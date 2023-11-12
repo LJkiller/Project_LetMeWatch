@@ -22,26 +22,28 @@
 		<header>
 			<a id="letMeWatchLogo" href="./index.html">
 				<img src="./Assets/Icons/LetMeWatchIcon.png" alt="LetMeWatch logo, a bright colored playbutton.">
-				<h1 id="letMeWatchTitle">LetMeWatch <span>DAMNIT</span></h1>
+				<h1 id="letMeWatchTitle">LetMeWatch <span>DAMMIT</span></h1>
 			</a>
 
-			<form id="falsifiedMediaLink" class="form__group field" onsubmit="extractAndSetVideo(event);">
-				<input id="linkInput" class="formInput" type="text" placeholder="Enter Link" autocomplete="off">
+			<form id="falsifiedMediaLink" onsubmit="extractAndSetVideo(event);">
+				<labeL for="linkInput">Enter Link |</labeL>
+				<input id="linkInput" class="formInput" type="text" placeholder="Link" autocomplete="off">
 				<button onclick="extractAndSetVideo()" class="formButton">Update Video</button>
 			</form>
 		</header>
 
 		<main>
 			<div id="content">
+				<div id="falsifiedMediaInformation">
+					<span id="widthValue" >Width  : (value)px</span>
+					<span id="heightValue">Height : (value)px</span>
+				</div>
 				<form id="falsifiedMediaController" onsubmit="return false;">
-					<input id="widthInput" class="formInput" type="number" placeholder="Enter Width" autocomplete="off">
+					<label for="widthInput">Enter Width |</label>
+					<input id="widthInput" class="formInput" type="number" placeholder="Width" autocomplete="off">
 					<button onclick="updateVideoSize()" class="formButton">Update Size</button>
 					<button onclick="resetVideoSize()" class="formButton">Reset Size</button>
 				</form>
-				<div id="falsifiedMediaInformation">
-					<span id="widthValue" >Width  : (value)</span>
-					<span id="heightValue">Height : (value)</span>
-				</div>
 				<iframe id="falsifiedMediaPlayer"
 					src="https://www.youtube-nocookie.com/embed/RamblingRamul?start=0&autoplay=1&autohide=1"
 					title="Media Viewer"

@@ -48,6 +48,7 @@
 
     --input-height: 2rem;
     --input-width: 20rem;
+    --input-small-width: 5rem;
     --input-fontsize: 1rem;
     --button-height: 2.4rem;
     --min-button-width: 5rem;
@@ -131,6 +132,7 @@ a{
 
 /*#region Forms*/
 .formInput, .formButton{
+    transition: var(--normal-transiiton);
     text-align: center;
     font-size: var(--input-fontsize);
     font-weight: bold;
@@ -141,13 +143,15 @@ a{
 
 .formInput{
     height: var(--input-height);
-    width: var(--input-width);
+    width: var(--input-small-width);
     color: var(--white);
 }
 .formInput:focus{
+    width: var(--input-width);
     outline: none;
 }
 .formInput::placeholder{
+    transition: var(--normal-transiiton);
     font-weight: bold;
     color: var(--primary-color);
 }
@@ -158,6 +162,24 @@ a{
     min-width: var(--min-button-width);
     color: var(--primary-color);
 }
+
+.formButton:hover{
+    color: var(--normal-text-color);
+    background-color: var(--primary-color);
+    cursor: pointer;
+}
+.formInput:hover{
+    width: var(--input-width);
+    background-color: var(--primary-color);
+}
+.formInput:hover::placeholder{
+    color: var(--white);
+}
+
+form label{
+    font-weight: bold;
+    color: var(--darker-gray);
+}  
 /*#endregion*/
 
 /*#region Header*/
@@ -196,6 +218,13 @@ header #letMeWatchLogo>img{
 header #letMeWatchLogo>h1{
     margin-left: .625rem;
 }
+
+header #letMeWatchLogo h1 span{
+    transition: var(--normal-transiiton);
+}
+header #letMeWatchLogo:hover h1 span{
+    color: var(--primary-color);
+}
 /*#endregion*/
 
 /*#region Right*/
@@ -224,21 +253,24 @@ main #content{
 }
 
 main #content #falsifiedMediaInformation span{
-    color: var(--normal-text-color);
+    font-weight: bold;
+    color: var(--gray);
 }
 
-
+main #content #falsifiedMediaController,
+main #content #falsifiedMediaPlayer{
+    margin-top: 10px;
+}
 main #content #falsifiedMediaPlayer{
     transition: var(--normal-transiiton);
-    margin-top: 50px;
     max-width: var(--max-media-width);
     max-height: var(--max-media-height);
-    border: 5px solid var(--primary-color);
+    border: 3px solid var(--primary-color);
     box-shadow: 0 0 0px 0px var(--primary-color);
     border-radius: var(--normal-border-radius);
 }
 main #content #falsifiedMediaPlayer:hover{
-    box-shadow: 0 0 50px 10px var(--primary-color);
+    box-shadow: 0 0 20px 10px var(--primary-color);
     border: 5px solid transparent;
 }
 

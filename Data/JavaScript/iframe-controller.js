@@ -45,8 +45,8 @@ function displaySizeValues() {
     let storedWidth = localStorage.getItem('videoWidth');
     let storedHeight = Math.round(storedWidth / aspectRatio);
 
-    heightValueSpan.textContent = `Height: ${storedHeight}`;
-    widthValueSpan.textContent = `Width: ${storedWidth}`;
+    heightValueSpan.textContent = `Height: ${storedHeight}px`;
+    widthValueSpan.textContent = `Width: ${storedWidth}px`;
 }
 
 displaySizeValues();
