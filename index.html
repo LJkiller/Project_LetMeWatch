@@ -26,7 +26,7 @@
 			</a>
 
 			<form id="falsifiedMediaLink" class="form__group field" onsubmit="extractAndSetVideo(event);">
-				<input id="linkInput" class="formInput" type="text" placeholder="Enter Link">
+				<input id="linkInput" class="formInput" type="text" placeholder="Enter Link" autocomplete="off">
 				<button onclick="extractAndSetVideo()" class="formButton">Update Video</button>
 			</form>
 		</header>
@@ -34,7 +34,7 @@
 		<main>
 			<div id="content">
 				<form id="falsifiedMediaController" onsubmit="return false;">
-					<input id="widthInput" class="formInput" type="number" placeholder="Enter Width">
+					<input id="widthInput" class="formInput" type="number" placeholder="Enter Width" autocomplete="off">
 					<button onclick="updateVideoSize()" class="formButton">Update Size</button>
 					<button onclick="resetVideoSize()" class="formButton">Reset Size</button>
 				</form>
