@@ -47,7 +47,7 @@
     --logo-dimensions: 2.5rem;
 
     --input-height: 2rem;
-    --input-width: 20rem;
+    --input-width: 10rem;
     --input-small-width: 5rem;
     --input-fontsize: 1rem;
     --button-height: 2.4rem;
@@ -180,6 +180,11 @@ form label{
     font-weight: bold;
     color: var(--darker-gray);
 }  
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
 /*#endregion*/
 
 /*#region Header*/
