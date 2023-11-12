@@ -1,0 +1,245 @@
+
+/*#region Roots*/
+
+/*Color*/
+:root{
+    --primary-color: var(--blue);
+
+    --primary-scroll-color: var(--primary-color);
+    --secondary-scroll-color: var(--red);
+    
+    --red: rgba(255,98,98,1);
+    --green: rgba(0,255,128,1);
+    --blue: rgba(0,128,255,1);
+
+    --primary-bg-color: rgba(0,0,0,1);
+    --seconday-bg-color: rgba(10,10,10,1);
+
+    --huge-text-color: var(--white);
+    --normal-text-color: var(--lightest-gray);
+    --small-text-color: var(--light-gray);
+
+    --white: rgba(255,255,255,1);
+    --lightest-gray: rgba(225,225,225,1);
+    --lighter-gray: rgba(200,200,200,1);
+    --light-gray: rgba(175,175,175,1);
+    --gray: rgba(150, 150,150,1);
+    --dark-gray: rgba(125,125,125,1);
+    --darker-gray: rgba(100,100,100,1);
+    --darkest-gray: rgba(75,75,75,1);
+    --lighter-black: rgba(50,50,50,1);
+    --almost-black: rgba(25,25,25,1);
+    --pitch-black: rgba(10,10,10,1);
+    --black: rgba(0,0,0,1);
+}
+
+/*Text*/
+:root{
+    --normal-font-family: Arial, sans-serif;
+}
+
+/*Units*/
+:root{
+    --normal-border-radius: 0.625rem;
+
+    --header-height: 4rem;
+    --header-top-margin: 5rem;
+    --logo-dimensions: 2.5rem;
+
+    --input-height: 2rem;
+    --input-width: 20rem;
+    --input-fontsize: 1rem;
+    --button-height: 2.4rem;
+    --min-button-width: 5rem;
+
+    --base-height: 240;
+    --base-width: 426;
+    --media-aspect-ratio: var(--base-height)/var(--base-width);
+    --max-media-width: 97vw;
+    --max-media-height: (var(--max-media-width)/var(--media-aspect-ratio))vw; 
+}
+
+/*Animation*/
+:root{
+    --fast-transiiton: .1s ease-in-out;
+    --normal-transiiton: .2s ease-in-out;
+    --slow-transiiton: .4s ease-in-out;
+}
+
+/*#endregion*/
+
+/*#region Body*/
+html{
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--seconday-bg-color);
+    font-family: var(--normal-font-family);
+    color: var(--normal-text-color);
+}
+a{
+    text-decoration: none;
+}
+
+/*#region Scrollbar*/
+::-webkit-scrollbar{
+	width: .8vw;
+}
+::-webkit-scrollbar-track{
+  	background: var(--pitch-black);
+}
+::-webkit-scrollbar-thumb{
+	background: var(--primary-scroll-color);
+	border-radius: var(--normal-border-radius);
+	height: 10%;
+	width: 100%;
+	border: 0px;
+	background-image: 
+		linear-gradient(
+			var(--primary-scroll-color), 
+			var(--black));
+}
+::-webkit-scrollbar-thumb:hover{
+	background: var(--primary-scroll-color);
+	border: 0.25rem solid var(--primary-scroll-color);
+	background-image: 
+		linear-gradient(
+			var(--primary-scroll-color), 
+			var(--black));
+}
+::-webkit-scrollbar-thumb:active{
+	border-color: var(--primary-scroll-color);
+	border-image:
+		linear-gradient(
+			var(--primary-scroll-color), 
+			var(--secondary-scroll-color));
+	border-image-slice: 1;
+	background-image: 
+		linear-gradient(
+			var(--primary-scroll-color), 
+			var(--secondary-scroll-color));
+}
+::-webkit-scrollbar-corner{
+	background-color: var(--pitch-black);
+}
+/*#endregion*/
+
+/*#endregion*/
+
+/*#region Forms*/
+.formInput, .formButton{
+    text-align: center;
+    font-size: var(--input-fontsize);
+    font-weight: bold;
+    border: 2px solid var(--primary-color);
+    border-radius: var(--normal-border-radius);
+    background-color: var(--black);
+}
+
+.formInput{
+    height: var(--input-height);
+    width: var(--input-width);
+    color: var(--white);
+}
+.formInput:focus{
+    outline: none;
+}
+.formInput::placeholder{
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.formButton{
+    text-align: center;
+    height: var(--button-height);
+    min-width: var(--min-button-width);
+    color: var(--primary-color);
+}
+/*#endregion*/
+
+/*#region Header*/
+body header{
+    position: fixed;
+    height: var(--header-height);
+    width: 100%;
+    background-color: var(--primary-bg-color);
+    z-index: 2;
+}
+
+header #letMeWatchLogo, header #falsifiedMediaLink{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    vertical-align: middle;
+    color: var(--normal-text-color);
+}
+
+/*#region Left*/
+header #letMeWatchLogo{
+    float: left;
+    margin-left: 1rem;
+    vertical-align: middle;
+}
+
+header #letMeWatchLogo>img,
+header #letMeWatchLogo>h1 {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+}
+header #letMeWatchLogo>img{
+    max-height: var(--logo-dimensions);
+    max-width: var(--logo-dimensions);
+}
+header #letMeWatchLogo>h1{
+    margin-left: .625rem;
+}
+/*#endregion*/
+
+/*#region Right*/
+header #falsifiedMediaLink{
+    float: right;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    height: var(--logo-dimensions);
+    vertical-align: middle;
+}
+
+/*#endregion*/
+
+/*#endregion*/
+
+/*#region Main*/
+main{
+    position: relative;
+    top: var(--header-top-margin);
+}
+
+main #content{
+    height: 150vh;
+    width: 100%;
+    text-align: center;
+}
+
+main #content #falsifiedMediaInformation span{
+    color: var(--normal-text-color);
+}
+
+
+main #content #falsifiedMediaPlayer{
+    transition: var(--normal-transiiton);
+    margin-top: 50px;
+    max-width: var(--max-media-width);
+    max-height: var(--max-media-height);
+    border: 5px solid var(--primary-color);
+    box-shadow: 0 0 0px 0px var(--primary-color);
+    border-radius: var(--normal-border-radius);
+}
+main #content #falsifiedMediaPlayer:hover{
+    box-shadow: 0 0 50px 10px var(--primary-color);
+    border: 5px solid transparent;
+}
+
+/*#endregion*/
