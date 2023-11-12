@@ -1,4 +1,4 @@
-# LetMeWatch DAMNIT
+# LetMeWatch DAMMIT
 
 My project here is a quick roundabout to watch youtube videos, since their ad-crackdown is annoying.
 
