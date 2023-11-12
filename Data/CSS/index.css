@@ -48,6 +48,7 @@
 
     --input-height: 2rem;
     --input-width: 10rem;
+    --input-special-width: 7rem;
     --input-small-width: 5rem;
     --input-fontsize: 1rem;
     --button-height: 2.4rem;
@@ -185,6 +186,17 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
 }
+
+/*#region Special Form Input Cases*/
+.formInput#widthInput:hover{
+    width: var(--input-special-width);
+}
+.formInput#widthInput:focus{
+    width: var(--input-special-width);
+}
+/*#endregion*/
+
+
 /*#endregion*/
 
 /*#region Header*/
