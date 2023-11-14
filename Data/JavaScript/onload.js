@@ -1,14 +1,20 @@
 //Fetch stored information (videoWidth, videoAspectRatio).
 window.onload = function() {
-    let storedWidth = localStorage.getItem('videoWidth');
-    let storedAspectRatio = localStorage.getItem('videoAspectRatio');
+    const storedWidth = localStorage.getItem('videoWidth');
+    const storedVideoID = localStorage.getItem('videoID');
+    const videoIdValueSpan = document.getElementById('videoID');
+
+    const storedAspectRatio = localStorage.getItem('videoAspectRatio');
 
     if (storedWidth && storedAspectRatio) {
-        let iframe = document.getElementById("falsifiedMediaPlayer");
+        const playerIframe = document.getElementById("falsifiedMediaPlayer");
         let calculatedHeight = storedWidth / storedAspectRatio;
 
-        // Update iframe dimensions
-        iframe.width = storedWidth;
-        iframe.height = calculatedHeight;
+        //Update iframe dimensions
+        playerIframe.width = storedWidth;
+        playerIframe.height = calculatedHeight;
     }
+
+    //Update videoID
+    videoIdValueSpan.textContent = `videoID: ${storedVideoID}`;
 };
