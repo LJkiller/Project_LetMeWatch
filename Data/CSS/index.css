@@ -269,7 +269,7 @@ main #content{
     text-align: center;
 }
 
-main #content #falsifiedMediaInformation span{
+main #content .falsifiedMediaInformation span{
     font-weight: bold;
     color: var(--gray);
 }
