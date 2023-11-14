@@ -83,7 +83,12 @@ body {
     color: var(--normal-text-color);
 }
 a{
+    transition: var(--normal-transiiton);
+    color: var(--primary-color);
     text-decoration: none;
+}
+a:hover{
+    color: var(--white);
 }
 
 /*#region Scrollbar*/
@@ -269,7 +274,7 @@ main #content{
     text-align: center;
 }
 
-main #content .falsifiedMediaInformation span{
+main #content .falsifiedMediaInformation{
     font-weight: bold;
     color: var(--gray);
 }

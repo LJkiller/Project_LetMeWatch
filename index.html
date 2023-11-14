@@ -35,15 +35,15 @@
 		<main>
 			<div id="content">
 				<div class="falsifiedMediaInformation">
-					<span id="widthValue" >Width  : (value)px</span>
+					<span id="widthValue" >Width  : $(storedWidth)px</span>
 					<span>|</span>
-					<span id="heightValue">Height : (value)px</span>
+					<span id="heightValue">Height : $(storedHeight)px</span>
 				</div>
 				<form id="falsifiedMediaController" onsubmit="return false;">
 					<label for="widthInput">Enter Width |</label>
 					<input id="widthInput" class="formInput" type="number" placeholder="Width" autocomplete="off">
 					<button onclick="updateVideoSize()" class="formButton">Update Size</button>
-					<button onclick="resetVideoSize()" class="formButton">Reset Size</button>
+					<button id="resetSizeButton" class="formButton">Reset Size</button>
 				</form>
 				<iframe id="falsifiedMediaPlayer"
 					src="https://www.youtube-nocookie.com/embed/RamblingRamul?start=0&autoplay=1&autohide=1"
@@ -53,7 +53,8 @@
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"> 
 				</iframe>
 				<div class="falsifiedMediaInformation">
-					<span id="videoID" >VideoID : (value)</span>
+					<span id="videoID" >VideoID: $(storedVideoID) : </span>
+					<a id="videoLink" target="_blank" href="">Video</a>
 				</div>
 
 			</div>
