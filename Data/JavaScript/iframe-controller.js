@@ -86,6 +86,9 @@ function extractVideoID(link) {
 //Sets the new ID as video/iframe src:
 function extractAndSetVideo(event) {
     event.preventDefault();
+
+    pressedButtonForVideoURL++;
+    
     const linkInput = document.getElementById('linkInput').value;
     const videoID = extractAndSetVideoID(linkInput);
     const iframeSrc = `https://www.youtube-nocookie.com/embed/${videoID}?start=0&autoplay=1&autohide=1`;
@@ -101,7 +104,6 @@ function extractAndSetVideo(event) {
     saveVideoLinkValue(linkInput);
     saveVideoIDValue(videoID);
 
-    pressedButtonForVideoURL++;
 }
 
 
