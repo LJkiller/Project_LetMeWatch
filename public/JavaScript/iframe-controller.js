@@ -135,19 +135,10 @@ function updateVideoId(videoId) {
  * 
  * @param {Array} mediaInfo - Info about: domainName, url, and iframeSrc.
  */
-function updateVideoLink(mediaInfo) {
+function updateVideoLink(videoLinkSrc) {
     let videoLink = document.getElementById('videoLink');
-    let source = '';
-
-    switch(mediaInfo[0]){
-        case 'www.youtube.com':
-            source = `https://www.youtube.com/watch?v=${mediaInfo[1]}`;
-            break;
-        default:
-            break;
-    }
-    saveVideoLink(source);
-    videoLink.href = source;
+    saveVideoLink(videoLinkSrc);
+    videoLink.href = videoLinkSrc;
 }
 
 // #endregion
@@ -200,24 +191,25 @@ function resetVideoSize(displayAsLastVideo) {
  */
 function handleMedia(linkInput){
     let mediaInfo = extractMediaInfo(linkInput);
-    saveVideoSource(mediaInfo[2]);
+    saveVideoSource(mediaInfo[3]);
 
     updateVideoId(mediaInfo[1]);
-    updateVideoLink(mediaInfo);
-    updateMediaPlayer(mediaInfo[2]);
+    updateVideoLink(mediaInfo[2]);
+    updateMediaPlayer(mediaInfo[3]);
 }
 
 /**
  * Method responsible of extracting media info from url.
  * 
  * @param {string} linkInput - Url input. 
- * @returns {Array} - Array of information: domainName, videoId, and iframeSrc.
+ * @returns {Array} - Array of information: domainName, videoId, videoLink, and iframeSrc.
  */
 function extractMediaInfo(linkInput){
     let linkChunk = linkInput.split('/');
 
     let domainName = '';
     let videoId = '';
+    let videoLink = '';
     let iframeSrc = '';
     let mediaInfo = [];
 
@@ -240,16 +232,19 @@ function extractMediaInfo(linkInput){
                     break;
             }
         }
+        videoLink = `https://${domainName}/watch?v=${videoId}`;
         iframeSrc = `https://www.youtube-nocookie.com/embed/${videoId}?start=0&autoplay=1&autohide=1`;
     } else {
         let linkArrayInfo = additionalMediaInfo(linkChunk);
         domainName = linkArrayInfo[0];
         videoId = linkArrayInfo[1];
-        iframeSrc = linkArrayInfo[2];
+        videoLink = linkArrayInfo[2];
+        iframeSrc = linkArrayInfo[3];
     }
 
     mediaInfo.push(domainName);
     mediaInfo.push(videoId);
+    mediaInfo.push(videoLink);
     mediaInfo.push(iframeSrc);
     return mediaInfo;
 }
