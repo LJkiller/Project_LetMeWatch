@@ -3,32 +3,31 @@
 	<head>
         <meta charset="UTF-8">
         <title>LetMeWatch</title>
-        <link rel="icon" href="./Assets/Icons/LetMeWatchIcon.png">
+        <link rel="icon" href="./public/assets/Icons/LetMeWatchIcon.png">
 
         <!-- SEO -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- CSS -->
-        <link rel="stylesheet" href="./Data/CSS/index.css">
+        <link rel="stylesheet" href="./public/CSS/index.css">
 
         <!-- Scripts -->
-		<script src="./Data/JavaScript/onload.js"></script>
-        <script src="./Data/JavaScript/var-handler.js"></script>
-        <script src="./Data/JavaScript/iframe-controller.js" defer></script>
+		<script src="./public/JavaScript/onload.js" defer></script>
+        <script src="./public/JavaScript/iframe-controller.js" defer></script>
 		<script src="https://www.youtube.com/iframe_api" defer></script>
 	</head>
 
 	<body>
 		<header>
 			<a id="letMeWatchLogo" href="./index.html">
-				<img src="./Assets/Icons/LetMeWatchIcon.png" alt="LetMeWatch logo, a bright colored playbutton.">
+				<img src="./public/assets/Icons/LetMeWatchIcon.png" alt="LetMeWatch logo, a bright colored playbutton.">
 				<h1 id="letMeWatchTitle">LetMeWatch <span>DAMMIT</span></h1>
 			</a>
 
-			<form id="falsifiedMediaLink" onsubmit="extractAndSetVideo(event);">
+			<form id="falsifiedMediaLink" onsubmit="handleLinkInput(event);">
 				<labeL for="linkInput">Enter Link |</labeL>
 				<input id="linkInput" class="formInput" type="text" placeholder="Link" autocomplete="off">
-				<button onclick="extractAndSetVideo()" class="formButton">Update Video</button>
+				<button class="formButton">Update Video</button>
 			</form>
 		</header>
 
