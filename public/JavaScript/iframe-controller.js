@@ -215,7 +215,9 @@ function extractMediaInfo(linkInput){
     let mediaInfo = [];
 
     domainName = linkChunk[2];
-    for (let i = 2; i < linkChunk.length; i++){
+    let normalCase = true;
+    for (let i = 2; (i < linkChunk.length) && normalCase; i++){
+        iterations++;
         switch (true){
             case domainName.includes('youtube') || domainName.includes('youtu.be'):
                 if (linkChunk[i].includes('watch')){
@@ -241,6 +243,7 @@ function extractMediaInfo(linkInput){
                 iframeSrc = `https://www.tiktok.com/embed/v2/${videoId}?muted=1`;
                 break;
             default: 
+                normalCase = false;
                 let linkArrayInfo = additionalMediaInfo(linkChunk);
                 domainName = linkArrayInfo[0];
                 videoId = linkArrayInfo[1];
