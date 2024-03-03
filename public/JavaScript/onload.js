@@ -2,13 +2,13 @@
 // Fetch stored information.
 window.onload = function() {
 
-    
+    /*
     for (let i = 0; i < localStorage.length; i++) {
         let key = localStorage.key(i);
         let value = localStorage.getItem(key);
-        console.log(key + " => " + value);
+        console.log(key + ' => ' + value);
     }
-    
+    */
 
     let playerIframe = document.getElementById('falsifiedMediaPlayer');
     let videoIdValueSpan = document.getElementById('videoID');

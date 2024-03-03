@@ -222,7 +222,7 @@ function extractMediaInfo(linkInput){
     let mediaInfo = [];
 
     if (linkChunk[2].includes('youtube') || linkChunk[2].includes('youtu.be')){
-        domainName = 'www.youtube.com';
+        domainName = linkChunk[2];
         for (let i = 0; i < linkChunk.length; i++) {
             switch (true){
                 case linkChunk[i].includes('watch'):
@@ -242,7 +242,7 @@ function extractMediaInfo(linkInput){
         }
         iframeSrc = `https://www.youtube-nocookie.com/embed/${videoId}?start=0&autoplay=1&autohide=1`;
     } else {
-        let linkArrayInfo = extractVideoInfo(linkChunk);
+        let linkArrayInfo = additionalMediaInfo(linkChunk);
         domainName = linkArrayInfo[0];
         videoId = linkArrayInfo[1];
         iframeSrc = linkArrayInfo[2];
