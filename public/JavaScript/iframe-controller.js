@@ -261,6 +261,7 @@ function extractMediaInfo(linkInput){
  */
 function updateMediaPlayer(iframeSrc){
     playerIframe.src = iframeSrc;
+    document.getElementById('linkInput').value = '';
 }
 
 // #endregion
