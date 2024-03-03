@@ -8,13 +8,14 @@ let widthValueSpan = document.getElementById('widthValue');
 let resetButton = document.getElementById('resetSizeButton');
 let videoIdValueSpan = document.getElementById('videoID');
 
-let baseWidth = 426;
-let baseHeight = 240;
-let scaleFactor = 3;
+let baseWidth = 560;
+let baseHeight = 315;
+// Scale factor to get to 1280 & 720px.
+let scaleFactor = 2.28571428571428580944;
+let aspectRatio = baseWidth / baseHeight;
 
 let defaultWidth = baseWidth * scaleFactor;
 let defaultHeight = baseHeight * scaleFactor;
-let aspectRatio = defaultWidth / defaultHeight;
 
 let pressedButtonForVideoURL = 0;
 // #endregion
@@ -30,7 +31,7 @@ displayVideoId();
  * Method responsible of displaying size values.
  */
 function displayVideoSize() {
-    let storedWidth = localStorage.getItem('videoWidth');
+    let storedWidth = Math.round(localStorage.getItem('videoWidth'));
     let storedHeight = Math.round(storedWidth / aspectRatio);
 
     heightValueSpan.textContent = `Height: ${storedHeight}px`;
@@ -213,8 +214,8 @@ function extractMediaInfo(linkInput){
     let iframeSrc = '';
     let mediaInfo = [];
 
-    if (linkChunk[2].includes('youtube') || linkChunk[2].includes('youtu.be')){
-        domainName = linkChunk[2];
+    domainName = linkChunk[2];
+    if (domainName.includes('youtube') || domainName.includes('youtu.be')){
         for (let i = 0; i < linkChunk.length; i++) {
             switch (true){
                 case linkChunk[i].includes('watch'):

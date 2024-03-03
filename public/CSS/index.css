@@ -287,13 +287,13 @@ main #content #falsifiedMediaPlayer{
     transition: var(--normal-transiiton);
     max-width: var(--max-media-width);
     max-height: var(--max-media-height);
-    border: 3px solid var(--primary-color);
+    border: 4px solid var(--primary-color);
     box-shadow: 0 0 0px 0px var(--primary-color);
     border-radius: var(--normal-border-radius);
 }
 main #content #falsifiedMediaPlayer:hover{
     box-shadow: 0 0 20px 10px var(--primary-color);
-    border: 5px solid transparent;
+    border: 4px solid transparent;
 }
 
 /*#endregion*/
