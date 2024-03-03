@@ -215,38 +215,46 @@ function extractMediaInfo(linkInput){
     let mediaInfo = [];
 
     domainName = linkChunk[2];
-    if (domainName.includes('youtube') || domainName.includes('youtu.be')){
-        for (let i = 0; i < linkChunk.length; i++) {
-            switch (true){
-                case linkChunk[i].includes('watch'):
+    for (let i = 2; i < linkChunk.length; i++){
+        switch (true){
+            case domainName.includes('youtube') || domainName.includes('youtu.be'):
+                if (linkChunk[i].includes('watch')){
                     videoId = linkChunk[i].split('?')[1].split('=')[1];
                     if (videoId.includes('&')){
                         videoId = videoId.split('&')[0];
                     }
-                    break;
-                case linkChunk[i].includes('youtu.be'):
-                case linkChunk[i].includes('embed'):
-                case linkChunk[i].includes('shorts'):
+                } else if (linkChunk[i].includes('youtu.be') 
+                    || linkChunk[i].includes('embed') 
+                    || linkChunk[i].includes('shorts') ){
                     videoId = linkChunk[i + 1].split('?')[0];
-                    break;
-                default:
-                    break;
-            }
+                }
+                videoLink = `https://${domainName}/watch?v=${videoId}`;
+                iframeSrc = `https://www.youtube-nocookie.com/embed/${videoId}?start=0&autoplay=1&autohide=1`;
+                break;
+            case domainName.includes('tiktok'):
+                if (linkChunk[i].includes('embed')){
+                    videoId = linkChunk[i + 2].split('?')[0];
+                } else if (linkChunk[i].includes('video')){
+                    videoId = linkChunk[i + 1];
+                }
+                videoLink = 'NOT SUPPORTED';
+                iframeSrc = `https://www.tiktok.com/embed/v2/${videoId}?muted=1`;
+                break;
+            default: 
+                let linkArrayInfo = additionalMediaInfo(linkChunk);
+                domainName = linkArrayInfo[0];
+                videoId = linkArrayInfo[1];
+                videoLink = linkArrayInfo[2];
+                iframeSrc = linkArrayInfo[3];
+                break;
         }
-        videoLink = `https://${domainName}/watch?v=${videoId}`;
-        iframeSrc = `https://www.youtube-nocookie.com/embed/${videoId}?start=0&autoplay=1&autohide=1`;
-    } else {
-        let linkArrayInfo = additionalMediaInfo(linkChunk);
-        domainName = linkArrayInfo[0];
-        videoId = linkArrayInfo[1];
-        videoLink = linkArrayInfo[2];
-        iframeSrc = linkArrayInfo[3];
     }
 
     mediaInfo.push(domainName);
     mediaInfo.push(videoId);
     mediaInfo.push(videoLink);
     mediaInfo.push(iframeSrc);
+    console.log(mediaInfo);
     return mediaInfo;
 }
 
