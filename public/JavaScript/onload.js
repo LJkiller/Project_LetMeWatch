@@ -10,9 +10,9 @@ window.onload = function() {
     }
     */
 
-    let playerIframe = document.getElementById('falsifiedMediaPlayer');
-    let videoIdValueSpan = document.getElementById('videoID');
-    let videoLink = document.getElementById('videoLink');
+    let playerIframe = document.getElementById('falsified-media-player');
+    let videoIdValueSpan = document.getElementById('video-id');
+    let videoLink = document.getElementById('video-link');
 
     let storedWidth = localStorage.getItem('videoWidth');
     let storedVideoID = localStorage.getItem('videoId');

@@ -1,0 +1,63 @@
+
+.form-input, .form-button{
+    transition: var(--standard-eio-transition);
+    text-align: center;
+    font-weight: bold;
+    font-size: var(--input-fontsize);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--standard-border-radius);
+    background-color: var(--black);
+}
+
+.form-input{
+    height: var(--input-height);
+    width: var(--input-small-width);
+    color: var(--white);
+}
+.form-input:focus{
+    width: var(--input-width);
+    outline: none;
+}
+.form-input::placeholder{
+    transition: var(--standard-eio-transition);
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.form-button{
+    text-align: center;
+    height: var(--button-height);
+    min-width: var(--min-button-width);
+    color: var(--primary-color);
+}
+
+.form-button:hover{
+    color: var(--normal-text-color);
+    background-color: var(--primary-color);
+    cursor: pointer;
+}
+.form-input:hover{
+    width: var(--input-width);
+    background-color: var(--primary-color);
+}
+.form-input:hover::placeholder{
+    color: var(--white);
+}
+
+form label{
+    font-weight: bold;
+    color: var(--darker-gray);
+}  
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+/*#region Special Form Input Cases*/
+.form-input#width-input:hover{
+    width: var(--input-special-width);
+}
+.form-input#width-input:focus{
+    width: var(--input-special-width);
+}

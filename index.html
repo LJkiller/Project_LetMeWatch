@@ -9,6 +9,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- CSS -->
+        <link rel="stylesheet" href="./public/CSS/style.css">
+        <link rel="stylesheet" href="./public/CSS/form.css">
+        <link rel="stylesheet" href="./public/CSS/responsive.css">
         <link rel="stylesheet" href="./public/CSS/index.css">
 
         <!-- Scripts -->
@@ -20,44 +23,49 @@
 
 	<body>
 		<header>
-			<a id="letMeWatchLogo" href="./index.html">
+			<a id="let-me-watch-logo" href="./index.html">
 				<img src="./public/assets/Icons/LetMeWatchIcon.png" alt="LetMeWatch logo, a bright colored playbutton.">
 				<h1 id="letMeWatchTitle">LetMeWatch <span>DAMMIT</span></h1>
 			</a>
 
-			<form id="falsifiedMediaLink" onsubmit="handleLinkInput(event);">
-				<labeL for="linkInput">Enter Link |</labeL>
-				<input id="linkInput" class="formInput" type="text" placeholder="Link" autocomplete="off">
-				<button class="formButton">Update Video</button>
+			<form id="falsified-media-link" onsubmit="handleLinkInput(event);">
+				<labeL for="link-input">Enter Link |</labeL>
+				<input id="link-input" class="form-input" type="text" placeholder="Link" autocomplete="off">
+				<button class="form-button">Update Video</button>
 			</form>
 		</header>
 
 		<main>
-			<div id="content">
-				<div class="falsifiedMediaInformation">
-					<span id="widthValue" >Width  : $(storedWidth)px</span>
-					<span>|</span>
-					<span id="heightValue">Height : $(storedHeight)px</span>
+			<section id="content">
+
+				<div id="media-top">
+					<div class="media-information">
+						<span id="width-value" >Width  : $(storedWidth)px</span>
+						<span>|</span>
+						<span id="height-value">Height : $(storedHeight)px</span>
+					</div>
+					<form id="media-controller" onsubmit="return false;">
+						<label for="width-input">Enter Width |</label>
+						<input id="width-input" class="form-input" type="number" placeholder="Width" autocomplete="off">
+						<button onclick="updateVideoSize()" class="form-button">Update Size</button>
+						<button id="reset-size-button" class="form-button">Reset Size</button>
+					</form>
 				</div>
-				<form id="falsifiedMediaController" onsubmit="return false;">
-					<label for="widthInput">Enter Width |</label>
-					<input id="widthInput" class="formInput" type="number" placeholder="Width" autocomplete="off">
-					<button onclick="updateVideoSize()" class="formButton">Update Size</button>
-					<button id="resetSizeButton" class="formButton">Reset Size</button>
-				</form>
-				<iframe id="falsifiedMediaPlayer"
+	
+				<iframe id="falsified-media-player"
 					src="https://www.youtube-nocookie.com/embed/RamblingRamul?start=0&autoplay=1&autohide=1"
 					title="Media Viewer"
 					allowfullscreen 
 					frameborder="0" 
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"> 
 				</iframe>
-				<div class="falsifiedMediaInformation">
-					<span id="videoID" >VideoID: $(storedVideoID) : </span>
-					<a id="videoLink" target="_blank" href="">Video</a>
+	
+				<div id="media-bottom" class="media-information">
+					<span id="video-id" >VideoID: $(storedVideoID) : </span>
+					<a id="video-link" target="_blank" href="">Video</a>
 				</div>
 
-			</div>
+			</section>
 		</main>
 
 		<footer></footer>

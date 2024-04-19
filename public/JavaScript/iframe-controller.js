@@ -1,12 +1,12 @@
 
 // #region Setup.
-let playerIframe = document.getElementById('falsifiedMediaPlayer');
-let widthInput = document.getElementById('widthInput');
+let playerIframe = document.getElementById('falsified-media-player');
+let widthInput = document.getElementById('width-input');
 
-let heightValueSpan = document.getElementById('heightValue');
-let widthValueSpan = document.getElementById('widthValue');
-let resetButton = document.getElementById('resetSizeButton');
-let videoIdValueSpan = document.getElementById('videoID');
+let heightValueSpan = document.getElementById('height-value');
+let widthValueSpan = document.getElementById('width-value');
+let resetButton = document.getElementById('reset-size-button');
+let videoIdValueSpan = document.getElementById('video-id');
 
 let baseWidth = 560;
 let baseHeight = 315;
@@ -137,7 +137,7 @@ function updateVideoId(videoId) {
  * @param {Array} mediaInfo - Info about: domainName, url, and iframeSrc.
  */
 function updateVideoLink(videoLinkSrc) {
-    let videoLink = document.getElementById('videoLink');
+    let videoLink = document.getElementById('video-link');
     saveVideoLink(videoLinkSrc);
     videoLink.href = videoLinkSrc;
 }
@@ -150,7 +150,7 @@ function updateVideoLink(videoLinkSrc) {
 
 function handleLinkInput(event){
     event.preventDefault();
-    let linkInput = document.getElementById('linkInput').value;
+    let linkInput = document.getElementById('link-input').value;
 
     handleMedia(linkInput);
 }
@@ -216,40 +216,49 @@ function extractMediaInfo(linkInput){
 
     domainName = linkChunk[2];
     let normalCase = true;
-    for (let i = 2; (i < linkChunk.length) && normalCase; i++){
-        switch (true){
-            case domainName.includes('youtube') || domainName.includes('youtu.be'):
-                if (linkChunk[i].includes('watch')){
-                    videoId = linkChunk[i].split('?')[1].split('=')[1];
-                    if (videoId.includes('&')){
-                        videoId = videoId.split('&')[0];
-                    }
-                } else if (linkChunk[i].includes('youtu.be') 
-                    || linkChunk[i].includes('embed') 
-                    || linkChunk[i].includes('shorts') ){
-                    videoId = linkChunk[i + 1].split('?')[0];
+    switch (true){
+        case domainName.includes('youtube') || domainName.includes('youtu.be'):
+            //Example youtube links:
+            //https://www.youtube.com/watch?v=PEvURuyHcXM
+            //https://youtu.be/PEvURuyHcXM?si=LQ1x4Q4DTbGMI4nP
+            //https://www.youtube.com/embed/PEvURuyHcXM?si=LQ1x4Q4DTbGMI4nP
+            //https://youtube.com/shorts/NuK3TqEhnkI?si=ido3nB9MMWW3IrRy
+            let youtubeRegexes = [
+                /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)/i,
+                /youtu\.be\/([^?]+)/i,
+                /(?:https?:\/\/)?(?:www\.)?youtube\.com\/embed\/([^?]+)/i,
+                /(?:https?:\/\/)?(?:www\.)?youtube\.com\/shorts\/([^?]+)/i
+            ];
+            for (let regex of youtubeRegexes) {
+                let youtubeMatch = linkInput.match(regex);
+                if (youtubeMatch) {
+                    videoId = youtubeMatch[1];
+                    videoLink = `https://www.youtube.com/watch?v=${videoId}`;
+                    iframeSrc = `https://www.youtube-nocookie.com/embed/${videoId}?start=0&autoplay=1&autohide=1`;
+                    console.log("Video ID: " + videoId);
+                    break;
                 }
-                videoLink = `https://${domainName}/watch?v=${videoId}`;
-                iframeSrc = `https://www.youtube-nocookie.com/embed/${videoId}?start=0&autoplay=1&autohide=1`;
-                break;
-            case domainName.includes('tiktok'):
-                if (linkChunk[i].includes('embed')){
-                    videoId = linkChunk[i + 2].split('?')[0];
-                } else if (linkChunk[i].includes('video')){
-                    videoId = linkChunk[i + 1];
-                }
-                videoLink = 'NOT SUPPORTED';
+            }
+            break;
+        case domainName.includes('tiktok'):
+            //Example tiktok links:
+            //https://www.tiktok.com/@pjoae/video/7316912250772606214
+            let tiktokRegex = /(?:https?:\/\/)?(?:www\.)?tiktok\.com\/@[^\/]+\/video\/(\d+)/i;
+            let tiktokMatch = linkInput.match(tiktokRegex);
+            if (tiktokMatch) {
+                videoId = tiktokMatch[1];
+                videoLink = 'NOT SUPPORTED'; // TikTok doesn't provide direct video links
                 iframeSrc = `https://www.tiktok.com/embed/v2/${videoId}?muted=1`;
-                break;
-            default: 
-                normalCase = false;
-                let linkArrayInfo = additionalMediaInfo(linkChunk);
-                domainName = linkArrayInfo[0];
-                videoId = linkArrayInfo[1];
-                videoLink = linkArrayInfo[2];
-                iframeSrc = linkArrayInfo[3];
-                break;
-        }
+            }
+            break;
+        default: 
+            normalCase = false;
+            let linkArrayInfo = additionalMediaInfo(linkInput);
+            domainName = linkArrayInfo[0];
+            videoId = linkArrayInfo[1];
+            videoLink = linkArrayInfo[2];
+            iframeSrc = linkArrayInfo[3];
+            break;
     }
 
     mediaInfo.push(domainName);
@@ -267,7 +276,7 @@ function extractMediaInfo(linkInput){
  */
 function updateMediaPlayer(iframeSrc){
     playerIframe.src = iframeSrc;
-    document.getElementById('linkInput').value = '';
+    document.getElementById('link-input').value = '';
 }
 
 // #endregion

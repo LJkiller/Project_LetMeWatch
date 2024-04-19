@@ -1,0 +1,144 @@
+
+/*#region Roots*/
+
+/*Color*/
+:root{
+    --primary-color: var(--blue);
+
+    --primary-scroll-color: var(--primary-color);
+    --secondary-scroll-color: var(--red);
+    
+    --red: rgba(255,98,98,1);
+    --green: rgba(0,255,128,1);
+    --blue: rgba(0,128,255,1);
+
+    --primary-bg-color: rgba(0,0,0,1);
+    --seconday-bg-color: rgba(10,10,10,1);
+
+    --huge-text-color: var(--white);
+    --normal-text-color: var(--lightest-gray);
+    --small-text-color: var(--light-gray);
+
+    --white: rgba(255,255,255,1);
+    --lightest-gray: rgba(225,225,225,1);
+    --lighter-gray: rgba(200,200,200,1);
+    --light-gray: rgba(175,175,175,1);
+    --gray: rgba(150, 150,150,1);
+    --dark-gray: rgba(125,125,125,1);
+    --darker-gray: rgba(100,100,100,1);
+    --darkest-gray: rgba(75,75,75,1);
+    --lighter-black: rgba(50,50,50,1);
+    --almost-black: rgba(25,25,25,1);
+    --pitch-black: rgba(10,10,10,1);
+    --black: rgba(0,0,0,1);
+}
+
+/*Text*/
+:root{
+    --normal-font-family: Arial, sans-serif;
+}
+
+/*Units*/
+:root{
+    --standard-size: 0.625rem;
+
+    --standard-spacing: var(--standard-size);
+    --standard-border-radius: var(--standard-size);
+
+    --header-height: 4rem;
+    --header-top-margin: 1.5rem;
+    --logo-dimensions: 2.5rem;
+
+    --footer-height: 4rem;
+
+    --input-height: 2.46rem;
+    --input-width: 10rem;
+    --input-special-width: 7rem;
+    --input-small-width: 5rem;
+    --input-fontsize: 1rem;
+    --button-height: 2.4rem;
+    --min-button-width: 5rem;
+
+    --base-height: 240;
+    --base-width: 426;
+    --media-aspect-ratio: var(--base-height)/var(--base-width);
+    --max-media-width: 97vw;
+    --max-media-height: (var(--max-media-width)/var(--media-aspect-ratio))vw; 
+}
+
+/*Animation*/
+:root{
+    --fast-eio-transition: .1s ease-in-out;
+    --standard-eio-transition: .2s ease-in-out;
+    --slow-eio-transition: .4s ease-in-out;
+}
+
+/*#endregion*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--seconday-bg-color);
+    font-family: var(--normal-font-family);
+    color: var(--normal-text-color);
+    height: 100vh;
+}
+a{
+    transition: var(--standard-eio-transition);
+    color: var(--primary-color);
+    text-decoration: none;
+}
+a:hover{
+    color: var(--white);
+}
+
+/*#region Scrollbar*/
+::-webkit-scrollbar{
+	width: .8vw;
+}
+::-webkit-scrollbar-track{
+  	background: var(--pitch-black);
+}
+::-webkit-scrollbar-thumb{
+	background: var(--primary-scroll-color);
+	border-radius: var(--standard-border-radius);
+	height: 10%;
+	width: 100%;
+	border: 0px;
+	background-image: 
+		linear-gradient(
+			var(--primary-scroll-color), 
+			var(--black));
+}
+::-webkit-scrollbar-thumb:hover{
+	background: var(--primary-scroll-color);
+	border: 0.25rem solid var(--primary-scroll-color);
+	background-image: 
+		linear-gradient(
+			var(--primary-scroll-color), 
+			var(--black));
+}
+::-webkit-scrollbar-thumb:active{
+	border-color: var(--primary-scroll-color);
+	border-image:
+		linear-gradient(
+			var(--primary-scroll-color), 
+			var(--secondary-scroll-color));
+	border-image-slice: 1;
+	background-image: 
+		linear-gradient(
+			var(--primary-scroll-color), 
+			var(--secondary-scroll-color));
+}
+::-webkit-scrollbar-corner{
+	background-color: var(--pitch-black);
+}
+/*#endregion*/
