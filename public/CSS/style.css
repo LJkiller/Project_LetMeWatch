@@ -3,14 +3,14 @@
 
 /*Color*/
 :root{
-    --primary-color: var(--blue);
-
-    --primary-scroll-color: var(--primary-color);
-    --secondary-scroll-color: var(--red);
-    
     --red: rgba(255,98,98,1);
     --green: rgba(0,255,128,1);
     --blue: rgba(0,128,255,1);
+
+    --primary-color: var(--blue);
+    
+    --primary-scroll-color: var(--primary-color);
+    --secondary-scroll-color: var(--red);
 
     --primary-bg-color: rgba(0,0,0,1);
     --seconday-bg-color: rgba(10,10,10,1);
@@ -57,7 +57,7 @@
     --input-small-width: 5rem;
     --input-fontsize: 1rem;
     --button-height: 2.4rem;
-    --min-button-width: 5rem;
+    --min-button-width: 7rem;
 
     --base-height: 240;
     --base-width: 426;

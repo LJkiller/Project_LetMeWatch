@@ -28,7 +28,7 @@
 				<h1 id="letMeWatchTitle">LetMeWatch <span>DAMMIT</span></h1>
 			</a>
 
-			<form id="falsified-media-link" onsubmit="handleLinkInput(event);">
+			<form id="falsified-media-link">
 				<labeL for="link-input">Enter Link |</labeL>
 				<input id="link-input" class="form-input" type="text" placeholder="Link" autocomplete="off">
 				<button class="form-button">Update Video</button>
@@ -47,7 +47,7 @@
 					<form id="media-controller" onsubmit="return false;">
 						<label for="width-input">Enter Width |</label>
 						<input id="width-input" class="form-input" type="number" placeholder="Width" autocomplete="off">
-						<button onclick="updateVideoSize()" class="form-button">Update Size</button>
+						<button id="update-size-button" class="form-button">Update Size</button>
 						<button id="reset-size-button" class="form-button">Reset Size</button>
 					</form>
 				</div>

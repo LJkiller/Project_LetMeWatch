@@ -148,12 +148,11 @@ function updateVideoLink(videoLinkSrc) {
 
 // #region Events
 
-function handleLinkInput(event){
+document.getElementById('falsified-media-link').addEventListener('submit', function(event) {
     event.preventDefault();
     let linkInput = document.getElementById('link-input').value;
-
     handleMedia(linkInput);
-}
+});
 
 /**
  * Event for checking how many times reset button has been pressed and operates accordingly.
@@ -169,11 +168,11 @@ resetButton.addEventListener('click', function() {
 
     resetVideoSize(displayAsLastVideo);
 });
-/**
- * Method responsible of resetting video size.
- * 
- * @param {boolean} displayAsLastVideo - If videoSpan should be displayed as LastVideoID.
- */
+
+document.getElementById('update-size-button').addEventListener('click', function(event) {
+    event.preventDefault();
+    resetVideoSize();
+}); 
 function resetVideoSize(displayAsLastVideo) {
     updatePlayerDimensions(defaultWidth, defaultHeight);
     saveVideoWidth();
@@ -208,63 +207,32 @@ function handleMedia(linkInput){
 function extractMediaInfo(linkInput){
     let linkChunk = linkInput.split('/');
 
-    let domainName = '';
-    let videoId = '';
-    let videoLink = '';
-    let iframeSrc = '';
-    let mediaInfo = [];
-
-    domainName = linkChunk[2];
-    let normalCase = true;
-    switch (true){
-        case domainName.includes('youtube') || domainName.includes('youtu.be'):
+    let domains = {
+        'www.youtube.com|youtu.be': {
             //Example youtube links:
             //https://www.youtube.com/watch?v=PEvURuyHcXM
             //https://youtu.be/PEvURuyHcXM?si=LQ1x4Q4DTbGMI4nP
             //https://www.youtube.com/embed/PEvURuyHcXM?si=LQ1x4Q4DTbGMI4nP
             //https://youtube.com/shorts/NuK3TqEhnkI?si=ido3nB9MMWW3IrRy
-            let youtubeRegexes = [
+            regexes: [
                 /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)/i,
                 /youtu\.be\/([^?]+)/i,
                 /(?:https?:\/\/)?(?:www\.)?youtube\.com\/embed\/([^?]+)/i,
                 /(?:https?:\/\/)?(?:www\.)?youtube\.com\/shorts\/([^?]+)/i
-            ];
-            for (let regex of youtubeRegexes) {
-                let youtubeMatch = linkInput.match(regex);
-                if (youtubeMatch) {
-                    videoId = youtubeMatch[1];
-                    videoLink = `https://www.youtube.com/watch?v=${videoId}`;
-                    iframeSrc = `https://www.youtube-nocookie.com/embed/${videoId}?start=0&autoplay=1&autohide=1`;
-                    console.log("Video ID: " + videoId);
-                    break;
-                }
-            }
-            break;
-        case domainName.includes('tiktok'):
-            //Example tiktok links:
-            //https://www.tiktok.com/@pjoae/video/7316912250772606214
-            let tiktokRegex = /(?:https?:\/\/)?(?:www\.)?tiktok\.com\/@[^\/]+\/video\/(\d+)/i;
-            let tiktokMatch = linkInput.match(tiktokRegex);
-            if (tiktokMatch) {
-                videoId = tiktokMatch[1];
-                videoLink = 'NOT SUPPORTED'; // TikTok doesn't provide direct video links
-                iframeSrc = `https://www.tiktok.com/embed/v2/${videoId}?muted=1`;
-            }
-            break;
-        default: 
-            normalCase = false;
-            let linkArrayInfo = additionalMediaInfo(linkInput);
-            domainName = linkArrayInfo[0];
-            videoId = linkArrayInfo[1];
-            videoLink = linkArrayInfo[2];
-            iframeSrc = linkArrayInfo[3];
-            break;
+            ],
+            iframeSrc: 'https://www.youtube-nocookie.com/embed/{urlId}?start=0&autoplay=1&autohide=1'
+        }
+    };
+
+    let domainResult = domainAnalyzis(domains, linkChunk[2]);
+    let linkArrayInfo;
+    if (domainResult) {
+        linkArrayInfo = mediaInformation(domainResult, linkInput, linkChunk[2]);
+    } else {
+        linkArrayInfo = additionalMediaInfo(linkInput);
     }
 
-    mediaInfo.push(domainName);
-    mediaInfo.push(videoId);
-    mediaInfo.push(videoLink);
-    mediaInfo.push(iframeSrc);
+    let mediaInfo = linkArrayInfo.slice(0, 4);
     console.log(mediaInfo);
     return mediaInfo;
 }
@@ -277,6 +245,67 @@ function extractMediaInfo(linkInput){
 function updateMediaPlayer(iframeSrc){
     playerIframe.src = iframeSrc;
     document.getElementById('link-input').value = '';
+}
+
+/**
+ * Method responsible of analyzing domains object.
+ * 
+ * @param {Object} domains - Objects representing different websites. 
+ * @returns {string} - The corresponding domainName.
+ */
+function domainAnalyzis(domains, domainName){
+    let domain;
+    for (let domainsProperty in domains) {
+        if (domainsProperty.includes('|')) {
+            let variations = domainsProperty.split('|');
+            if (variations.includes(domainName) && domains[domainsProperty]) {
+                domain = domains[domainsProperty];
+                break;
+            }
+        } else if (domainsProperty === domainName && domains[domainsProperty]) {
+            domain = domains[domainsProperty];
+            break;
+        }
+    }
+    return domain;
+}
+
+/**
+ * Method responsible of getting appropiate information.
+ * 
+ * @param {string} domainResult - 
+ * @param {URL} linkInput - Link input to be analyzed.
+ * @param {string} domainName - The link's domain name.
+ * @returns {Array} - Information of what to proceed with.
+ */
+function mediaInformation(domainResult, linkInput, domainName){
+    let { regexes, iframeSrc } = domainResult;
+    let combinedRegex = new RegExp(regexes.map(pattern => `(?:${pattern.source})`).join('|'), 'i');
+    
+    let match = linkInput.match(combinedRegex);
+    if (match) {
+        let urlId = '';
+        switch (true) {
+            case !!match[1]:
+                urlId = match[1];
+                break;
+            case !!match[2]:
+                urlId = match[2];
+                break;
+            case !!match[3]:
+                urlId = match[3];
+                break;
+            case !!match[4]:
+                urlId = match[4];
+                break;
+            default:
+                break;
+        }
+        let videoLink = linkInput;
+        let finalIframeSrc = `${iframeSrc.replace('{urlId}', urlId)}`;
+
+        return [domainName, urlId, videoLink, finalIframeSrc];
+    }
 }
 
 // #endregion
