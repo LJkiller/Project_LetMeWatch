@@ -90,7 +90,7 @@ function updatePlayerDimensions(width, height) {
 function displayVideoId(displayAsLastVideo = false) {
     let storedVideoID = localStorage.getItem('videoID');
 
-    if (displayAsLastVideo){
+    if (displayAsLastVideo) {
         videoIdValueSpan.textContent = `VideoID: ${storedVideoID} : `;
     } else {
         videoIdValueSpan.innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${storedVideoID} : `;
@@ -98,48 +98,71 @@ function displayVideoId(displayAsLastVideo = false) {
 }
 
 /**
- * Method resposnbile of saving video id.
- * 
- * @param {string} videoId - The current iframe video id.
- */
-function saveVideoIDValue(videoId = 'NOT FOUND') {
-    localStorage.setItem('videoId', videoId);
-}
-/**
  * Method resposnbile of saving video link.
  * 
  * @param {string} videoLink - The current video link.
+ * @param {string} videoId - Video ID.
  */
-function saveVideoLink(videoLink = 'NOT FOUND'){
+function saveVideoLink(videoLink, videoId) {
+    let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
+    if (videoLinksArray.length >= 5) {
+        videoLinksArray.shift();
+    }
+
+    let videoObject = {
+        url: videoLink,
+        date: formatDate(new Date),
+        id: videoId
+    };
+    videoLinksArray.push(videoObject);
     localStorage.setItem('videoLink', videoLink);
-}
-/**
- * Method resposnbile of saving video embed source.
- * 
- * @param {string} videoSource - The current video embed source.
- */
-function saveVideoSource(videoSource = 'NOT FOUND'){
-    localStorage.setItem('videoSource', videoSource);
+    localStorage.setItem('videoId', videoId);
+    localStorage.setItem('videoLinks', JSON.stringify(videoLinksArray));
 }
 
 /**
- * Method responsible of updating video id.
+ * Method responsible of saving domains with used number.
  * 
- * @param {string} videoId - Video id.
+ * @param {string} videoLink - The URL of the video link.
+ * @returns Nothing, just to break out of the function.
  */
-function updateVideoId(videoId) {
-    videoIdValueSpan.textContent = `VideoID: ${videoId} : `;
-    saveVideoIDValue(videoId);
+function frequentDomainsAnalysis(videoLink, domains = [], additionalDomains = []) {
+    if (videoLink === 'NOT FOUND') {
+        console.log('None found.');
+        return;
+    }
+
+    let domainName = videoLink.split('/')[2];
+    let allDomains = [...domains, ...additionalDomains];
+    for (let domain of allDomains) {
+        let [domainIdentifier] = domain.split('|')[1];
+        if (domainName.includes(domainIdentifier)) {
+            saveFrequentDomain(domainName, allDomains, JSON.parse(localStorage.getItem('frequentDomainData')) || []);
+            return;
+        }
+    }
+
+    console.log('None found.');
 }
+
 /**
- * Method responsible of updating video link.
+ * Method responsible for saving video information and updating UI.
  * 
- * @param {Array} mediaInfo - Info about: domainName, url, and iframeSrc.
+ * @param {string} videoId - Video ID.
+ * @param {string} videoLink - The URL of the video link.
+ * @param {string} iframeSrc - The current video embed source.
  */
-function updateVideoLink(videoLinkSrc) {
-    let videoLink = document.getElementById('video-link');
-    saveVideoLink(videoLinkSrc);
-    videoLink.href = videoLinkSrc;
+function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeSrc = 'NOT FOUND') {
+    localStorage.setItem('videoSource', iframeSrc);
+
+    videoIdValueSpan.textContent = `VideoID: ${videoId} : `;
+
+    let publicDomains = typeof domains !== 'undefined' ? domains : {};
+    let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
+
+    videoLink.href = videoLink;
+    frequentDomainsAnalysis(videoLink, Object.keys(publicDomains), Object.keys(moreDomains));
+    saveVideoLink(videoLink, videoId);
 }
 
 // #endregion
@@ -148,7 +171,7 @@ function updateVideoLink(videoLinkSrc) {
 
 // #region Events
 
-document.getElementById('falsified-media-link').addEventListener('submit', function(event) {
+document.getElementById('falsified-media-link').addEventListener('submit', function (event) {
     event.preventDefault();
     let linkInput = document.getElementById('link-input').value;
     handleMedia(linkInput);
@@ -157,7 +180,7 @@ document.getElementById('falsified-media-link').addEventListener('submit', funct
 /**
  * Event for checking how many times reset button has been pressed and operates accordingly.
  */
-resetButton.addEventListener('click', function() {
+resetButton.addEventListener('click', function () {
     let displayAsLastVideo = false;
 
     if (pressedButtonForVideoURL !== 0) {
@@ -169,10 +192,10 @@ resetButton.addEventListener('click', function() {
     resetVideoSize(displayAsLastVideo);
 });
 
-document.getElementById('update-size-button').addEventListener('click', function(event) {
+document.getElementById('update-size-button').addEventListener('click', function (event) {
     event.preventDefault();
     resetVideoSize();
-}); 
+});
 function resetVideoSize(displayAsLastVideo) {
     updatePlayerDimensions(defaultWidth, defaultHeight);
     saveVideoWidth();
@@ -189,14 +212,17 @@ function resetVideoSize(displayAsLastVideo) {
  * 
  * @param {string} linkInput - Video link.
  */
-function handleMedia(linkInput){
-    let mediaInfo = extractMediaInfo(linkInput);
-    console.log(mediaInfo);
-    saveVideoSource(mediaInfo[3]);
+function handleMedia(linkInput) {
+    if (linkInput.toLowerCase() === 'clear') {
+        localStorage.clear();
+        console.log('Local Storage Cleared.');
+    } else {
+        let mediaInfo = extractMediaInfo(linkInput);
 
-    updateVideoId(mediaInfo[1]);
-    updateVideoLink(mediaInfo[2]);
-    updateMediaPlayer(mediaInfo[3]);
+        videoIdValueSpan.textContent = `VideoID: ${mediaInfo[1]} : `;
+        updateVideoInfo(mediaInfo[1], mediaInfo[2], mediaInfo[3]);
+        updateMediaPlayer(mediaInfo[3]);
+    }
 }
 
 /**
@@ -205,8 +231,10 @@ function handleMedia(linkInput){
  * @param {string} linkInput - Url input. 
  * @returns {Array} - Array of information: domainName, videoId, videoLink, and iframeSrc.
  */
-function extractMediaInfo(linkInput){
-    let domainResult = domainAnalyzis(domains, linkInput.split('/')[2]);
+function extractMediaInfo(linkInput) {
+    let publicDomains = typeof domains === 'object' ? domains : [];
+    let domainResult = domainAnalyzis(publicDomains, linkInput.split('/')[2]);
+
     let linkArrayInfo;
     if (domainResult) {
         linkArrayInfo = mediaInformation(domainResult, linkInput, linkInput.split('/')[2]);
@@ -224,7 +252,7 @@ function extractMediaInfo(linkInput){
  * @param {Object} domains - Objects representing different websites. 
  * @returns {string} - The corresponding domainName.
  */
-function domainAnalyzis(domains, domainName){
+function domainAnalyzis(domains, domainName) {
     let domain;
     for (let domainsProperty in domains) {
         if (domainsProperty.includes('|')) {
@@ -249,10 +277,10 @@ function domainAnalyzis(domains, domainName){
  * @param {string} domainName - The link's domain name.
  * @returns {Array} - Information of what to proceed with.
  */
-function mediaInformation(domainResult, linkInput, domainName){
+function mediaInformation(domainResult, linkInput, domainName) {
     let { regexes, iframeSrc } = domainResult;
     let combinedRegex = new RegExp(regexes.map(pattern => `(?:${pattern.source})`).join('|'), 'i');
-    
+
     let match = linkInput.match(combinedRegex);
     if (match) {
         let urlId = '';
@@ -284,7 +312,7 @@ function mediaInformation(domainResult, linkInput, domainName){
  * 
  * @param {string} iframeSrc - corresponding iframe for specific link.
  */
-function updateMediaPlayer(iframeSrc){
+function updateMediaPlayer(iframeSrc) {
     playerIframe.src = iframeSrc;
     document.getElementById('link-input').value = '';
 }

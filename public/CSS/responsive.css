@@ -1,7 +1,7 @@
 body {
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: var(--header-height) 1fr var(--footer-height);
+    grid-template-rows: var(--header-height) 1fr auto;
     grid-template-areas:
         "header"
         "main"
@@ -10,6 +10,7 @@ body {
 }
 
 
+/*#region Header */
 
 header {
     grid-area: header;
@@ -18,14 +19,12 @@ header {
     align-items: center;
     flex-direction: column;
 }
-
 header #let-me-watch-logo {
     display: flex;
     flex-wrap: nowrap;
     justify-content: start;
     align-items: center;
 }
-
 header #falsified-media-link {
     display: flex;
     justify-content: end;
@@ -34,7 +33,9 @@ header #falsified-media-link {
     gap: var(--standard-spacing);
 }
 
+/*#endregion*/
 
+/*#region Main */
 
 main {
     grid-area: main;
@@ -44,59 +45,142 @@ main {
     grid-template-areas:
         "content-area"
     ;
-    margin-bottom: calc(var(--standard-spacing) * 6.75);
 }
 
 main #content {
     grid-area: content-area;
     display: flex;
     align-self: flex-start;
-    margin-top: var(--header-top-margin);
+    margin-top: var(--header-margin-top);
+    margin-bottom: var(--header-margin-bottom);
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: var(--standard-spacing);
 }
-
 main #content #media-top {
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: calc(var(--standard-spacing) / 2);
 }
-
 main #content #media-top #media-controller {
     display: flex;
     flex-direction: column;
     gap: calc(var(--standard-spacing) / 2);
 }
-
 main #content #media-top section#width {
     display: flex;
     justify-content: start;
     align-items: center;
     gap: var(--standard-spacing);
 }
-
 main #content #media-top section#width label {
     margin-left: calc(var(--standard-spacing) - 0.15rem);
 }
 
+/*#endregion*/
 
+/*#region Footer*/
 
 footer {
     grid-area: footer;
+    height: 100%;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto auto 1fr auto;
     grid-template-areas:
-        "site-information"
+        "site-insight"
         "supported-domains"
         "additional-domains"
+        "site-information"
     ;
 }
 
-footer #site-information {
+/*#region Site Insight */
+
+footer>#site-insight{
+    grid-area: site-insight;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(var(--site-insight-height), 1fr);
+    grid-template-areas: 
+        "insight-header"
+        "insight-metrics"
+    ;
+}
+footer>#site-insight h2{
+    grid-area: insight-header;
+}
+footer>#site-insight>div{
+    grid-area: insight-metrics;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto minmax(calc(var(--standard-spacing) * 3), 1fr);
+    grid-template-areas: 
+        "last-viewed"
+        "most-frequent"
+    ;
+}
+footer>#site-insight>div h3{
+    padding: var(--standard-spacing) calc(var(--standard-spacing) * 2);
+    margin-top: var(--standard-spacing);
+}
+footer>#site-insight>div>section#last-viewed-video{
+    grid-area: last-viewed;
+}
+footer>#site-insight>div>section#frequent-domain-uses{
+    grid-area: most-frequent;
+}
+
+
+footer>#site-insight>div section ul li {
+    display: grid;
+    margin-left: calc(var(--standard-spacing) * 2);
+    margin-bottom: var(--standard-spacing);
+    grid-template-columns: calc(var(--dot-size) * 4) auto;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+        "metric-marker metric-date"
+        "metric-link metric-link"
+    ;
+    align-items: center;
+}
+
+footer>#site-insight>div section ul li svg{
+    grid-area: metric-marker;
+}
+footer>#site-insight>div section ul li span:first-child {
+    grid-area: metric-date;
+    justify-self: start;
+}
+footer>#site-insight>div section ul li a,
+footer>#site-insight>div section ul li span:last-child {
+    grid-area: metric-link;
+}
+
+
+/*#endregion*/
+
+footer>#supported-domains {
+    grid-area: supported-domains;
+}
+footer>#additional-domains {
+    grid-area: additional-domains;
+}
+
+footer>section>h2,
+footer>section>p,
+footer>section>span {
+    padding: var(--standard-spacing) calc(var(--standard-spacing) * 2);
+}
+footer>section>h2{
+    margin-top: var(--standard-spacing);
+}
+
+/*#region Site Information */
+
+footer>#site-information {
     grid-area: site-information;
     display: grid;
     grid-template-columns: auto;
@@ -108,30 +192,20 @@ footer #site-information {
     ;
     justify-content: start;
 }
-footer #site-information span#site-info-header {
+footer>#site-information h2 {
     grid-area: site-info-header;
 }
-footer #site-information span#site-info-content {
+footer>#site-information span#site-info-content {
     grid-area: site-info-content;
 }
-footer #site-information span#site-info-copy {
+footer>#site-information span#site-info-copy {
     grid-area: site-info-copy;
     color: var(--small-text-color);
 }
 
+/*#endregion*/
 
-footer #supported-domains {
-    grid-area: supported-domains;
-}
-footer #additional-domains {
-    grid-area: additional-domains;
-}
-
-footer section span {
-    padding: var(--standard-spacing) calc(var(--standard-spacing) * 2);
-}
-
-footer section:not(#site-information) {
+footer>section:not(#site-information, #site-insight) {
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto 1fr;
@@ -141,18 +215,17 @@ footer section:not(#site-information) {
     ;
     justify-content: start;
 }
-footer section:not(#site-information) span {
-    margin-top: var(--standard-spacing);
+footer>section:not(#site-information, #site-insight) h2 {
     grid-area: supported-header;
 }
-footer section:not(#site-information) ul {
+footer>section:not(#site-information, #site-insight) ul {
     grid-area: domains-list;
     display: flex;
     justify-content: start;
     flex-direction: column;
     gap: calc(var(--standard-spacing) / 2);
 }
-footer section:not(#site-information) ul li {
+footer>section:not(#site-information, #site-insight) ul li {
     display: grid;
     grid-template-columns: calc(var(--dot-size) * 5) 1fr;
     grid-template-rows: auto;
@@ -161,26 +234,28 @@ footer section:not(#site-information) ul li {
     ;
     gap: var(--standard-spacing);
 }
-footer section:not(#site-information) ul li:last-child {
+footer>section:not(#site-information, #site-insight) ul li:last-child,
+footer>#site-insight>div section ul li:last-child {
     margin-bottom: var(--standard-spacing);
 }
 
-footer section:not(#site-information) ul li i {
+footer>section:not(#site-information, #site-insight) ul li i {
     grid-area: marks;
     align-self: center;
     margin-left: var(--standard-spacing);
     justify-self: center;
 }
-footer section:not(#site-information) ul li a {
+footer>section:not(#site-information, #site-insight) ul li a {
     grid-area: domain-names;
 }
 
+/*#endregion*/
 
 
 @media screen and (min-width: 271px) {
     /* Footer adjustment*/
 
-    footer section {
+    footer>section {
         justify-content: center;
     }
 
@@ -208,17 +283,19 @@ footer section:not(#site-information) ul li a {
 
 }
 
-@media screen and (min-width: 538px) {
+@media screen and (min-width: 598px) {
     /* Footer adjustment*/
 
     footer {
-        grid-template-columns: auto auto;
-        grid-template-rows: auto auto;
+        grid-template-columns: auto auto 1fr;
+        grid-template-rows: minmax(var(--site-insight-height), auto) auto auto;
         grid-template-areas:
-            "site-information site-information"
-            "supported-domains additional-domains"
+            "site-insight site-insight ."
+            "supported-domains additional-domains ."
+            "site-information site-information ."
         ;
     }
+    
 }
 
 @media screen and (min-width: 721px) {
@@ -239,34 +316,28 @@ footer section:not(#site-information) ul li a {
 
 }
 
-@media screen and (min-width: 1111px) {
+@media screen and (min-width: 1000px) {
     /* Footer adjustment*/
 
-    footer #additional-domains {
-        grid-area: additional-domains;
-    }
-    footer section:not(#site-information)#additional-domains {
-        justify-content: end;
-    }
-    footer section:not(#site-information)#additional-domains ul {
-        grid-area: domains-list;
-        display: grid;
-        justify-self: end;
-        gap: calc(var(--standard-spacing) / 2);
-    }
-    footer section:not(#site-information)#additional-domains ul li {
-        grid-template-columns: 1fr calc(var(--dot-size) * 5);
+    footer {
+        grid-template-columns: 1fr auto auto;
+        grid-template-rows: auto auto;
         grid-template-areas:
-            "domain-names marks"
+            "site-insight supported-domains additional-domains"
+            "site-insight site-information site-information"
         ;
-        margin-left: 0;
-        margin-right: calc(var(--standard-spacing) / 2);
-    }
-    footer section:not(#site-information)#additional-domains ul li i{
-        margin-left: 0;
-    }
-    footer section:not(#site-information)#additional-domains ul li a{
-        justify-self: end;
     }
 
+    footer>#site-insight>div section ul li {
+        display: grid;
+        margin-left: calc(var(--standard-spacing) * 2);
+        grid-template-columns: auto auto auto 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+            "metric-marker metric-date metric-link ."
+        ;
+        align-items: center;
+        gap: var(--standard-spacing);
+    }
+    
 }

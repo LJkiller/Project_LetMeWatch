@@ -65,25 +65,30 @@ main #content #falsified-media-player:hover{
 
 /*#region Footer*/
 
-footer section{
+footer {
     background-color: var(--primary-bg-color);
 }
 
-footer section:not(#site-information)>span,
-footer section>#site-info-header{
+footer>section>h2{
     color: var(--big-text-color);
     font-size: var(--large-fontsize);
     font-weight: bold;
 }
-footer section ul li i {
+footer>section ul li i {
     font-size: var(--dot-size);
 }
-footer section ul li i.fa-fire {
+footer>section ul li i.fa-fire {
     font-size: var(--fire-dot-size);
 }
 
-footer section>#site-info-header {
-    padding: calc(var(--standard-spacing) * 2) var(--standard-spacing) var(--standard-spacing) calc(var(--standard-spacing) * 2);
+footer>section>#site-info-content{
+    max-width: var(--site-info-content-max-width);
+}
+footer>#site-insight>div section h3{
+    font-size: var(--larger-fontsize);
+}
+footer>#site-insight>div section ul{
+    list-style: none;
 }
 
 /*#endregion*/

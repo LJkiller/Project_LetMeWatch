@@ -1,5 +1,4 @@
 
-
 /**
  * Method responsible of primarily handling supported websites.
  * 
@@ -44,7 +43,7 @@ function capitalizeFirstLetter(input) {
  * @param {string[]} domains - Array of website names.
  * @param {HTMLUListElement} area - Area where the items are to be created in.
  */
-function createListItems(domains, area){
+function createListItems(domains, area) {
     let sortedArray = domains.sort((a, b) => {
         if (a[1] < b[1]) {
             return -1;
@@ -54,14 +53,14 @@ function createListItems(domains, area){
         }
         return 0;
     });
-    for (let i = 0; i < sortedArray.length; i++){
+    for (let i = 0; i < sortedArray.length; i++) {
         let supportedSiteItem = document.createElement('li');
         let dot = document.createElement('i');
         let link = document.createElement('a');
 
-        dot.classList.add('fa-solid', sortedArray[i][0], 
+        dot.classList.add('fa-solid', sortedArray[i][0],
             sortedArray[i][0] === 'flaired' ? 'fa-fire' : 'fa-circle')
-        ;
+            ;
         dot.classList.remove('not');
 
 
@@ -72,4 +71,60 @@ function createListItems(domains, area){
         supportedSiteItem.append(dot, link);
         area.appendChild(supportedSiteItem);
     }
+}
+
+/**
+  * Method responsible of formatting dates.
+  * 
+  * @param {Date} currentDate - The current date/time.
+  * @returns {Array} - Formatted variations of the current date/time.
+  */
+function formatDate(currentDate) {
+    let year = currentDate.getUTCFullYear();
+    let month = (currentDate.getUTCMonth() + 1).toString().padStart(2, '0');
+    let day = currentDate.getUTCDate().toString().padStart(2, '0');
+    let hour = currentDate.getUTCHours().toString().padStart(2, '0');
+    let minute = currentDate.getUTCMinutes().toString().padStart(2, '0');
+    let second = currentDate.getUTCSeconds().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+}
+
+/**
+ * Method responsible of saving frequent domain.
+ * 
+ * @param {string} domainName - Domain name to analyze.
+ * @param {string[]} allDomains - Array of all domain names.
+ * @param {JSON} previousInfo - Previous data of frequentDomainData.
+ */
+function saveFrequentDomain(domainName, allDomains, previousInfo) {
+    let dataToSave = {
+        initialized: false
+    };
+
+    if (previousInfo && previousInfo.initialized) {
+        dataToSave = previousInfo;
+    }
+
+    if (!dataToSave.initialized) {
+        dataToSave.initialized = true;
+        for (let i = 0; i < allDomains.length; i++) {
+            let domain = allDomains[i].split('|')[1];
+            if (dataToSave[domain]) {
+                dataToSave[domain]++;
+            } else {
+                dataToSave[domain] = 0;
+            }
+        }
+    }
+
+    for (let i = 0; i < allDomains.length; i++){
+        if (allDomains[i].includes(domainName)){
+            dataToSave[domainName]++;
+            break;
+        }
+    }
+
+    let jsonData = JSON.stringify(dataToSave);
+    localStorage.setItem('frequentDomainData', jsonData);
 }

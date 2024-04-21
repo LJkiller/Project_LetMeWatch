@@ -1,7 +1,6 @@
 
 let domains = {
     'flaired|www.youtube.com|youtu.be': {
-        //Example youtube links:
         //https://www.youtube.com/watch?v=PEvURuyHcXM
         //https://youtu.be/PEvURuyHcXM?si=LQ1x4Q4DTbGMI4nP
         //https://www.youtube.com/embed/PEvURuyHcXM?si=LQ1x4Q4DTbGMI4nP

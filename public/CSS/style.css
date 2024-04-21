@@ -53,13 +53,17 @@
     --small-fontsize: 0.5rem;
 
     --header-height: 7rem;
-    --header-top-margin: 2rem;
+    --header-margin-top: 0.5rem;
+    --header-margin-bottom: 1rem;
     --header-fontsize: 1.5rem;
     --logo-dimensions: 2.25rem;
 
     --footer-height: 4rem;
+    --site-insight-height: 10rem;
+    --site-info-content-max-width: 37.375rem;
     --site-info-height: 4rem;
     --dot-size: 0.5rem;
+    --svg-dot-size: 20;
     --fire-dot-size: calc(var(--dot-size) * 2);
 
     --input-height: 2.46rem;

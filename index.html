@@ -20,6 +20,7 @@
 	<!-- #region Scripts -->
 	<script src="./public/JavaScript/onload.js" defer></script>
 	<script src="./public/JavaScript/methods.js" defer></script>
+	<script src="./public/JavaScript/svgManager.js" defer></script>
 	<script src="./public/JavaScript/supportedDomains.js" defer></script>
 	<script src="./public/JavaScript/iframe-controller.js" defer></script>
 	<script src="./public/JavaScript/additionalManager.js" defer></script>
@@ -101,20 +102,41 @@
 	</main>
 
 	<footer>
-		<section id="site-information">
-			<span id="site-info-header">Site Information</span>
-			<span id="site-info-content">This website is developed purely out of spite for YouTube's crackdown on ads.</span>
-			<span id="site-info-copy">&copy; LJkiller 2024</span>
+		<section id="site-insight">
+			<h2>Site Insight</h2>
+			<div>
+				<section id="last-viewed-video">
+					<h3>Last Viewed Videos</h3>
+					<ul class="metrics">
+					</ul>
+				</section>
+				<section id="frequent-domain-uses">
+					<h3>Frequently Used Domains</h3>
+					<ul class="metrics">
+					</ul>
+				</section>
+			</div>
 		</section>
 		<section id="supported-domains">
-			<span>Supported Domains</span>
+			<h2>Supported Domains</h2>
 			<ul>
 			</ul>
 		</section>
 		<section id="additional-domains">
-			<span></span>
+			<h2></h2>
 			<ul></ul>
 		</section>
+		<section id="site-information">
+			<h2 id="site-info-header">Site Information</h2>
+			<p id="site-info-content">
+				This website is developed purely out of spite for YouTube's crackdown on ads.<br>
+				This website has since been further developed branching out to more platforms, not limited by YouTube.<br><br>
+				To use this platform, simply insert a video link (from any <a href="#supported-domains">supported domain</a>) into the <a href="#link-input">link input field</a>.<br>
+				Please note that certain videos may be unavailable due to uploader restrictions or regional blocks.
+			</p>
+			<span id="site-info-copy">&copy; LJkiller 2024. All rights reserved. </span>
+		</section>
+		<!--I should probably add a new section for the list of previous video links-->
 	</footer>
 </body>
 
