@@ -31,8 +31,7 @@ window.onload = function () {
     let supportedUl = document.querySelector('#supported-domains > ul');
     let supportedLi = document.createElement('li');
     supportedLi.style.marginLeft = 'calc(var(--standard-spacing) * 2)';
-    typeof supportedWebsites === 'function' ? supportedWebsites(publicDomains, moreDomains) : 
-        supportedLi.innerHTML = '<i class="fa-solid fa-circle"></i>No domains found';
+    typeof supportedWebsites === 'function' ? supportedWebsites(publicDomains, moreDomains) : supportedLi.innerHTML = '<i class="fa-solid fa-circle"></i>No domains found';
     supportedUl.appendChild(supportedLi);
 
     siteCorrection();
@@ -43,8 +42,8 @@ window.onload = function () {
     };
     let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
     let frequentDomainData = JSON.parse(localStorage.getItem('frequentDomainData')) || {};
-    let lastVideoSection = `footer #site-insight div>section${selectors.lastVideoId} > .metrics`;
-    let mostFrequentSecton = `footer #site-insight div>section${selectors.mostFrequentId} > .metrics`;
+    let lastVideoSection = `${selectors.lastVideoId} > .metrics`;
+    let mostFrequentSecton = `${selectors.mostFrequentId} > .metrics`;
     createMetricsList(videoLinksArray, document.querySelector(lastVideoSection));
     createMetricsList(frequentDomainData, document.querySelector(mostFrequentSecton));
 };
@@ -55,18 +54,27 @@ window.onload = function () {
 function checkLocalStore() {
     if (localStorage) {
         console.log('LocalStorage Loaded and will display:');
+        let results = [];
+
         for (let i = 0; i < localStorage.length; i++) {
             let key = localStorage.key(i);
             let value = localStorage.getItem(key);
-            // Check if key and value are not null
             if (key !== null && value !== null) {
-                console.log(key + ' => ' + value);
+                let parsedValue;
+                try {
+                    parsedValue = JSON.parse(value);
+                } catch (error) {
+                    parsedValue = value;
+                }
+                results.push({ key, value: parsedValue });
             } else {
                 console.error("Key or value is null");
             }
         }
+        console.log(results);
     } 
 }
+
 
 /**
  * Method responsible of restoring iframe size.

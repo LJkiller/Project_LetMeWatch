@@ -214,12 +214,18 @@ function resetVideoSize(displayAsLastVideo) {
  */
 function handleLinkInput(linkInput) {
     let inputChecking = linkInput.toLowerCase();
-    switch (true) {
-        case inputChecking === 'clear':
+    switch (inputChecking) {
+        case 'clear':
             localStorage.clear();
             console.log('Local Storage Cleared.');
             window.location.reload();
             break;
+        case 'localstorage':
+        case 'localstore':
+        case 'local':
+                document.getElementById('link-input').value = '';
+                checkLocalStore();
+                break;
         default:
             let mediaInfo = extractMediaInfo(linkInput);
             videoIdValueSpan.textContent = `VideoID: ${mediaInfo[1]} : `;
