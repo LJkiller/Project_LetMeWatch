@@ -174,7 +174,7 @@ function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeS
 document.getElementById('falsified-media-link').addEventListener('submit', function (event) {
     event.preventDefault();
     let linkInput = document.getElementById('link-input').value;
-    handleMedia(linkInput);
+    handleLinkInput(linkInput);
 });
 
 /**
@@ -212,16 +212,20 @@ function resetVideoSize(displayAsLastVideo) {
  * 
  * @param {string} linkInput - Video link.
  */
-function handleMedia(linkInput) {
-    if (linkInput.toLowerCase() === 'clear') {
-        localStorage.clear();
-        console.log('Local Storage Cleared.');
-    } else {
-        let mediaInfo = extractMediaInfo(linkInput);
-
-        videoIdValueSpan.textContent = `VideoID: ${mediaInfo[1]} : `;
-        updateVideoInfo(mediaInfo[1], mediaInfo[2], mediaInfo[3]);
-        updateMediaPlayer(mediaInfo[3]);
+function handleLinkInput(linkInput) {
+    let inputChecking = linkInput.toLowerCase();
+    switch (true) {
+        case inputChecking === 'clear':
+            localStorage.clear();
+            console.log('Local Storage Cleared.');
+            window.location.reload();
+            break;
+        default:
+            let mediaInfo = extractMediaInfo(linkInput);
+            videoIdValueSpan.textContent = `VideoID: ${mediaInfo[1]} : `;
+            updateVideoInfo(mediaInfo[1], mediaInfo[2], mediaInfo[3]);
+            updateMediaPlayer(mediaInfo[3]);
+            break;
     }
 }
 

@@ -115,6 +115,7 @@ function createMetricsList(items, location) {
     let bottomColor = originalColor;
 
     let svg = 'circle';
+    items['initialized'] = 0;
     Array.isArray(items) ? items.forEach((item, i) => {
         let li = document.createElement('li');
         li.innerHTML = `
