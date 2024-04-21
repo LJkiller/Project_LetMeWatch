@@ -62,6 +62,8 @@ function createListItems(domains, area){
         dot.classList.add('fa-solid', sortedArray[i][0], 
             sortedArray[i][0] === 'flaired' ? 'fa-fire' : 'fa-circle')
         ;
+        dot.classList.remove('not');
+
 
         link.textContent = capitalizeFirstLetter(sortedArray[i][1]);
         link.href = `https://www.${sortedArray[i][1]}`;
