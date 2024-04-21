@@ -6,6 +6,7 @@
     --red: rgba(255,98,98,1);
     --green: rgba(0,255,128,1);
     --blue: rgba(0,128,255,1);
+    --yellow: rgba(255,255,0,1);
 
     --primary-color: var(--blue);
     
@@ -15,7 +16,7 @@
     --primary-bg-color: rgba(0,0,0,1);
     --seconday-bg-color: rgba(10,10,10,1);
 
-    --huge-text-color: var(--white);
+    --big-text-color: var(--white);
     --normal-text-color: var(--lightest-gray);
     --small-text-color: var(--light-gray);
 
@@ -45,11 +46,21 @@
     --standard-spacing: var(--standard-size);
     --standard-border-radius: var(--standard-size);
 
-    --header-height: 4rem;
-    --header-top-margin: 1.5rem;
-    --logo-dimensions: 2.5rem;
+    --large-fontsize: 1.5rem;
+    --larger-fontsize: 1.25rem;
+    --standard-fontsize: 1rem;
+    --smaller-fontsize: 0.75rem;
+    --small-fontsize: 0.5rem;
+
+    --header-height: 7rem;
+    --header-top-margin: 2rem;
+    --header-fontsize: 1.5rem;
+    --logo-dimensions: 2.25rem;
 
     --footer-height: 4rem;
+    --site-info-height: 4rem;
+    --dot-size: 0.5rem;
+    --fire-dot-size: calc(var(--dot-size) * 2);
 
     --input-height: 2.46rem;
     --input-width: 10rem;
@@ -98,6 +109,13 @@ a{
 }
 a:hover{
     color: var(--white);
+}
+
+i.fa-fire {
+    background-image: linear-gradient(to top, var(--yellow), var(--red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 /*#region Scrollbar*/

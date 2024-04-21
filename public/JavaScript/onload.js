@@ -21,6 +21,19 @@ window.onload = function () {
     videoLink.href = storedVideoLink;
     // Update videoSrc.
     playerIframe.src = storedVideoSource;
+    
+    if (typeof additionalDomains !== 'undefined' && typeof additionalMediaInfo === 'function'){
+        document.querySelector('#additional-domains>span').textContent = 'Additional Domains';
+    }
+    let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
+    let publicDomains = typeof domains !== 'undefined' ? domains : {};
+    
+    let supportedUl = document.querySelector('#supported-domains > ul');
+    let supportedLi = document.createElement('li');
+    supportedLi.style.marginLeft = 'calc(var(--standard-spacing) * 2)';
+    typeof supportedWebsites === 'function' ? supportedWebsites(publicDomains, moreDomains) : 
+        supportedLi.innerHTML = '<i class="fa-solid fa-circle"></i>No domains found';
+    supportedUl.appendChild(supportedLi);
 };
 
 /**

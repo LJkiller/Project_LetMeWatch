@@ -1,73 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-        <meta charset="UTF-8">
-        <title>LetMeWatch</title>
-        <link rel="icon" href="./public/assets/Icons/LetMeWatchIcon.png">
 
-        <!-- SEO -->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+	<meta charset="UTF-8">
+	<title>LetMeWatch</title>
+	<link rel="icon" href="./public/assets/Icons/LetMeWatchIcon.png">
 
-        <!-- CSS -->
-        <link rel="stylesheet" href="./public/CSS/style.css">
-        <link rel="stylesheet" href="./public/CSS/form.css">
-        <link rel="stylesheet" href="./public/CSS/responsive.css">
-        <link rel="stylesheet" href="./public/CSS/index.css">
+	<!-- #region SEO -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- #endregion -->
 
-        <!-- Scripts -->
-		<script src="./public/JavaScript/onload.js" defer></script>
-        <script src="./public/JavaScript/iframe-controller.js" defer></script>
-		<script src="./public/JavaScript/additionalManager.js" defer></script>
-		<script src="https://www.youtube.com/iframe_api" defer></script>
-	</head>
+	<!-- #region CSS -->
+	<link rel="stylesheet" href="./public/CSS/style.css">
+	<link rel="stylesheet" href="./public/CSS/form.css">
+	<link rel="stylesheet" href="./public/CSS/responsive.css">
+	<link rel="stylesheet" href="./public/CSS/index.css">
+	<!-- #endregion -->
 
-	<body>
-		<header>
-			<a id="let-me-watch-logo" href="./index.html">
-				<img src="./public/assets/Icons/LetMeWatchIcon.png" alt="LetMeWatch logo, a bright colored playbutton.">
-				<h1 id="letMeWatchTitle">LetMeWatch <span>DAMMIT</span></h1>
-			</a>
+	<!-- #region Scripts -->
+	<script src="./public/JavaScript/onload.js" defer></script>
+	<script src="./public/JavaScript/methods.js" defer></script>
+	<script src="./public/JavaScript/supportedDomains.js" defer></script>
+	<script src="./public/JavaScript/iframe-controller.js" defer></script>
+	<script src="./public/JavaScript/additionalManager.js" defer></script>
+	<script src="https://www.youtube.com/iframe_api" defer></script>
+	<!-- #endregion -->
 
-			<form id="falsified-media-link">
-				<labeL for="link-input">Enter Link |</labeL>
-				<input id="link-input" class="form-input" type="text" placeholder="Link" autocomplete="off">
-				<button class="form-button">Update Video</button>
-			</form>
-		</header>
+	<!-- #region Icons-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<script src="https://kit.fontawesome.com/180268d8b3.js" crossorigin="anonymous"></script>
+	<!-- #endregion-->
 
-		<main>
-			<section id="content">
+	<!-- #region Fonts-->
+	<!-- #region Amaranth-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+	<!-- #endregion-->
+	<!-- #region Goldman-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&family=Goldman:wght@400;700&display=swap" rel="stylesheet">
+	<!-- #endregion-->
+	<!-- #region Oxanium-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+	<!-- #endregion-->
+	<!-- #endregion-->
 
-				<div id="media-top">
-					<div class="media-information">
-						<span id="width-value" >Width  : $(storedWidth)px</span>
-						<span>|</span>
-						<span id="height-value">Height : $(storedHeight)px</span>
-					</div>
-					<form id="media-controller" onsubmit="return false;">
+</head>
+
+<body>
+	<header>
+		<a id="let-me-watch-logo" href="./index.html">
+			<img src="./public/assets/Icons/LetMeWatchIcon.png" alt="LetMeWatch logo, a bright colored playbutton.">
+			<span id="letMeWatchTitle">LetMeWatch <span>DAMMIT</span></span>
+		</a>
+
+		<form id="falsified-media-link">
+			<labeL for="link-input">Enter Link |</labeL>
+			<input id="link-input" class="form-input" type="text" placeholder="Link" autocomplete="off">
+			<button class="form-button">Update Video</button>
+		</form>
+	</header>
+
+	<main>
+		<section id="content">
+
+			<div id="media-top">
+				<div class="media-information">
+					<span id="width-value">Width : $(storedWidth)px</span>
+					<span>|</span>
+					<span id="height-value">Height : $(storedHeight)px</span>
+				</div>
+				<form id="media-controller" onsubmit="return false;">
+					<section id="width">
 						<label for="width-input">Enter Width |</label>
 						<input id="width-input" class="form-input" type="number" placeholder="Width" autocomplete="off">
+					</section>
+					<section id="buttons">
 						<button id="update-size-button" class="form-button">Update Size</button>
 						<button id="reset-size-button" class="form-button">Reset Size</button>
-					</form>
-				</div>
-	
-				<iframe id="falsified-media-player"
-					src="https://www.youtube-nocookie.com/embed/RamblingRamul?start=0&autoplay=1&autohide=1"
-					title="Media Viewer"
-					allowfullscreen 
-					frameborder="0" 
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"> 
-				</iframe>
-	
-				<div id="media-bottom" class="media-information">
-					<span id="video-id" >VideoID: $(storedVideoID) : </span>
-					<a id="video-link" target="_blank" href="">Video</a>
-				</div>
+					</section>
+				</form>
+			</div>
 
-			</section>
-		</main>
+			<iframe id="falsified-media-player"
+				src="https://www.youtube-nocookie.com/embed/RamblingRamul?start=0&autoplay=1&autohide=1"
+				title="Media Viewer" allowfullscreen frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+			</iframe>
 
-		<footer></footer>
-	</body>
+			<div id="media-bottom" class="media-information">
+				<span id="video-id">VideoID: $(storedVideoID) : </span>
+				<a id="video-link" target="_blank" href="">Video</a>
+			</div>
+
+		</section>
+	</main>
+
+	<footer>
+		<section id="site-information">
+			<span id="site-info-header">Site Information</span>
+			<span id="site-info-content">This website is developed purely out of spite for YouTube's crackdown on ads.</span>
+			<span id="site-info-copy">&copy; LJkiller 2024</span>
+		</section>
+		<section id="supported-domains">
+			<span>Supported Domains</span>
+			<ul>
+			</ul>
+		</section>
+		<section id="additional-domains">
+			<span></span>
+			<ul></ul>
+		</section>
+	</footer>
+</body>
+
 </html>

@@ -14,23 +14,25 @@ header #let-me-watch-logo{
     margin-left: calc(var(--standard-spacing) * 1.6);
 }
 
-header #let-me-watch-logo>img{
+header #let-me-watch-logo img{
     max-height: var(--logo-dimensions);
     max-width: var(--logo-dimensions);
 }
-header #let-me-watch-logo>h1{
+header #let-me-watch-logo>span{
+    transition: var(--standard-eio-transition);
     margin-left: var(--standard-spacing);
+    font-weight: bold;
+    font-size: var(--header-fontsize);
 }
 
-header #let-me-watch-logo h1 span{
+header #let-me-watch-logo:hover>span>span{
     transition: var(--standard-eio-transition);
-}
-header #let-me-watch-logo:hover h1 span{
     color: var(--primary-color);
 }
 /*#endregion*/
 
 /*#region Right*/
+
 header #falsified-media-link{
     height: var(--logo-dimensions);
 }
@@ -57,6 +59,31 @@ main #content #falsified-media-player{
 main #content #falsified-media-player:hover{
     box-shadow: 0 0 20px 10px var(--primary-color);
     border: 4px solid transparent;
+}
+
+/*#endregion*/
+
+/*#region Footer*/
+
+footer section{
+    background-color: var(--primary-bg-color);
+}
+
+footer section:not(#site-information)>span,
+footer section>#site-info-header{
+    color: var(--big-text-color);
+    font-size: var(--large-fontsize);
+    font-weight: bold;
+}
+footer section ul li i {
+    font-size: var(--dot-size);
+}
+footer section ul li i.fa-fire {
+    font-size: var(--fire-dot-size);
+}
+
+footer section>#site-info-header {
+    padding: calc(var(--standard-spacing) * 2) var(--standard-spacing) var(--standard-spacing) calc(var(--standard-spacing) * 2);
 }
 
 /*#endregion*/

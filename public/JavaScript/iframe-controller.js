@@ -191,6 +191,7 @@ function resetVideoSize(displayAsLastVideo) {
  */
 function handleMedia(linkInput){
     let mediaInfo = extractMediaInfo(linkInput);
+    console.log(mediaInfo);
     saveVideoSource(mediaInfo[3]);
 
     updateVideoId(mediaInfo[1]);
@@ -205,46 +206,16 @@ function handleMedia(linkInput){
  * @returns {Array} - Array of information: domainName, videoId, videoLink, and iframeSrc.
  */
 function extractMediaInfo(linkInput){
-    let linkChunk = linkInput.split('/');
-
-    let domains = {
-        'www.youtube.com|youtu.be': {
-            //Example youtube links:
-            //https://www.youtube.com/watch?v=PEvURuyHcXM
-            //https://youtu.be/PEvURuyHcXM?si=LQ1x4Q4DTbGMI4nP
-            //https://www.youtube.com/embed/PEvURuyHcXM?si=LQ1x4Q4DTbGMI4nP
-            //https://youtube.com/shorts/NuK3TqEhnkI?si=ido3nB9MMWW3IrRy
-            regexes: [
-                /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)/i,
-                /youtu\.be\/([^?]+)/i,
-                /(?:https?:\/\/)?(?:www\.)?youtube\.com\/embed\/([^?]+)/i,
-                /(?:https?:\/\/)?(?:www\.)?youtube\.com\/shorts\/([^?]+)/i
-            ],
-            iframeSrc: 'https://www.youtube-nocookie.com/embed/{urlId}?start=0&autoplay=1&autohide=1'
-        }
-    };
-
-    let domainResult = domainAnalyzis(domains, linkChunk[2]);
+    let domainResult = domainAnalyzis(domains, linkInput.split('/')[2]);
     let linkArrayInfo;
     if (domainResult) {
-        linkArrayInfo = mediaInformation(domainResult, linkInput, linkChunk[2]);
+        linkArrayInfo = mediaInformation(domainResult, linkInput, linkInput.split('/')[2]);
     } else {
-        linkArrayInfo = additionalMediaInfo(linkInput);
+        linkArrayInfo = typeof additionalMediaInfo === 'function' ? additionalMediaInfo(linkInput) : [];
     }
 
     let mediaInfo = linkArrayInfo.slice(0, 4);
-    console.log(mediaInfo);
     return mediaInfo;
-}
-
-/**
- * Method responsible of updating media player src.
- * 
- * @param {string} iframeSrc - corresponding iframe for specific link.
- */
-function updateMediaPlayer(iframeSrc){
-    playerIframe.src = iframeSrc;
-    document.getElementById('link-input').value = '';
 }
 
 /**
@@ -306,6 +277,16 @@ function mediaInformation(domainResult, linkInput, domainName){
 
         return [domainName, urlId, videoLink, finalIframeSrc];
     }
+}
+
+/**
+ * Method responsible of updating media player src.
+ * 
+ * @param {string} iframeSrc - corresponding iframe for specific link.
+ */
+function updateMediaPlayer(iframeSrc){
+    playerIframe.src = iframeSrc;
+    document.getElementById('link-input').value = '';
 }
 
 // #endregion
