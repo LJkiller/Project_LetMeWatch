@@ -36,14 +36,10 @@ window.onload = function () {
 
     siteCorrection();
 
-    let selectors = {
-        lastVideoId: '#last-viewed-video',
-        mostFrequentId: '#frequent-domain-uses'
-    };
     let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
     let frequentDomainData = JSON.parse(localStorage.getItem('frequentDomainData')) || {};
-    let lastVideoSection = `${selectors.lastVideoId} > .metrics`;
-    let mostFrequentSecton = `${selectors.mostFrequentId} > .metrics`;
+    let lastVideoSection = `${metricSelectors.lastVideoId} > .metrics`;
+    let mostFrequentSecton = `${metricSelectors.mostFrequentId} > .metrics`;
     createMetricsList(videoLinksArray, document.querySelector(lastVideoSection));
     createMetricsList(frequentDomainData, document.querySelector(mostFrequentSecton));
 };
@@ -74,7 +70,6 @@ function checkLocalStore() {
         console.log(results);
     } 
 }
-
 
 /**
  * Method responsible of restoring iframe size.
@@ -108,58 +103,7 @@ function siteCorrection(){
     siteCopy.append(website);
 }
 
-/**
- * Method responsible of creating metrics lists.
- * 
- * @param {Array} items - Array of objects containing information to be displayed.
- * @param {HTMLUListElement} location - Ul element where to append list.
- */
-function createMetricsList(items, location) {
-    let root = document.documentElement;
-    let originalColor = getComputedStyle(root).getPropertyValue('--blue');
-    let originalTextColor = getComputedStyle(root).getPropertyValue('--white');
-    let textColor = originalTextColor;
-    let topColor = originalColor;
-    let bottomColor = originalColor;
-
-    let svg = 'circle';
-    items['initialized'] = 0;
-    Array.isArray(items) ? items.forEach((item, i) => {
-        let li = document.createElement('li');
-        li.innerHTML = `
-            ${createMetricNumber(root, bottomColor, topColor, textColor, i + 1, svg)}
-            <span>${item.date}</span>
-            <a href="${item.url}" target="_blank">${item.url}</a>
-        `;
-        if (item.url === 'NOT FOUND'){
-            li.innerHTML = `
-                ${createMetricNumber(root, bottomColor, topColor, textColor, i + 1, svg)}
-                <span>${item.date}</span>
-                <span>${item.url}</span>
-            `;
-        }
-        location.appendChild(li);
-    }) : Object.keys(items)
-        .map(key => ({ key, value: items[key] }))
-        .sort((a, b) => b.value - a.value)
-        .forEach((item, i) => {
-            if (item.value >= 1 && item.key !== 'initialized' && i < 10) {
-                if (i === 0){
-                    textColor = 'var(--black)';
-                    topColor = 'var(--yellow)';
-                    bottomColor = 'var(--red)';
-                } else {
-                    textColor = originalTextColor;
-                    topColor = originalColor;
-                    bottomColor = originalColor;
-                }
-                let li = document.createElement('li');
-                li.innerHTML = `
-                    ${createMetricNumber(root, bottomColor, topColor, textColor, i + 1, svg)}
-                    <span>Uses: ${item.value}</span>
-                    <a href="${item.key}" target="_blank">${item.key}</a>
-                `;
-                location.appendChild(li);
-            }
-        });
-}
+/*
+ENTER WIDTH FUNCTION NEEDS TO FUNCITON
+UPDATE (INSIGHT METRICS) WHEN LINK HAS BEEN PUT IN
+*/

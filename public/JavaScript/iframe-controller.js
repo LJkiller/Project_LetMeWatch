@@ -123,26 +123,29 @@ function saveVideoLink(videoLink, videoId) {
 /**
  * Method responsible of saving domains with used number.
  * 
- * @param {string} videoLink - The URL of the video link.
+ * @param {any} videoInput - The video input or array of a boolean and an array.
+ * @param {any[]} [additionalDomains=[]] - Array of domains.
+ * @param {any[]} [domains=[]] - Array of domains.
  * @returns Nothing, just to break out of the function.
  */
-function frequentDomainsAnalysis(videoLink, domains = [], additionalDomains = []) {
-    if (videoLink === 'NOT FOUND') {
-        console.log('None found.');
-        return;
-    }
-
-    let domainName = videoLink.split('/')[2];
+function frequentDomainsAnalysis(videoInput, domains = [], additionalDomains = []) {
     let allDomains = [...domains, ...additionalDomains];
-    for (let domain of allDomains) {
-        let [domainIdentifier] = domain.split('|')[1];
-        if (domainName.includes(domainIdentifier)) {
-            saveFrequentDomain(domainName, allDomains, JSON.parse(localStorage.getItem('frequentDomainData')) || []);
+    if (Array.isArray(videoInput)){
+        saveFrequentDomain(videoInput, allDomains, JSON.parse(localStorage.getItem('frequentDomainData')) || []);
+    } else {
+        if (videoInput === 'NOT FOUND') {
             return;
         }
-    }
+        let domainName = videoInput.split('/')[2];
 
-    console.log('None found.');
+        for (let domain of allDomains) {
+            let [domainIdentifier] = domain.split('|')[1];
+            if (domainName.includes(domainIdentifier)) {
+                saveFrequentDomain(domainName, allDomains, JSON.parse(localStorage.getItem('frequentDomainData')) || []);
+                return;
+            }
+        }
+    }
 }
 
 /**
@@ -214,24 +217,33 @@ function resetVideoSize(displayAsLastVideo) {
  */
 function handleLinkInput(linkInput) {
     let inputChecking = linkInput.toLowerCase();
-    switch (inputChecking) {
-        case 'clear':
-            localStorage.clear();
-            console.log('Local Storage Cleared.');
-            window.location.reload();
-            break;
-        case 'localstorage':
-        case 'localstore':
-        case 'local':
-                document.getElementById('link-input').value = '';
-                checkLocalStore();
-                break;
-        default:
-            let mediaInfo = extractMediaInfo(linkInput);
-            videoIdValueSpan.textContent = `VideoID: ${mediaInfo[1]} : `;
-            updateVideoInfo(mediaInfo[1], mediaInfo[2], mediaInfo[3]);
-            updateMediaPlayer(mediaInfo[3]);
-            break;
+    document.getElementById('link-input').value = '';
+
+    let commandCheck = isCommand(inputChecking);
+    if (commandCheck[0] && commandCheck[1] === commands.localClear){
+        localStorage.clear();
+        console.log('Local Storage Cleared.');
+        window.location.reload();
+    } else if (commandCheck[0] && commandCheck[1] === commands.cmdList){
+        for (let command in commands){
+            console.log(command, ':', commands[command]);
+        }
+    } else if (commandCheck[0] && commandCheck[1] === commands.localFill){
+        let publicDomains = typeof domains !== 'undefined' ? domains : {};
+        let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
+        frequentDomainsAnalysis(commandCheck, Object.keys(publicDomains), Object.keys(moreDomains));
+        console.log('Local Storage Fixed');
+        document.querySelector('#site-insight > div > section > ul.metrics').innerHTML = '';
+        updateMetricLists();
+    } else if (commandCheck[0] && commandCheck[1] === commands.localStorage){
+        checkLocalStore();
+    } else {
+        let mediaInfo = extractMediaInfo(linkInput);
+        videoIdValueSpan.textContent = `VideoID: ${mediaInfo[1]} : `;
+        updateVideoInfo(mediaInfo[1], mediaInfo[2], mediaInfo[3]);
+        updateMediaPlayer(mediaInfo[3]);
+
+        updateMetricLists();
     }
 }
 
@@ -324,7 +336,20 @@ function mediaInformation(domainResult, linkInput, domainName) {
  */
 function updateMediaPlayer(iframeSrc) {
     playerIframe.src = iframeSrc;
-    document.getElementById('link-input').value = '';
+}
+
+/**
+ * Method responsible of updating metric list.
+ */
+function updateMetricLists(){    
+    let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
+    let frequentDomainData = JSON.parse(localStorage.getItem('frequentDomainData')) || {};
+    let lastVideoSection = `${metricSelectors.lastVideoId} > .metrics`;
+    let mostFrequentSecton = `${metricSelectors.mostFrequentId} > .metrics`;
+    document.querySelector(lastVideoSection).innerHTML = '';
+    document.querySelector(mostFrequentSecton).innerHTML = '';
+    createMetricsList(videoLinksArray, document.querySelector(lastVideoSection));
+    createMetricsList(frequentDomainData, document.querySelector(mostFrequentSecton));
 }
 
 // #endregion

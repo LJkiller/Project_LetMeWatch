@@ -1,4 +1,9 @@
 
+let metricSelectors = {
+    lastVideoId: '#last-viewed-video',
+    mostFrequentId: '#frequent-domain-uses'
+};
+
 let domains = {
     'flaired|www.youtube.com|youtu.be': {
         //https://www.youtube.com/watch?v=PEvURuyHcXM
@@ -32,3 +37,10 @@ let domains = {
         iframeSrc: 'https://www.dailymotion.com/embed/video/{urlId}?autoplay=1'
     }
 };
+
+let commands = {
+    cmdList: ['commands', 'command', 'cmds', 'cmd'],
+    localClear: ['localclear', 'clear'],
+    localStorage: ['localstorage', 'localstore', 'storage', 'store'],
+    localFill: ['localfill', 'fill']
+}

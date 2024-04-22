@@ -6,11 +6,12 @@
  * @param {string} bottomColor - Color of the bottom part.
  * @param {string} topColor - Color of the top part.
  * @param {string} textColor - Color of the text.
+ * @param {string} outlineColor - Color of the outline for the shape.
  * @param {number} iteration - Number used as text for SVG.
  * @param {string} elementCase - Additional parameter for special SVG creation.
  * @returns {string} - The SVG markup as a string.
  */
-function createMetricNumber(root, bottomColor, topColor, textColor, iteration, elementCase) {
+function createMetricNumber(root, bottomColor, topColor, textColor, outlineColor, iteration, elementCase) {
     let areaSize = parseFloat(getComputedStyle(root).getPropertyValue('--svg-dot-size'));
     let svg = createSvgElement('svg', {
         'width': areaSize,
@@ -21,7 +22,7 @@ function createMetricNumber(root, bottomColor, topColor, textColor, iteration, e
     let defs = createSvgElement('defs', {});
     let linearGradient = createLinearGradient(gradientId, bottomColor, topColor);
 
-    let shape = createShape(areaSize, gradientId, elementCase);
+    let shape = createShape(areaSize, gradientId, outlineColor, elementCase);
     let text = createText(iteration, textColor);
 
     defs.appendChild(linearGradient);
@@ -76,7 +77,6 @@ function createLinearGradient(gradientId, bottomColor, topColor) {
 
     linearGradient.appendChild(stop1);
     linearGradient.appendChild(stop2);
-
     return linearGradient;
 }
 
@@ -85,23 +85,35 @@ function createLinearGradient(gradientId, bottomColor, topColor) {
  * 
  * @param {number} areaSize - Size of the area for the shape.
  * @param {string} gradientId - ID of the gradient used to fill the shape.
- * @param {boolean} specialCase - Additional parameter for special cases.
+ * @param {string} outlineColor - Outline color. 
+ * @param {string} elementCase - Additional parameter for special cases.
  * @returns {SVGElement} - Consturcted shape element as SVG.
  */
-function createShape(areaSize, gradientId, elementCase) {
+function createShape(areaSize, gradientId, outlineColor, elementCase) {
     let shape;
     switch (elementCase) {
         case '':
             break;
         default:
+            let shadow = createSvgElement('circle', {
+                'cx': areaSize / 2,
+                'cy': areaSize / 2,
+                'r': '50%',
+                'fill': outlineColor,
+                'opacity': '1'
+            });
             shape = createSvgElement('circle', {
                 'cx': areaSize / 2,
                 'cy': areaSize / 2,
                 'r': '40%',
                 'stroke': 'none',
-                'fill': 'url(#' + gradientId + ')'
+                'fill': `url(#${gradientId})`
             });
-            break;
+
+            let group = createSvgElement('g');
+            group.appendChild(shadow);
+            group.appendChild(shape);
+            return group;
     }
 
     return shape;
