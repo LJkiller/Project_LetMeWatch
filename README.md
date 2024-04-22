@@ -12,3 +12,5 @@ Supported websites:
 Youtube.
 
 You can check out how it would look and act here, since I don't have a domain for this: https://letmewatch-dammit.000webhostapp.com/
+
+(The website hosting my website is a bit bad since it doesn't support grid properties (CSS, and why idk))
