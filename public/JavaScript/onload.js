@@ -1,74 +1,34 @@
 
 window.onload = function () {
-    //checkLocalStore();
+    let videoWidth = localStorage.getItem('videoWidth');
+    if (typeof videoWidth === 'undefined' || videoWidth === null) {
+        resetVideoSize(false);
+    }
+    displayVideoSize();
+    displayVideoId();
 
-    let playerIframe = document.getElementById('falsified-media-player');
-    let videoIdValueSpan = document.getElementById('video-id');
-    let videoLink = document.getElementById('video-link');
+    siteSavedCorrection();
+    siteDomainsCorrection();
+    siteStyleCorrection();
+    siteMetricsCorrection();
+};
 
+/**
+ * Method responsible of correcting HTML on the site by provided information.
+ */
+function siteSavedCorrection(){
     let storedWidth = localStorage.getItem('videoWidth');
     let storedVideoID = localStorage.getItem('videoId');
-    let storedVideoSource = localStorage.getItem('videoSource');
     let storedVideoLink = localStorage.getItem('videoLink');
+    let storedVideoSource = localStorage.getItem('videoSource');
 
     if (storedWidth) {
         restoreIframeSize(playerIframe, storedWidth);
     }
 
-    // Update videoID.
-    videoIdValueSpan.innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${storedVideoID} : `;
-    // Update videoLink.
-    videoLink.href = storedVideoLink;
-    // Update videoSrc.
-    playerIframe.src = storedVideoSource;
-    
-    if (typeof additionalDomains !== 'undefined' && typeof additionalMediaInfo === 'function'){
-        document.querySelector('#additional-domains>h2').textContent = 'Additional Domains';
-    }
-    let publicDomains = typeof domains !== 'undefined' ? domains : {};
-    let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
-    
-    let supportedUl = document.querySelector('#supported-domains > ul');
-    let supportedLi = document.createElement('li');
-    supportedLi.style.marginLeft = 'calc(var(--standard-spacing) * 2)';
-    typeof supportedWebsites === 'function' ? supportedWebsites(publicDomains, moreDomains) : supportedLi.innerHTML = '<i class="fa-solid fa-circle"></i>No domains found';
-    supportedUl.appendChild(supportedLi);
-
-    siteCorrection();
-
-    let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
-    let frequentDomainData = JSON.parse(localStorage.getItem('frequentDomainData')) || {};
-    let lastVideoSection = `${metricSelectors.lastVideoId} > .metrics`;
-    let mostFrequentSecton = `${metricSelectors.mostFrequentId} > .metrics`;
-    createMetricsList(videoLinksArray, document.querySelector(lastVideoSection));
-    createMetricsList(frequentDomainData, document.querySelector(mostFrequentSecton));
-};
-
-/**
- * Method responsible of checking all locally stored information.
- */
-function checkLocalStore() {
-    if (localStorage) {
-        console.log('LocalStorage Loaded and will display:');
-        let results = [];
-
-        for (let i = 0; i < localStorage.length; i++) {
-            let key = localStorage.key(i);
-            let value = localStorage.getItem(key);
-            if (key !== null && value !== null) {
-                let parsedValue;
-                try {
-                    parsedValue = JSON.parse(value);
-                } catch (error) {
-                    parsedValue = value;
-                }
-                results.push({ key, value: parsedValue });
-            } else {
-                console.error("Key or value is null");
-            }
-        }
-        console.log(results);
-    } 
+    document.getElementById('video-id').innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${storedVideoID} : `;
+    document.getElementById('video-link').href = storedVideoLink;
+    document.getElementById('falsified-media-player').src = storedVideoSource;
 }
 
 /**
@@ -89,9 +49,27 @@ function restoreIframeSize(playerIframe, storedWidth) {
 }
 
 /**
+ * Method responsible of correcting HTML and CSS of domains sections.
+ */
+function siteDomainsCorrection(){
+    if (typeof additionalDomains !== 'undefined' && typeof additionalMediaInfo === 'function'){
+        document.querySelector('#additional-domains>h2').textContent = 'Additional Domains';
+        document.getElementById('supported-domains').style.gridArea = 'supported-domains';
+    }
+    let publicDomains = typeof domains !== 'undefined' ? domains : {};
+    let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
+    
+    let supportedUl = document.querySelector('#supported-domains > ul');
+    let supportedLi = document.createElement('li');
+    supportedLi.style.marginLeft = 'calc(var(--standard-spacing) * 2)';
+    typeof supportedWebsites === 'function' ? supportedWebsites(publicDomains, moreDomains) : supportedLi.innerHTML = '<i class="fa-solid fa-circle"></i>No domains found';
+    supportedUl.appendChild(supportedLi);
+}
+
+/**
  * Method responsible of correcting some CSS issues.
  */
-function siteCorrection(){
+function siteStyleCorrection(){
     // Style correction of footer height.
     // Why? Because CSS is weird.
     document.querySelector('body > footer').style.height = `auto`;
@@ -103,7 +81,14 @@ function siteCorrection(){
     siteCopy.append(website);
 }
 
-/*
-ENTER WIDTH FUNCTION NEEDS TO FUNCITON
-UPDATE (INSIGHT METRICS) WHEN LINK HAS BEEN PUT IN
-*/
+/**
+ * Method responsible of generating and correcting HTML in the metrics sections.
+ */
+function siteMetricsCorrection(){
+    let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
+    let frequentDomainData = JSON.parse(localStorage.getItem('frequentDomainData')) || {};
+    let lastVideoSection = `${metricSelectors.lastVideoId} > .metrics`;
+    let mostFrequentSecton = `${metricSelectors.mostFrequentId} > .metrics`;
+    createMetricsList(videoLinksArray, document.querySelector(lastVideoSection));
+    createMetricsList(frequentDomainData, document.querySelector(mostFrequentSecton));
+}

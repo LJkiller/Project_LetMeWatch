@@ -1,11 +1,9 @@
 
 // #region Setup.
 let playerIframe = document.getElementById('falsified-media-player');
-let widthInput = document.getElementById('width-input');
 
 let heightValueSpan = document.getElementById('height-value');
 let widthValueSpan = document.getElementById('width-value');
-let resetButton = document.getElementById('reset-size-button');
 let videoIdValueSpan = document.getElementById('video-id');
 
 let baseWidth = 560;
@@ -20,22 +18,68 @@ let defaultHeight = baseHeight * scaleFactor;
 let pressedButtonForVideoURL = 0;
 // #endregion
 
-// #region Saving & Displaying
+// #region Events
 
-displayVideoSize();
-displayVideoId();
+/**
+ * Event for initiating media link input management.
+ */
+document.getElementById('falsified-media-link').addEventListener('submit', function (event) {
+    event.preventDefault();
+    let linkInput = document.getElementById('link-input').value;
+    handleLinkInput(linkInput);
+});
+
+/**
+ * Event for checking how many times reset button has been pressed and operates accordingly.
+ */
+document.getElementById('reset-size-button').addEventListener('click', function () {
+    resetVideoSize(pressedButtonForVideoURL !== 0);
+    pressedButtonForVideoURL++;
+});
+
+/**
+ * Event for initating update of media player size.
+ */
+document.getElementById('update-size-button').addEventListener('click', function (event) {
+    event.preventDefault();
+    updateVideoSize(document.getElementById('width-input'));
+});
+
+/**
+ * Method responsible of reseting video size.
+ * 
+ * @param {boolean} displayAsLastVideo - Boolean for checking if it's displayed as last video.
+ */
+function resetVideoSize(displayAsLastVideo) {
+    updatePlayerDimensions(defaultWidth, defaultHeight);
+    saveVideoWidth();
+    displayVideoSize();
+    displayVideoId(displayAsLastVideo);
+}
+
+// #endregion
+
+// #region Saving & Displaying
 
 // #region Size
 
 /**
- * Method responsible of displaying size values.
+ * Method responsible of updating video size.
+ * 
+ * @returns Nothing.
  */
-function displayVideoSize() {
-    let storedWidth = Math.round(localStorage.getItem('videoWidth'));
-    let storedHeight = Math.round(storedWidth / aspectRatio);
+function updateVideoSize(widthInput) {
+    let newWidth = parseInt(widthInput.value);
+    if (isNaN(newWidth)) {
+        return;
+    }
 
-    heightValueSpan.textContent = `Height: ${storedHeight}px`;
-    widthValueSpan.textContent = `Width: ${storedWidth}px`;
+    let newHeight = Math.round(newWidth / aspectRatio);
+    localStorage.setItem('videoWidth', newWidth);
+    updatePlayerDimensions(newWidth, newHeight);
+    displayVideoSize();
+
+    widthInput.value = '';
 }
 
 /**
@@ -48,25 +92,16 @@ function saveVideoWidth(width = defaultWidth) {
 }
 
 /**
- * Method responsible of updating video size.
- * 
- * @returns Nothing.
+ * Method responsible of displaying size values.
  */
-function updateVideoSize() {
-    let newWidth = parseInt(widthInput.value);
+function displayVideoSize() {
+    let storedWidth = Math.round(localStorage.getItem('videoWidth'));
+    let storedHeight = Math.round(storedWidth / aspectRatio);
 
-    if (isNaN(newWidth)) {
-        return;
-    }
-
-    let newHeight = Math.round(newWidth / aspectRatio);
-
-    saveVideoWidth(newWidth);
-    updatePlayerDimensions(newWidth, newHeight);
-    displayVideoSize();
-
-    widthInput.value = '';
+    heightValueSpan.textContent = `Height: ${storedHeight}px`;
+    widthValueSpan.textContent = `Width: ${storedWidth}px`;
 }
+
 /**
  * Method responsible of updating iframe dimensions.
  * 
@@ -172,42 +207,6 @@ function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeS
 
 // #endregion
 
-// #region Events
-
-document.getElementById('falsified-media-link').addEventListener('submit', function (event) {
-    event.preventDefault();
-    let linkInput = document.getElementById('link-input').value;
-    handleLinkInput(linkInput);
-});
-
-/**
- * Event for checking how many times reset button has been pressed and operates accordingly.
- */
-resetButton.addEventListener('click', function () {
-    let displayAsLastVideo = false;
-
-    if (pressedButtonForVideoURL !== 0) {
-        displayAsLastVideo = true;
-    }
-
-    pressedButtonForVideoURL++;
-
-    resetVideoSize(displayAsLastVideo);
-});
-
-document.getElementById('update-size-button').addEventListener('click', function (event) {
-    event.preventDefault();
-    resetVideoSize();
-});
-function resetVideoSize(displayAsLastVideo) {
-    updatePlayerDimensions(defaultWidth, defaultHeight);
-    saveVideoWidth();
-    displayVideoSize();
-    displayVideoId(displayAsLastVideo);
-}
-
-// #endregion
-
 // #region Media
 
 /**
@@ -219,32 +218,48 @@ function handleLinkInput(linkInput) {
     let inputChecking = linkInput.toLowerCase();
     document.getElementById('link-input').value = '';
 
-    let commandCheck = isCommand(inputChecking);
-    if (commandCheck[0] && commandCheck[1] === commands.localClear){
-        localStorage.clear();
-        console.log('Local Storage Cleared.');
-        window.location.reload();
-    } else if (commandCheck[0] && commandCheck[1] === commands.cmdList){
-        for (let command in commands){
-            console.log(command, ':', commands[command]);
-        }
-    } else if (commandCheck[0] && commandCheck[1] === commands.localFill){
-        let publicDomains = typeof domains !== 'undefined' ? domains : {};
-        let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
-        frequentDomainsAnalysis(commandCheck, Object.keys(publicDomains), Object.keys(moreDomains));
-        console.log('Local Storage Fixed');
-        document.querySelector('#site-insight > div > section > ul.metrics').innerHTML = '';
-        updateMetricLists();
-    } else if (commandCheck[0] && commandCheck[1] === commands.localStorage){
-        checkLocalStore();
-    } else {
-        let mediaInfo = extractMediaInfo(linkInput);
-        videoIdValueSpan.textContent = `VideoID: ${mediaInfo[1]} : `;
-        updateVideoInfo(mediaInfo[1], mediaInfo[2], mediaInfo[3]);
-        updateMediaPlayer(mediaInfo[3]);
+    let examples = getAllDomainExamples();
+    let example = getRandomValue(examples);
+    let publicDomains = typeof domains !== 'undefined' ? domains : {};
+    let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
 
-        updateMetricLists();
+    let commandCheck = isCommand(inputChecking);
+    switch(true){
+        case commandCheck[1] === commands.cmdList:
+            for (let command in commands){
+                console.log(command, ':', commands[command]);
+            }
+            break;
+        case commandCheck[1] === commands.example:
+            handleLinkInput(example);
+            console.log(`Video Example Applied: ${example}.`);
+            break;
+        case commandCheck[1] === commands.localClear:
+            localStorage.clear();
+            console.log('Local Storage Cleared.');
+            window.location.reload();
+            break;
+        case commandCheck[1] === commands.localFill:
+            frequentDomainsAnalysis(commandCheck, Object.keys(publicDomains), Object.keys(moreDomains));
+            console.log('Local Storage Manipulated.');
+            break;
+        case commandCheck[1] === commands.localStorage:
+            checkLocalStore();
+            break;
+        case commandCheck[1] === commands.localTest:
+            frequentDomainsAnalysis(commandCheck, Object.keys(publicDomains), Object.keys(moreDomains));
+            console.log('Local Storage Manipulated.');
+            handleLinkInput(example);
+            console.log(`Video Example Applied: ${example}.`);
+            break;
+        default:
+            let mediaInfo = extractMediaInfo(linkInput);
+            videoIdValueSpan.textContent = `VideoID: ${mediaInfo[1]} : `;
+            updateVideoInfo(mediaInfo[1], mediaInfo[2], mediaInfo[3]);
+            updateMediaPlayer(mediaInfo[3]);
+            break;
     }
+    updateMetricLists();
 }
 
 /**
@@ -264,15 +279,14 @@ function extractMediaInfo(linkInput) {
         linkArrayInfo = typeof additionalMediaInfo === 'function' ? additionalMediaInfo(linkInput) : [];
     }
 
-    let mediaInfo = linkArrayInfo.slice(0, 4);
-    return mediaInfo;
+    return linkArrayInfo;
 }
 
 /**
  * Method responsible of analyzing domains object.
  * 
  * @param {Object} domains - Objects representing different websites. 
- * @returns {string} - The corresponding domainName.
+ * @returns {Object} - The corresponding domain information.
  */
 function domainAnalyzis(domains, domainName) {
     let domain;
@@ -327,6 +341,7 @@ function mediaInformation(domainResult, linkInput, domainName) {
 
         return [domainName, urlId, videoLink, finalIframeSrc];
     }
+    return;
 }
 
 /**
@@ -341,7 +356,7 @@ function updateMediaPlayer(iframeSrc) {
 /**
  * Method responsible of updating metric list.
  */
-function updateMetricLists(){    
+function updateMetricLists(){
     let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
     let frequentDomainData = JSON.parse(localStorage.getItem('frequentDomainData')) || {};
     let lastVideoSection = `${metricSelectors.lastVideoId} > .metrics`;
