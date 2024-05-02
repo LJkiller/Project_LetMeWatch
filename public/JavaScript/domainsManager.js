@@ -60,23 +60,19 @@ function createMetricsList(items, location) {
     items['initialized'] = 0;
     if (Array.isArray(items)) {
         items.forEach((item, i) => {
-            let text, urlElement;
+            let urlDomain, urlElement;
             if (item.url === 'NOT FOUND') {
-                text = item.url;
-                urlElement = `<span>${text}</span>`;
+                urlDomain = `<span class="url-name">NOT</span>`;
+                urlElement = `<span class="url-id">FOUND</span>`;
             } else {
-                if (item.url.includes('www.')) {
-                    text = `${capitalizeFirstLetter(item.url.split('www.')[1].split('/')[0])} - ${item.id}`;
-                } else {
-                    text = capitalizeFirstLetter(item.url.split('://')[1]);
-                }
-                urlElement = `<a href="${item.url}" target="_blank">${text}</a>`;
+                urlDomain = `<span class="url-name">${capitalizeFirstLetter(getWebsiteName(item.url))}:</span>`;
+                urlElement = `<a href="${item.url}" target="_blank">${item.id}</a>`;
             }
             let li = document.createElement('li');
             li.innerHTML = `
                 ${createMetricNumber(root, bottomColor, topColor, textColor, textColor, i + 1, svg)}
-                <span>${item.date[0]}</span>
-                ${urlElement}
+                <span class="date">${item.date[0]}</span>
+                <p class="domain">${urlDomain}${urlElement}</p>
             `;
             location.appendChild(li);
         });
@@ -89,7 +85,7 @@ function createMetricsList(items, location) {
         let text;
         for (let i = 0; i < keys.length; i++) {
             let item = keys[i];
-            let text = getWebsiteNames(item.key);
+            text = getWebsiteNames(item.key);
             if (item.value >= 1 && item.key !== 'initialized' && i < 10) {
                 if (item.value === highestValue) {
                     textColor = 'var(--black)';

@@ -147,16 +147,20 @@ footer>#site-insight>div section ul li {
     align-items: center;
 }
 
-footer>#site-insight>div section ul li svg{
+footer>#site-insight>div section ul li svg {
     grid-area: metric-marker;
 }
-footer>#site-insight>div section ul li span:first-child {
+footer>#site-insight>div section ul li span.date {
     grid-area: metric-date;
     justify-self: start;
 }
-footer>#site-insight>div section ul li a,
-footer>#site-insight>div section ul li span:last-child {
+footer>#site-insight>div section ul li p {
     grid-area: metric-link;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: start;
+    align-items: center;
+    gap: var(--standard-spacing);
 }
 
 
@@ -328,7 +332,7 @@ footer>section:not(#site-information, #site-insight) ul li a {
 
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1027px) {
     /* Footer adjustment*/
 
     footer {

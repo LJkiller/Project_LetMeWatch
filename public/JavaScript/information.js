@@ -10,7 +10,7 @@ let domains = {
             'https://www.youtube.com/watch?v=PEvURuyHcXM',
             'https://youtu.be/PEvURuyHcXM?si=LQ1x4Q4DTbGMI4nP',
             'https://www.youtube.com/embed/PEvURuyHcXM?si=LQ1x4Q4DTbGMI4nP',
-            'https://youtube.com/shorts/NuK3TqEhnkI?si=ido3nB9MMWW3IrRy'
+            'https://www.youtube.com/shorts/qdGatFkber8'
         ],
         regexes: [
             /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)/i,

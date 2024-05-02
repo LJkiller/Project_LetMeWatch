@@ -217,6 +217,10 @@ function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeS
 function handleLinkInput(linkInput) {
     let inputChecking = linkInput.toLowerCase();
     document.getElementById('link-input').value = '';
+    
+    if (isGibberish(linkInput)){
+        return;
+    }
 
     let examples = getAllDomainExamples();
     let example = getRandomValue(examples);

@@ -52,9 +52,12 @@ function restoreIframeSize(playerIframe, storedWidth) {
  * Method responsible of correcting HTML and CSS of domains sections.
  */
 function siteDomainsCorrection(){
+    let additionalDomainsHTML = document.getElementById('additional-domains');
     if (typeof additionalDomains !== 'undefined' && typeof additionalMediaInfo === 'function'){
-        document.querySelector('#additional-domains>h2').textContent = 'Additional Domains';
+        additionalDomainsHTML.querySelector('h2').textContent = 'Additional Domains';
         document.getElementById('supported-domains').style.gridArea = 'supported-domains';
+    } else {
+        additionalDomainsHTML.style.display = 'none';
     }
     let publicDomains = typeof domains !== 'undefined' ? domains : {};
     let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
