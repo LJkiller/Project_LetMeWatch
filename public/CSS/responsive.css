@@ -7,8 +7,8 @@ body {
         "main"
         "footer"
     ;
+    gap: var(--standard-spacing);
 }
-
 
 /*#region Header */
 
@@ -145,6 +145,14 @@ footer>#site-insight>div section ul li {
         "metric-link metric-link"
     ;
     align-items: center;
+}
+footer>#site-insight>div section#frequent-domain-uses ul li {
+    grid-template-columns: calc(var(--dot-size) * 2.5) auto auto 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "metric-marker metric-date metric-link ."
+    ;
+    gap: var(--standard-spacing);
 }
 
 footer>#site-insight>div section ul li svg {
@@ -308,9 +316,6 @@ footer>section:not(#site-information, #site-insight) ul li a {
         display: flex;
         justify-content: space-between;
     }
-    footer>#site-insight>div>section#frequent-domain-uses h3{
-        padding: var(--standard-spacing) calc(var(--standard-spacing) * 2.6);
-    }
     
 }
 
@@ -332,7 +337,7 @@ footer>section:not(#site-information, #site-insight) ul li a {
 
 }
 
-@media screen and (min-width: 1027px) {
+@media screen and (min-width: 1056px) {
     /* Footer adjustment*/
 
     footer {

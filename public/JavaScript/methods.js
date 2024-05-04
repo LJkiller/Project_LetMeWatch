@@ -65,7 +65,7 @@ function capitalizeFirstLetter(input) {
  * @returns {boolean} - True or false if it's gibberish or not.
  */
 function isGibberish(input) {
-    if (!input || input.length < 3) {
+    if (!input || input.length < 2) {
         return true;
     }
 

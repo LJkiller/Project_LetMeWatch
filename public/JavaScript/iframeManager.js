@@ -137,8 +137,9 @@ function displayVideoId(displayAsLastVideo = false) {
  * 
  * @param {string} videoLink - The current video link.
  * @param {string} videoId - Video ID.
+ * @param {string} iframeSrc - Video iframeSrc.
  */
-function saveVideoLink(videoLink, videoId) {
+function saveVideoLink(videoLink, videoId, iframeSrc) {
     let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
     if (videoLinksArray.length >= 5) {
         videoLinksArray.shift();
@@ -147,11 +148,10 @@ function saveVideoLink(videoLink, videoId) {
     let videoObject = {
         url: videoLink,
         date: formatDate(new Date),
-        id: videoId
+        id: videoId,
+        src: iframeSrc
     };
     videoLinksArray.push(videoObject);
-    localStorage.setItem('videoLink', videoLink);
-    localStorage.setItem('videoId', videoId);
     localStorage.setItem('videoLinks', JSON.stringify(videoLinksArray));
 }
 
@@ -191,7 +191,6 @@ function frequentDomainsAnalysis(videoInput, domains = [], additionalDomains = [
  * @param {string} iframeSrc - The current video embed source.
  */
 function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeSrc = 'NOT FOUND') {
-    localStorage.setItem('videoSource', iframeSrc);
 
     videoIdValueSpan.textContent = `VideoID: ${videoId} : `;
 
@@ -200,7 +199,7 @@ function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeS
 
     videoLink.href = videoLink;
     frequentDomainsAnalysis(videoLink, Object.keys(publicDomains), Object.keys(moreDomains));
-    saveVideoLink(videoLink, videoId);
+    saveVideoLink(videoLink, videoId, iframeSrc);
 }
 
 // #endregion

@@ -18,17 +18,16 @@ window.onload = function () {
  */
 function siteSavedCorrection(){
     let storedWidth = localStorage.getItem('videoWidth');
-    let storedVideoID = localStorage.getItem('videoId');
-    let storedVideoLink = localStorage.getItem('videoLink');
-    let storedVideoSource = localStorage.getItem('videoSource');
+    let videoLinks = JSON.parse(localStorage.getItem('videoLinks'));
+    let latestLink = videoLinks[videoLinks.length -1];
 
     if (storedWidth) {
         restoreIframeSize(playerIframe, storedWidth);
     }
 
-    document.getElementById('video-id').innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${storedVideoID} : `;
-    document.getElementById('video-link').href = storedVideoLink;
-    document.getElementById('falsified-media-player').src = storedVideoSource;
+    document.getElementById('video-id').innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${latestLink.id} : `;
+    document.getElementById('video-link').href = latestLink.url;
+    document.getElementById('falsified-media-player').src = latestLink.src;
 }
 
 /**
@@ -43,7 +42,7 @@ function restoreIframeSize(playerIframe, storedWidth) {
     let aspectRatio = baseWidth / baseHeight;
     let calculatedHeight = storedWidth / aspectRatio;
 
-    //Update iframe dimensions
+    // Update iframe dimensions.
     playerIframe.width = storedWidth;
     playerIframe.height = calculatedHeight;
 }
