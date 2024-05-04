@@ -1,13 +1,13 @@
 
 window.onload = function () {
     let videoWidth = localStorage.getItem('videoWidth');
-    if (typeof videoWidth === 'undefined' || videoWidth === null) {
+    if (!videoWidth) {
         resetVideoSize(false);
     }
     displayVideoSize();
     displayVideoId();
 
-    siteSavedCorrection();
+    siteSavedCorrection(videoWidth);
     siteDomainsCorrection();
     siteStyleCorrection();
     siteMetricsCorrection();
@@ -15,14 +15,14 @@ window.onload = function () {
 
 /**
  * Method responsible of correcting HTML on the site by provided information.
+ * 
+ * @param {number} width - Width of the iframe.
  */
-function siteSavedCorrection(){
-    let storedWidth = localStorage.getItem('videoWidth');
-    let videoLinks = JSON.parse(localStorage.getItem('videoLinks'));
-    let latestLink = videoLinks[videoLinks.length -1];
-
-    if (storedWidth) {
-        restoreIframeSize(playerIframe, storedWidth);
+function siteSavedCorrection(width){
+    let videoLinks = JSON.parse(localStorage.getItem('videoLinks')) || [];
+    let latestLink = videoLinks.length ? videoLinks[videoLinks.length - 1] : { id: 'NOT FOUND', url: 'NOT FOUND', src: 'NOT FOUND'};
+    if (width) {
+        restoreIframeSize(playerIframe, width);
     }
 
     document.getElementById('video-id').innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${latestLink.id} : `;
@@ -72,10 +72,6 @@ function siteDomainsCorrection(){
  * Method responsible of correcting some CSS issues.
  */
 function siteStyleCorrection(){
-    // Style correction of footer height.
-    // Why? Because CSS is weird.
-    document.querySelector('body > footer').style.height = `auto`;
-
     let siteCopy = document.getElementById('site-info-copy');
     let website = document.createElement('a');
     website.href = 'https://letmewatch-dammit.com';
@@ -89,8 +85,6 @@ function siteStyleCorrection(){
 function siteMetricsCorrection(){
     let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
     let frequentDomainData = JSON.parse(localStorage.getItem('frequentDomainData')) || {};
-    let lastVideoSection = `${metricSelectors.lastVideoId} > .metrics`;
-    let mostFrequentSecton = `${metricSelectors.mostFrequentId} > .metrics`;
-    createMetricsList(videoLinksArray, document.querySelector(lastVideoSection));
-    createMetricsList(frequentDomainData, document.querySelector(mostFrequentSecton));
+    createMetricsList(videoLinksArray, document.querySelector(`${metricSelectors.lastVideoId} > .metrics`));
+    createMetricsList(frequentDomainData, document.querySelector(`${metricSelectors.mostFrequentId} > .metrics`));
 }

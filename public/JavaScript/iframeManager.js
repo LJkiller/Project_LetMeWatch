@@ -18,6 +18,8 @@ let defaultHeight = baseHeight * scaleFactor;
 let pressedButtonForVideoURL = 0;
 // #endregion
 
+
+
 // #region Events
 
 /**
@@ -58,6 +60,8 @@ function resetVideoSize(displayAsLastVideo) {
 }
 
 // #endregion
+
+
 
 // #region Saving & Displaying
 
@@ -191,7 +195,6 @@ function frequentDomainsAnalysis(videoInput, domains = [], additionalDomains = [
  * @param {string} iframeSrc - The current video embed source.
  */
 function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeSrc = 'NOT FOUND') {
-
     videoIdValueSpan.textContent = `VideoID: ${videoId} : `;
 
     let publicDomains = typeof domains !== 'undefined' ? domains : {};
@@ -205,6 +208,8 @@ function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeS
 // #endregion
 
 // #endregion
+
+
 
 // #region Media
 
@@ -259,7 +264,7 @@ function handleLinkInput(linkInput) {
             let mediaInfo = extractMediaInfo(linkInput);
             videoIdValueSpan.textContent = `VideoID: ${mediaInfo[1]} : `;
             updateVideoInfo(mediaInfo[1], mediaInfo[2], mediaInfo[3]);
-            updateMediaPlayer(mediaInfo[3]);
+            playerIframe.src = mediaInfo[3];
             break;
     }
     updateMetricLists();
@@ -322,23 +327,8 @@ function mediaInformation(domainResult, linkInput, domainName) {
 
     let match = linkInput.match(combinedRegex);
     if (match) {
-        let urlId = '';
-        switch (true) {
-            case !!match[1]:
-                urlId = match[1];
-                break;
-            case !!match[2]:
-                urlId = match[2];
-                break;
-            case !!match[3]:
-                urlId = match[3];
-                break;
-            case !!match[4]:
-                urlId = match[4];
-                break;
-            default:
-                break;
-        }
+        let urlId = match.slice(1).find(id => !!id) || '';
+        console.log(urlId);
         let videoLink = linkInput;
         let finalIframeSrc = `${iframeSrc.replace('{urlId}', urlId)}`;
 
@@ -348,26 +338,17 @@ function mediaInformation(domainResult, linkInput, domainName) {
 }
 
 /**
- * Method responsible of updating media player src.
- * 
- * @param {string} iframeSrc - corresponding iframe for specific link.
- */
-function updateMediaPlayer(iframeSrc) {
-    playerIframe.src = iframeSrc;
-}
-
-/**
  * Method responsible of updating metric list.
  */
 function updateMetricLists(){
     let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
     let frequentDomainData = JSON.parse(localStorage.getItem('frequentDomainData')) || {};
-    let lastVideoSection = `${metricSelectors.lastVideoId} > .metrics`;
-    let mostFrequentSecton = `${metricSelectors.mostFrequentId} > .metrics`;
-    document.querySelector(lastVideoSection).innerHTML = '';
-    document.querySelector(mostFrequentSecton).innerHTML = '';
-    createMetricsList(videoLinksArray, document.querySelector(lastVideoSection));
-    createMetricsList(frequentDomainData, document.querySelector(mostFrequentSecton));
+    let lastVideoSection = document.querySelector(`${metricSelectors.lastVideoId} > .metrics`);
+    let mostFrequentSecton = document.querySelector(`${metricSelectors.mostFrequentId} > .metrics`);
+    lastVideoSection.innerHTML = '';
+    mostFrequentSecton.innerHTML = '';
+    createMetricsList(videoLinksArray, lastVideoSection);
+    createMetricsList(frequentDomainData, mostFrequentSecton);
 }
 
 // #endregion
