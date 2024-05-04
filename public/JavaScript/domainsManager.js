@@ -53,61 +53,64 @@ function createMetricsList(items, location) {
     let root = document.documentElement;
     let originalColor = getComputedStyle(root).getPropertyValue('--blue');
     let originalTextColor = getComputedStyle(root).getPropertyValue('--white');
-    let textColor = originalTextColor, outlineColor = originalTextColor
-        bottomColor = originalColor, topColor = originalColor;
+    let textColor = originalTextColor, outlineColor = originalTextColor, bottomColor = originalColor, topColor = originalColor;
 
     let svg = 'circle';
+    let fragment = document.createDocumentFragment();
     items['initialized'] = 0;
     if (Array.isArray(items)) {
-        items.forEach((item, i) => {
-            let urlDomain, urlElement;
-            if (item.url === 'NOT FOUND') {
-                urlDomain = `<span class="url-name">NOT</span>`;
-                urlElement = `<span class="url-id">FOUND</span>`;
-            } else {
-                urlDomain = `<span class="url-name">${capitalizeFirstLetter(getWebsiteName(item.url))}:</span>`;
-                urlElement = `<a href="${item.url}" target="_blank">${item.id}</a>`;
-            }
+        let textLimit = 13;
+        for (let i = 0; i < items.length; i++){
+            let item = items[i];
+            let ifNotFound = item.url === 'NOT FOUND';
+
+            let urlDomain = ifNotFound ?
+                `<span class="url-name">NOT</span>` :
+                `<span class="url-name">${capitalizeFirstLetter(getWebsiteName(item.url))}:</span>`
+            ;
+            let urlElement = ifNotFound ?
+                `<span class="url-id">FOUND</span>` :
+                `<a href="${item.url}" target="_blank">${item.id.slice(0, textLimit)}</a>`
+            ;
+
             let li = document.createElement('li');
             li.innerHTML = `
                 ${createMetricNumber(root, bottomColor, topColor, textColor, textColor, i + 1, svg)}
                 <span class="date">${item.date[0]}</span>
                 <p class="domain">${urlDomain}${urlElement}</p>
             `;
-            location.appendChild(li);
-        });
+            fragment.appendChild(li);
+        }
     } else {
-        let keys = Object.keys(items)
-            .map(key => ({ key, value: items[key] }))
-            .sort((a, b) => b.value - a.value)
+        let objectArray = Object.keys(items)
+            .map(key => ({
+                key: getWebsiteNames(key),
+                value: items[key]
+            }))
+            .filter(item => item.value >= 1 && item.key !== 'initialized')
+            .slice(0, 10)
         ;
-        let highestValue = keys.length > 0 ? keys[0].value : 0;
-        let text;
-        for (let i = 0; i < keys.length; i++) {
-            let item = keys[i];
-            text = getWebsiteNames(item.key);
-            if (item.value >= 1 && item.key !== 'initialized' && i < 10) {
-                if (item.value === highestValue) {
-                    textColor = 'var(--black)';
-                    outlineColor = 'var(--yellow)';
-                    topColor = 'var(--yellow)';
-                    bottomColor = 'var(--red)';
-                } else {
-                    textColor = originalTextColor;
-                    outlineColor = originalTextColor;
-                    topColor = originalColor;
-                    bottomColor = originalColor;
-                }
-                let li = document.createElement('li');
-                li.innerHTML = `
-                    ${createMetricNumber(root, bottomColor, topColor, textColor, outlineColor, i + 1, svg)}
-                    <span>Uses: ${item.value}</span>
-                    <a href="https://${item.key}" target="_blank">${text}</a>
-                `;
-                location.appendChild(li);
-            }
+        for (let i = 0; i < objectArray.length; i++){
+            let item = objectArray[i];
+            let uses = `Uses: ${item.value}`;
+            let text = getWebsiteNames(item.key);
+
+            let isHighestValue = item.value === objectArray[0].value;
+            textColor = isHighestValue ? 'var(--black)' : originalTextColor;
+            outlineColor = isHighestValue ? 'var(--yellow)' : originalTextColor;
+            topColor = isHighestValue ? 'var(--yellow)' : originalColor;
+            bottomColor = isHighestValue ? 'var(--red)' : originalColor;
+
+            let li = document.createElement('li');
+            li.innerHTML = `
+                ${createMetricNumber(root, bottomColor, topColor, textColor, outlineColor, i + 1, svg)}
+                <span>${uses}</span>
+                <a href="https://${item.key}" target="_blank">${text}</a>
+            `;
+            fragment.appendChild(li);
         }
     }
+    location.appendChild(fragment);
 }
 
 /**

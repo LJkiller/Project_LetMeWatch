@@ -329,16 +329,25 @@ footer>section:not(#site-information, #site-insight) ul li a {
     }
 
     header {
+        position: fixed;
+        height: var(--header-height);
         display: flex;
         justify-content: space-between;
         flex-direction: row;
         gap: var(--standard-spacing);
+        z-index: 100;
     }
 
 }
 
-@media screen and (min-width: 1056px) {
-    /* Footer adjustment*/
+@media screen and (min-width: 1064px) {
+    /* a-elemnt & Footer adjustment*/
+
+    a {
+        text-decoration: none;
+    }
+
+    
 
     footer {
         grid-template-columns: 1fr auto auto;

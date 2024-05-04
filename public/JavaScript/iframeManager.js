@@ -141,7 +141,7 @@ function displayVideoId(displayAsLastVideo = false) {
  * 
  * @param {string} videoLink - The current video link.
  * @param {string} videoId - Video ID.
- * @param {string} iframeSrc - Video iframeSrc.
+ * @param {string[]} iframeSrc - Video iframeSrc.
  */
 function saveVideoLink(videoLink, videoId, iframeSrc) {
     let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
@@ -192,9 +192,9 @@ function frequentDomainsAnalysis(videoInput, domains = [], additionalDomains = [
  * 
  * @param {string} videoId - Video ID.
  * @param {string} videoLink - The URL of the video link.
- * @param {string} iframeSrc - The current video embed source.
+ * @param {string[]} iframeSrc - The current video embed source.
  */
-function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeSrc = 'NOT FOUND') {
+function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeSrc = ['NOT FOUND']) {
     videoIdValueSpan.textContent = `VideoID: ${videoId} : `;
 
     let publicDomains = typeof domains !== 'undefined' ? domains : {};
@@ -324,13 +324,13 @@ function domainAnalyzis(domains, domainName) {
 function mediaInformation(domainResult, linkInput, domainName) {
     let { regexes, iframeSrc } = domainResult;
     let combinedRegex = new RegExp(regexes.map(pattern => `(?:${pattern.source})`).join('|'), 'i');
-
+    
     let match = linkInput.match(combinedRegex);
     if (match) {
         let urlId = match.slice(1).find(id => !!id) || '';
-        console.log(urlId);
         let videoLink = linkInput;
-        let finalIframeSrc = `${iframeSrc.replace('{urlId}', urlId)}`;
+        let isPlaylist = linkInput.includes('playlist') || linkInput.includes('list');
+        let finalIframeSrc = isPlaylist ? `${iframeSrc[1].replace('{urlId}', urlId)}` : `${iframeSrc[0].replace('{urlId}', urlId)}`;
 
         return [domainName, urlId, videoLink, finalIframeSrc];
     }

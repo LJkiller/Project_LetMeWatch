@@ -10,15 +10,20 @@ let domains = {
             'https://www.youtube.com/watch?v=PEvURuyHcXM',
             'https://youtu.be/PEvURuyHcXM?si=LQ1x4Q4DTbGMI4nP',
             'https://www.youtube.com/embed/PEvURuyHcXM?si=LQ1x4Q4DTbGMI4nP',
-            'https://www.youtube.com/shorts/qdGatFkber8'
+            'https://www.youtube.com/shorts/qdGatFkber8',
+            'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi'
         ],
         regexes: [
+            /(?:https?:\/\/)?(?:www\.)?youtube\.com\/playlist\?list=([^&?/]+)/i,
             /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)/i,
             /youtu\.be\/([^?]+)/i,
             /(?:https?:\/\/)?(?:www\.)?youtube\.com\/embed\/([^?]+)/i,
             /(?:https?:\/\/)?(?:www\.)?youtube\.com\/shorts\/([^?]+)/i
         ],
-        iframeSrc: 'https://www.youtube-nocookie.com/embed/{urlId}?start=0&autoplay=1&autohide=1'
+        iframeSrc: [
+            'https://www.youtube-nocookie.com/embed/{urlId}?start=0&autoplay=1&autohide=1', 
+            'https://www.youtube.com/embed/videoseries?list={urlId}'
+        ]
     },
     'not|www.bitchute.com': {
         examples: [
@@ -29,7 +34,7 @@ let domains = {
             /(?:https?:\/\/)?(?:www\.)?bitchute\.com\/video\/(\w+)\/?/,
             /(?:https?:\/\/)?(?:www\.)?bitchute\.com\/embed\/(\w+)\/?/
         ],
-        iframeSrc: 'https://www.bitchute.com/embed/{urlId}/'
+        iframeSrc: ['https://www.bitchute.com/embed/{urlId}/']
     },
     'not|www.dailymotion.com|dai.ly': {
         examples: [
@@ -40,7 +45,7 @@ let domains = {
             /(?:https?:\/\/)?(?:www\.)?dailymotion\.com\/video\/(\w+)/,
             /https?:\/\/dai\.ly\/(\w+)/,
         ],
-        iframeSrc: 'https://www.dailymotion.com/embed/video/{urlId}?autoplay=1'
+        iframeSrc: ['https://www.dailymotion.com/embed/video/{urlId}?autoplay=1']
     }
 };
 

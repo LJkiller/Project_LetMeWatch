@@ -109,7 +109,6 @@ body {
 a{
     transition: var(--standard-eio-transition);
     color: var(--primary-color);
-    text-decoration: none;
 }
 a:hover{
     color: var(--white);

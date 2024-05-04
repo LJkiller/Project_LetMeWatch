@@ -2,11 +2,8 @@
 /*#region Header*/
 
 header {
-    position: fixed;
     width: 100%;
-    height: var(--header-height);
     background-color: var(--primary-bg-color);
-    z-index: 100;
 }
 
 header #let-me-watch-logo, header #falsified-media-link{

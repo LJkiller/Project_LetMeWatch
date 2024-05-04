@@ -129,12 +129,17 @@ function isGibberish(input) {
  * @returns {string} - Domain name.
  */
 function getWebsiteName(link) {
-    return link.includes('www.') ?
-        link.split('www.')[1].split('/')[0] :
-        link.split('://')[1].split('/')[0]
-        ;
+    let returnValue = link.includes('www.') ? 
+        link.split('www.')[1].split('/')[0] : link.split('://')[1].split('/')[0]
+    ;
+    if (returnValue.split('.').length > 2){
+        let splitArray = returnValue.split('.');
+        splitArray.shift();
+        returnValue = splitArray.join('.');
+    }
+    
+    return returnValue;
 }
-
 /**
  * Method responsible of getting the website names into an array.
  * 

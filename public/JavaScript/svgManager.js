@@ -127,13 +127,16 @@ function createShape(areaSize, gradientId, outlineColor, elementCase) {
  * @returns {SVGTextElement} - Constructed text element as SVG.
  */
 function createText(iteration, textColor) {
+    let isDeca = iteration >= 10
+    let decaPosX = isDeca ? '46%': '50%';
+    let decaSize = isDeca ? '75%': '80%';
     let text = createSvgElement('text', {
-        'x': '50%',
+        'x': decaPosX,
         'y': '56%',
         'dominant-baseline': 'middle',
         'text-anchor': 'middle',
         'font-weight': 'bold',
-        'font-size': '80%',
+        'font-size': decaSize,
         'fill': textColor
     });
     text.textContent = iteration;
