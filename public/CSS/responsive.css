@@ -273,15 +273,20 @@ footer>#additional-domains {
 footer>section:not(#site-information, #site-insight, #user-library) {
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto auto auto 1fr;
     grid-template-areas:
         "supported-header"
         "domains-list"
+        "add-custom-domain"
+        "."
     ;
     justify-content: start;
 }
 footer>section:not(#site-information, #site-insight, #user-library) h2 {
     grid-area: supported-header;
+}
+footer>section:not(#site-information, #site-insight, #user-library) #add-custom-button{
+    grid-area: add-custom-domain;
 }
 footer>section:not(#site-information, #site-insight, #user-library) ul {
     grid-area: domains-list;
