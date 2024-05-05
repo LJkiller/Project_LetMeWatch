@@ -85,44 +85,94 @@ document.getElementById('next-playlist-button').addEventListener('click', functi
 
 
 
-// #region Like
+// #region Library Buttons
 
-// Events for hover actions.
-likeButton.addEventListener('mouseenter', toggleLikeIcon);
-likeButton.addEventListener('mouseleave', toggleLikeIcon);
-let isLiked = false;
+let starActive = false, addToPlaylistActive = false;
 
-/**
- * Method responsible for toggling like icon by hover.
- * 
- * @param {Event} event - Event.
- */
-function toggleLikeIcon(event) {
+// #region Hover
+
+starButton.addEventListener('mouseenter', function(event) {
     event.preventDefault();
-    if (isLiked === false) {
-        let likeIcon = likeButton.querySelector('i');
-        likeIcon.classList.toggle('fa-regular');
-        likeIcon.classList.toggle('fa-solid');
+    if (!starActive){
+        hoverSolidIcon(starButton);
     }
-}
-
-/**
- * Event for clicking like button.
- */
-likeButton.addEventListener('click', function(event) {
+});
+starButton.addEventListener('mouseleave', function(event) {
     event.preventDefault();
-    isLiked = !isLiked;
-    let likeIcon = likeButton.querySelector('i');
-    if (isLiked === true){
-        console.log('liked');
-    } else {
-        console.log('disliked');
+    if (!starActive){
+        hoverSolidIcon(starButton);
     }
 });
 
+addToPlaylistButton.addEventListener('mouseenter', function(event) {
+    event.preventDefault();
+    if (!addToPlaylistActive){
+        hoverSolidIcon(addToPlaylistButton);
+    }
+});
+addToPlaylistButton.addEventListener('mouseleave', function(event) {
+    event.preventDefault();
+    if (!addToPlaylistActive){
+        hoverSolidIcon(addToPlaylistButton);
+    }
+});
 
+/**
+ * Method responsible of hovering over the button to toggle icon.
+ * 
+ * @param {HTMLButtonElement} location - Button element.
+ */
+function hoverSolidIcon(location) {
+    let icon = location.querySelector('i');
+    icon.classList.toggle('fa-regular');
+    icon.classList.toggle('fa-solid');
 
+}
 
+// #endregion
 
+// #region Click
+
+/**
+ * Event for clicking star button.
+ */
+starButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    if (!starActive) {
+        addToLibrary('starLibrary', videoLinkHTML.href);
+        starSpan.innerHTML = 'Starred';
+        starActive = true;
+    } else {
+        removeFromLibrary('starLibrary', videoLinkHTML.href);
+        starSpan.innerHTML = 'Star';
+        starActive = false;
+    }
+    let starLibrary = JSON.parse(localStorage.getItem('starLibrary')) || [];
+    let location = document.querySelector(`#starred-videos > .videos`);
+    location.innerHTML = '';
+    createLibraryList(starLibrary, location);
+});
+
+/**
+ * Event for clicking add to playlist.
+ */
+addToPlaylistButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    if (!addToPlaylistActive) {
+        addToLibrary('playlistLibrary', videoLinkHTML.href);
+        addSpan.innerHTML = 'Added';
+        addToPlaylistActive = true;
+    } else {
+        removeFromLibrary('playlistLibrary', videoLinkHTML.href);
+        addSpan.innerHTML = 'Add To Playlist';
+        addToPlaylistActive = false;
+    }
+    let playlistLibrary = JSON.parse(localStorage.getItem('playlistLibrary')) || [];
+    let location = document.querySelector(`#playlist > .videos`);
+    location.innerHTML = '';
+    createLibraryList(playlistLibrary, location);
+});
+
+// #endregion
 
 // #endregion

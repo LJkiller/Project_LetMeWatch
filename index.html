@@ -20,12 +20,12 @@
 
 	<!-- #region Scripts -->
 	<script src="./public/JavaScript/onload.js" defer></script>
-	<script src="./public/JavaScript/header.js" defer></script>
 	<script src="./public/JavaScript/methods.js" defer></script>
 	<script src="./public/JavaScript/svgManager.js" defer></script>
 	<script src="./public/JavaScript/information.js" defer></script>
 	<script src="./public/JavaScript/iframeManager.js" defer></script>
 	<script src="./public/JavaScript/eventListeners.js" defer></script>
+	<script src="./public/JavaScript/userLibraryManager.js" defer></script>
 	<script src="./public/JavaScript/supportedDomainsManager.js" defer></script>
 	<script src="./public/JavaScript/additionalDomainsManager.js" defer></script>
 	<script src="https://www.youtube.com/iframe_api" defer></script>
@@ -101,13 +101,14 @@
 				<span id="video-id">VideoID: $(storedVideoID)</span>
 				<span>-</span>
 				<a id="video-link" target="_blank" href="">Video</a>
-				<button id="like-button" class="quick-button"><i class="fa-regular fa-star"></i> Like</button>
+				<button id="add-to-playlist-button" class="quick-button"><i class="fa-regular fa-bookmark"></i><span>Add To Playlist</span></button>
+				<button id="star-button" class="quick-button"><i class="fa-regular fa-star"></i><span>Star</span></button>
 			</div>
 
 			<div id="iframe-controls">
-				<button id="prev-playlist-button" class="form-button"><i class="fa-solid fa-backward"></i><span>Prev</span></button>
-				<button id="exit-playlist-button" class="form-button"><i class="fa-solid fa-circle-xmark"></i><span>Exit Playlist</span></button>
-				<button id="next-playlist-button" class="form-button"><span>Next</span><i class="fa-solid fa-forward"></i></button>
+				<button id="prev-playlist-button" class="quick-button"><i class="fa-solid fa-backward"></i><span>Prev</span></button>
+				<button id="exit-playlist-button" class="quick-button"><i class="fa-solid fa-circle-xmark"></i><span>Exit Playlist</span></button>
+				<button id="next-playlist-button" class="quick-button"><span>Next</span><i class="fa-solid fa-forward"></i></button>
 			</div>
 
 		</section> 
@@ -116,15 +117,15 @@
 
 	<footer>
 		<section id="user-library">
-			<h2>User Library</h2>
+			<h2><span>User Library</span><button id="start-playlist-button" class="quick-button active"><i class="fa-solid fa-play"></i> Start Playlist</button></h2>
 			<div>
 				<section id="playlist">
-					<h3><span>Playlist</span><button id="start-playlist-button" class="quick-button active"><i class="fa-solid fa-play"></i> Start Playlist</button></h3>
+					<h3>Playlist</h3>
 					<ul class="videos">
 					</ul>
 				</section>
-				<section id="liked-videos">
-					<h3>Liked Videos</h3>
+				<section id="starred-videos">
+					<h3>Starred Videos</h3>
 					<ul class="videos">
 					</ul>
 				</section>
@@ -148,7 +149,8 @@
 		<section id="supported-domains">
 			<h2>Supported Domains</h2>
 			<ul>
-			</ul><button id="add-custom-button" class="quick-button"><i class="fa-solid fa-circle-plus"></i> Add Custom Domain</button>
+			</ul>
+			<button id="add-custom-button" class="quick-button"><i class="fa-solid fa-circle-plus"></i> Add Custom Domain</button>
 		</section>
 		<section id="additional-domains">
 			<h2></h2>

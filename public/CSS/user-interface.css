@@ -31,7 +31,10 @@
 }
 .quick-button{
     color: var(--primary-color);
-    padding: calc(var(--standard-spacing) / 3);
+    display: flex;
+    padding: calc(var(--standard-spacing) / 3) var(--standard-spacing);
+    justify-content: center;
+    gap: var(--standard-spacing);
 }
 
 .form-button:hover, 

@@ -50,7 +50,6 @@ function createListItems(domains, area) {
  * @param {HTMLUListElement} location - Ul element where to append list.
  */
 function createMetricsList(items, location) {
-    let root = document.documentElement;
     let originalColor = getComputedStyle(root).getPropertyValue('--blue');
     let originalTextColor = getComputedStyle(root).getPropertyValue('--white');
     let textColor = originalTextColor, outlineColor = originalTextColor, bottomColor = originalColor, topColor = originalColor;
@@ -75,7 +74,7 @@ function createMetricsList(items, location) {
 
             let li = document.createElement('li');
             li.innerHTML = `
-                ${createMetricNumber(root, bottomColor, topColor, textColor, textColor, i + 1, svg)}
+                ${createSVGNumber(root, bottomColor, topColor, textColor, textColor, i + 1, svg)}
                 <span class="date">${item.date[0]}</span>
                 <p class="domain">${urlDomain}${urlElement}</p>
             `;
@@ -107,7 +106,7 @@ function createMetricsList(items, location) {
 
             let li = document.createElement('li');
             li.innerHTML = `
-                ${createMetricNumber(root, bottomColor, topColor, textColor, outlineColor, i + 1, svg)}
+                ${createSVGNumber(root, bottomColor, topColor, textColor, outlineColor, i + 1, svg)}
                 <span>${uses}</span>
                 <a href="https://${item.key}" target="_blank">${text}</a>
             `;

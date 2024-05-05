@@ -65,7 +65,12 @@ function updatePlayerDimensions(width, height) {
  */
 function displayVideoId(displayAsLastVideo = false) {
     let videoLinks = JSON.parse(localStorage.getItem('videoLinks')) || [];
-    let storedVideoID = videoLinks[videoLinks.length -1].id;
+    let storedVideoID = 'NOT FOUND';
+    try {
+        storedVideoID = videoLinks[videoLinks.length -1].id;
+    } catch (error) {
+        console.error('Id is not found', error);
+    }
 
     if (displayAsLastVideo) {
         videoIdValueSpan.textContent = `VideoID: ${storedVideoID}`;
@@ -205,6 +210,8 @@ function handleLinkInput(linkInput) {
             break;
     }
     updateMetricLists();
+    resetMainButtons();
+    checkLibrary();
 }
 
 /**

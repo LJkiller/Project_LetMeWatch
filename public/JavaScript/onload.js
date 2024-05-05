@@ -7,6 +7,7 @@ window.onload = function () {
     siteDomainsCorrection();
     siteStyleCorrection();
     siteMetricsCorrection();
+    siteLibraryCorrection();
 };
 
 /**
@@ -83,4 +84,15 @@ function siteMetricsCorrection(){
     let frequentDomainData = JSON.parse(localStorage.getItem('frequentDomainData')) || {};
     createMetricsList(videoLinksArray, document.querySelector(`${metricSelectors.lastVideoId} > .metrics`));
     createMetricsList(frequentDomainData, document.querySelector(`${metricSelectors.mostFrequentId} > .metrics`));
+}
+
+/**
+ * Method responsible of correcting user libraries.
+ */
+function siteLibraryCorrection(){
+    checkLibrary();
+    let starLibrary = JSON.parse(localStorage.getItem('starLibrary')) || [];
+    let playlistLibrary = JSON.parse(localStorage.getItem('playlistLibrary')) || [];
+    createLibraryList(starLibrary, document.querySelector(`#starred-videos > .videos`));
+    createLibraryList(playlistLibrary, document.querySelector(`#playlist > .videos`));
 }

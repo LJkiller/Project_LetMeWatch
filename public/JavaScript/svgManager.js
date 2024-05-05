@@ -11,7 +11,7 @@
  * @param {string} elementCase - Additional parameter for special SVG creation.
  * @returns {string} - The SVG markup as a string.
  */
-function createMetricNumber(root, bottomColor, topColor, textColor, outlineColor, iteration, elementCase) {
+function createSVGNumber(root, bottomColor, topColor, textColor, outlineColor, iteration, elementCase) {
     let areaSize = parseFloat(getComputedStyle(root).getPropertyValue('--svg-dot-size'));
     let svg = createSvgElement('svg', {
         'width': areaSize,
