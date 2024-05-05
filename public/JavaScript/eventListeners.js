@@ -86,15 +86,39 @@ document.getElementById('next-playlist-button').addEventListener('click', functi
 
 // #region Like
 
+// Events for hover actions.
 likeButton.addEventListener('mouseenter', toggleLikeIcon);
 likeButton.addEventListener('mouseleave', toggleLikeIcon);
 
+let isLiked = false;
+let likeIcon = likeButton.querySelector('i');
+
+/**
+ * Method responsible for toggling like icon by hover.
+ * 
+ * @param {Event} event - Event.
+ */
 function toggleLikeIcon(event) {
     event.preventDefault();
-    let i = likeButton.querySelector('i');
-    i.classList.toggle('fa-regular');
-    i.classList.toggle('fa-solid');
+    if (!isLiked) {
+        likeIcon.classList.toggle('fa-regular');
+        likeIcon.classList.toggle('fa-solid');
+    }
 }
+
+/**
+ * Event for clicking like button.
+ */
+likeButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    isLiked = !isLiked;
+    if (isLiked === true){
+        console.log('liked');
+    } else {
+        console.log('disliked');
+    }
+});
+
 
 
 
