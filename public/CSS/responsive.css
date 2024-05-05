@@ -172,6 +172,16 @@ footer>#user-library>div>section#liked-videos{
     grid-area: user-likes;
 }
 
+footer>section#user-library>div>#playlist>h3{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: var(--standard-spacing);
+}
+footer>section#user-library>div>#playlist>h3>button{
+    padding: var(--standard-spacing);
+}
+
 /*#endregion*/
 
 /*#region Site Insight */
