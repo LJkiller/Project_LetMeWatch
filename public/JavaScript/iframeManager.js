@@ -59,6 +59,14 @@ function resetVideoSize(displayAsLastVideo) {
     displayVideoId(displayAsLastVideo);
 }
 
+/**
+ * Event for closing iframe-controls for playlist.
+ */
+document.getElementById('exit-button').addEventListener('click', function(event){
+    event.preventDefault();
+    document.getElementById('iframe-controls').classList.remove('active');
+});
+
 // #endregion
 
 

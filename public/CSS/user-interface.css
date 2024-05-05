@@ -54,10 +54,25 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
 }
 
-/*#region Special Form Input Cases*/
 .form-input#width-input:hover{
     width: var(--input-special-width);
 }
 .form-input#width-input:focus{
     width: var(--input-special-width);
+}
+
+
+#iframe-controls {
+    display: none;
+}
+#iframe-controls.active{
+    display: flex;
+    gap: var(--standard-spacing);
+}
+#iframe-controls > button {
+    display: flex;
+    padding: var(--standard-spacing);
+    justify-content: center;
+    align-items: center;
+    gap: var(--standard-spacing);
 }

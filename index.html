@@ -12,8 +12,8 @@
 
 	<!-- #region CSS -->
 	<link rel="stylesheet" href="./public/CSS/style.css">
-	<link rel="stylesheet" href="./public/CSS/form.css">
 	<link rel="stylesheet" href="./public/CSS/responsive.css">
+	<link rel="stylesheet" href="./public/CSS/user-interface.css">
 	<link rel="stylesheet" href="./public/CSS/index.css">
 	<!-- #endregion -->
 
@@ -100,11 +100,32 @@
 				<a id="video-link" target="_blank" href="">Video</a>
 			</div>
 
+			<div id="iframe-controls">
+				<button id="prev-button" class="form-button"><i class="fa-solid fa-backward"></i><span>Prev</span></button>
+				<button id="exit-button" class="form-button"><i class="fa-solid fa-circle-xmark"></i><span>Exit Playlist</span></button>
+				<button id="next-button" class="form-button"><span>Next</span><i class="fa-solid fa-forward"></i></button>
+			</div>
+
 		</section> 
 	</main>
 
 
 	<footer>
+		<section id="user-library">
+			<h2>User Library</h2>
+			<div>
+				<section id="playlist">
+					<h3>Playlist</h3>
+					<ul class="videos">
+					</ul>
+				</section>
+				<section id="liked-videos">
+					<h3>Liked Videos</h3>
+					<ul class="videos">
+					</ul>
+				</section>
+			</div>
+		</section>
 		<section id="site-insight">
 			<h2>Site Insight</h2>
 			<div>
