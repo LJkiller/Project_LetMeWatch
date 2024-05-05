@@ -6,8 +6,7 @@
  */
 document.getElementById('falsified-media-link').addEventListener('submit', function (event) {
     event.preventDefault();
-    let linkInput = document.getElementById('link-input').value;
-    handleLinkInput(linkInput);
+    handleLinkInput(document.getElementById('link-input').value);
 });
 
 /**
@@ -42,7 +41,6 @@ function resetVideoSize(displayAsLastVideo) {
 
 
 
-
 // #region Iframe Controller Events
 
 
@@ -65,6 +63,7 @@ exitPlaylistButton.addEventListener('click', function(event){
 });
 
 
+
 /**
  * Event for playing previous video.
  */
@@ -80,5 +79,25 @@ document.getElementById('next-playlist-button').addEventListener('click', functi
     event.preventDefault();
     console.log('forward');
 });
+
+// #endregion
+
+
+
+// #region Like
+
+likeButton.addEventListener('mouseenter', toggleLikeIcon);
+likeButton.addEventListener('mouseleave', toggleLikeIcon);
+
+function toggleLikeIcon(event) {
+    event.preventDefault();
+    let i = likeButton.querySelector('i');
+    i.classList.toggle('fa-regular');
+    i.classList.toggle('fa-solid');
+}
+
+
+
+
 
 // #endregion

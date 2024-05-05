@@ -25,7 +25,7 @@ function siteSavedCorrection(width){
         restoreIframeSize(playerIframe, width);
     }
 
-    document.getElementById('video-id').innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${latestLink.id} : `;
+    document.getElementById('video-id').innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${latestLink.id}`;
     document.getElementById('video-link').href = latestLink.url;
     document.getElementById('falsified-media-player').src = latestLink.src;
 }

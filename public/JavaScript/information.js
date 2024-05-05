@@ -1,6 +1,8 @@
 
 // #region Setup.
 let playerIframe = document.getElementById('falsified-media-player');
+
+let likeButton = document.getElementById('like-button');
 let startPlaylistButton = document.getElementById('start-playlist-button');
 let exitPlaylistButton = document.getElementById('exit-playlist-button');
 let iframeControls = document.getElementById('iframe-controls');
