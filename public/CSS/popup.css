@@ -1,0 +1,21 @@
+
+
+noscript {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 101;
+}
+noscript section {
+    padding: calc(var(--standard-spacing)  * 4);
+    border-radius: var(--standard-size);
+    background-color: var(--primary-bg-color);
+    border: 5px solid var(--primary-color);
+}
+noscript section span {
+    font-style: italic;
+}

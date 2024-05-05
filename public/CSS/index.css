@@ -92,4 +92,9 @@ footer>#site-insight>div section ul{
     list-style: none;
 }
 
+footer>section:not(#site-information, #site-insight, #user-library) #add-custom-button{
+    margin: 0 auto;
+    width: 90%;
+}
+
 /*#endregion*/

@@ -1,68 +1,5 @@
 
-// #region Events
-
-/**
- * Event for initiating media link input management.
- */
-document.getElementById('falsified-media-link').addEventListener('submit', function (event) {
-    event.preventDefault();
-    let linkInput = document.getElementById('link-input').value;
-    handleLinkInput(linkInput);
-});
-
-/**
- * Event for checking how many times reset button has been pressed and operates accordingly.
- */
-document.getElementById('reset-size-button').addEventListener('click', function () {
-    resetVideoSize(pressedButtonForVideoURL !== 0);
-    pressedButtonForVideoURL++;
-});
-
-/**
- * Event for initating update of media player size.
- */
-document.getElementById('update-size-button').addEventListener('click', function (event) {
-    event.preventDefault();
-    updateVideoSize(document.getElementById('width-input'));
-});
-
-/**
- * Method responsible of reseting video size.
- * 
- * @param {boolean} displayAsLastVideo - Boolean for checking if it's displayed as last video.
- */
-function resetVideoSize(displayAsLastVideo) {
-    updatePlayerDimensions(defaultWidth, defaultHeight);
-    saveVideoWidth();
-    displayVideoSize();
-    displayVideoId(displayAsLastVideo);
-}
-
-/**
- * Event for starting playlist.
- */
-startPlaylistButton.addEventListener('click', function(event){
-    event.preventDefault();
-    iframeControls.classList.add('active');
-    startPlaylistButton.classList.remove('active');
-});
-
-/**
- * Event for closing iframe-controls for playlist.
- */
-exitPlaylistButton.addEventListener('click', function(event){
-    event.preventDefault();
-    iframeControls.classList.remove('active');
-    startPlaylistButton.classList.add('active');
-});
-
-// #endregion
-
-
-
-// #region Saving & Displaying
-
-// #region Size
+// #region Media Result Applications
 
 /**
  * Method responsible of updating video size.
@@ -116,7 +53,10 @@ function updatePlayerDimensions(width, height) {
 
 // #endregion
 
-// #region Media
+
+
+
+// #region Media Result Saving
 
 /**
  * Method responsible of displaying latest video id.
@@ -204,11 +144,10 @@ function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeS
 
 // #endregion
 
-// #endregion
 
 
 
-// #region Media
+// #region Iframe Input
 
 /**
  * Method responsible of routing different logics together.
