@@ -1,25 +1,4 @@
 
-// #region Setup.
-let playerIframe = document.getElementById('falsified-media-player');
-
-let heightValueSpan = document.getElementById('height-value');
-let widthValueSpan = document.getElementById('width-value');
-let videoIdValueSpan = document.getElementById('video-id');
-
-let baseWidth = 560;
-let baseHeight = 315;
-// Scale factor to get to 1280 & 720px.
-let scaleFactor = 2.28571428571428580944;
-let aspectRatio = baseWidth / baseHeight;
-
-let defaultWidth = baseWidth * scaleFactor;
-let defaultHeight = baseHeight * scaleFactor;
-
-let pressedButtonForVideoURL = 0;
-// #endregion
-
-
-
 // #region Events
 
 /**
@@ -60,11 +39,21 @@ function resetVideoSize(displayAsLastVideo) {
 }
 
 /**
+ * Event for starting playlist.
+ */
+startPlaylistButton.addEventListener('click', function(event){
+    event.preventDefault();
+    iframeControls.classList.add('active');
+    startPlaylistButton.classList.remove('active');
+});
+
+/**
  * Event for closing iframe-controls for playlist.
  */
-document.getElementById('exit-button').addEventListener('click', function(event){
+exitPlaylistButton.addEventListener('click', function(event){
     event.preventDefault();
-    document.getElementById('iframe-controls').classList.remove('active');
+    iframeControls.classList.remove('active');
+    startPlaylistButton.classList.add('active');
 });
 
 // #endregion

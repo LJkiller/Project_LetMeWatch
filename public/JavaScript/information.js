@@ -1,4 +1,27 @@
 
+// #region Setup.
+let playerIframe = document.getElementById('falsified-media-player');
+let startPlaylistButton = document.getElementById('start-playlist-button');
+let exitPlaylistButton = document.getElementById('exit-playlist-button');
+let iframeControls = document.getElementById('iframe-controls');
+
+let heightValueSpan = document.getElementById('height-value');
+let widthValueSpan = document.getElementById('width-value');
+let videoIdValueSpan = document.getElementById('video-id');
+
+let baseWidth = 560;
+let baseHeight = 315;
+// Scale factor to get to 1280 & 720px.
+let scaleFactor = 2.28571428571428580944;
+let aspectRatio = baseWidth / baseHeight;
+
+let defaultWidth = baseWidth * scaleFactor;
+let defaultHeight = baseHeight * scaleFactor;
+
+let pressedButtonForVideoURL = 0;
+// #endregion
+
+
 let metricSelectors = {
     lastVideoId: '#last-viewed-video',
     mostFrequentId: '#frequent-domain-uses'

@@ -76,3 +76,10 @@ input[type="number"]::-webkit-outer-spin-button {
     align-items: center;
     gap: var(--standard-spacing);
 }
+
+#start-playlist-button{
+    display: none;
+}
+#start-playlist-button.active{
+    display: inline-block;
+}
