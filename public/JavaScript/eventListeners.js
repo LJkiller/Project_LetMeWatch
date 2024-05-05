@@ -51,6 +51,7 @@ startPlaylistButton.addEventListener('click', function(event){
     event.preventDefault();
     iframeControls.classList.add('active');
     startPlaylistButton.classList.remove('active');
+    document.getElementById("media-top").scrollIntoView();
 });
 
 /**
@@ -89,9 +90,7 @@ document.getElementById('next-playlist-button').addEventListener('click', functi
 // Events for hover actions.
 likeButton.addEventListener('mouseenter', toggleLikeIcon);
 likeButton.addEventListener('mouseleave', toggleLikeIcon);
-
 let isLiked = false;
-let likeIcon = likeButton.querySelector('i');
 
 /**
  * Method responsible for toggling like icon by hover.
@@ -100,7 +99,8 @@ let likeIcon = likeButton.querySelector('i');
  */
 function toggleLikeIcon(event) {
     event.preventDefault();
-    if (!isLiked) {
+    if (isLiked === false) {
+        let likeIcon = likeButton.querySelector('i');
         likeIcon.classList.toggle('fa-regular');
         likeIcon.classList.toggle('fa-solid');
     }
@@ -112,6 +112,7 @@ function toggleLikeIcon(event) {
 likeButton.addEventListener('click', function(event) {
     event.preventDefault();
     isLiked = !isLiked;
+    let likeIcon = likeButton.querySelector('i');
     if (isLiked === true){
         console.log('liked');
     } else {

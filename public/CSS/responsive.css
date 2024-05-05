@@ -378,12 +378,16 @@ footer>section:not(#site-information, #site-insight, #user-library) ul li a {
 }
 
 @media screen and (min-width: 721px) {
-    /* Header adjustment*/
+    /* a-elemnt & Header adjustment*/
 
     :root {
         --header-height: 4rem;
         --header-top-margin: 1.5rem;
         --logo-dimensions: 2.5rem;
+    }
+
+    a {
+        text-decoration: none;
     }
 
     header {
@@ -399,11 +403,7 @@ footer>section:not(#site-information, #site-insight, #user-library) ul li a {
 }
 
 @media screen and (min-width: 1064px) {
-    /* a-elemnt & Footer adjustment*/
-
-    a {
-        text-decoration: none;
-    }
+    /* Footer adjustment*/
 
     footer {
         grid-template-columns: auto 1fr auto auto auto;

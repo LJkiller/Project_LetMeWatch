@@ -13,7 +13,7 @@ function updateVideoSize(widthInput) {
     }
 
     let newHeight = Math.round(newWidth / aspectRatio);
-    localStorage.setItem('videoWidth', newWidth);
+    saveVideoWidth(newWidth);
     updatePlayerDimensions(newWidth, newHeight);
     displayVideoSize();
 
@@ -64,12 +64,13 @@ function updatePlayerDimensions(width, height) {
  * @param {boolean} displayAsLastVideo - If last video id should be displayed.
  */
 function displayVideoId(displayAsLastVideo = false) {
-    let storedVideoID = localStorage.getItem('videoID');
+    let videoLinks = JSON.parse(localStorage.getItem('videoLinks')) || [];
+    let storedVideoID = videoLinks[videoLinks.length -1].id;
 
     if (displayAsLastVideo) {
-        videoIdValueSpan.textContent = `VideoID: ${storedVideoID} : `;
+        videoIdValueSpan.textContent = `VideoID: ${storedVideoID}`;
     } else {
-        videoIdValueSpan.innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${storedVideoID} : `;
+        videoIdValueSpan.innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${storedVideoID}`;
     }
 }
 
@@ -132,12 +133,12 @@ function frequentDomainsAnalysis(videoInput, domains = [], additionalDomains = [
  * @param {string[]} iframeSrc - The current video embed source.
  */
 function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeSrc = ['NOT FOUND']) {
-    videoIdValueSpan.textContent = `VideoID: ${videoId} : `;
+    videoIdValueSpan.textContent = `VideoID: ${videoId}`;
 
     let publicDomains = typeof domains !== 'undefined' ? domains : {};
     let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
 
-    videoLink.href = videoLink;
+    videoLinkHTML.href = videoLink;
     frequentDomainsAnalysis(videoLink, Object.keys(publicDomains), Object.keys(moreDomains));
     saveVideoLink(videoLink, videoId, iframeSrc);
 }
@@ -188,7 +189,7 @@ function handleLinkInput(linkInput) {
             console.log('Local Storage Manipulated.');
             break;
         case commandCheck[1] === commands.localStorage:
-            checkLocalStore();
+            checkLocalStorage();
             break;
         case commandCheck[1] === commands.localTest:
             frequentDomainsAnalysis(commandCheck, Object.keys(publicDomains), Object.keys(moreDomains));
@@ -198,7 +199,7 @@ function handleLinkInput(linkInput) {
             break;
         default:
             let mediaInfo = extractMediaInfo(linkInput);
-            videoIdValueSpan.textContent = `VideoID: ${mediaInfo[1]} : `;
+            videoIdValueSpan.textContent = `VideoID: ${mediaInfo[1]}`;
             updateVideoInfo(mediaInfo[1], mediaInfo[2], mediaInfo[3]);
             playerIframe.src = mediaInfo[3];
             break;

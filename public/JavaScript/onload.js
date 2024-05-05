@@ -1,13 +1,9 @@
 
 window.onload = function () {
-    let videoWidth = localStorage.getItem('videoWidth');
-    if (!videoWidth) {
-        resetVideoSize(false);
-    }
     displayVideoSize();
     displayVideoId();
 
-    siteSavedCorrection(videoWidth);
+    siteSavedCorrection(localStorage.getItem('videoWidth'));
     siteDomainsCorrection();
     siteStyleCorrection();
     siteMetricsCorrection();

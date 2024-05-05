@@ -88,6 +88,10 @@ function createMetricsList(items, location) {
                 value: items[key]
             }))
             .filter(item => item.value >= 1 && item.key !== 'initialized')
+            .sort((a, b) => {
+                if (a.value !== b.value) return b.value - a.value;
+                return a.key.localeCompare(b.key);
+            })
             .slice(0, 10)
         ;
         for (let i = 0; i < objectArray.length; i++){

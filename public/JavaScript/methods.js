@@ -2,7 +2,7 @@
 /**
  * Method responsible of checking all locally stored information.
  */
-function checkLocalStore() {
+function checkLocalStorage() {
     if (localStorage) {
         console.log('LocalStorage Loaded and will display:');
         let results = [];

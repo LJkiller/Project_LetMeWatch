@@ -10,6 +10,7 @@ let iframeControls = document.getElementById('iframe-controls');
 let heightValueSpan = document.getElementById('height-value');
 let widthValueSpan = document.getElementById('width-value');
 let videoIdValueSpan = document.getElementById('video-id');
+let videoLinkHTML = document.getElementById('video-link');
 
 let baseWidth = 560;
 let baseHeight = 315;
