@@ -30,6 +30,7 @@
     color: var(--primary-color);
 }
 .quick-button{
+    transition: var(--fast-eio-transition);
     color: var(--primary-color);
     display: flex;
     padding: calc(var(--standard-spacing) / 3) var(--standard-spacing);

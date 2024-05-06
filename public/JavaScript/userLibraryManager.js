@@ -16,12 +16,14 @@ function itemExistsInList(list, item) {
 function checkLibrary() {
     let starLibrary = JSON.parse(localStorage.getItem('starLibrary')) || [];
     let playlistLibrary = JSON.parse(localStorage.getItem('playlistLibrary')) || [];
-    if (itemExistsInList(starLibrary, videoLinkHTML.href)) {
+    let videoLinks = JSON.parse(localStorage.getItem('videoLinks'));
+    let latestVideo = videoLinks[videoLinks.length -1].url;
+    if (itemExistsInList(starLibrary, latestVideo)) {
         activateButtonIcon(starButton.querySelector('i'));
         starSpan.innerHTML = 'Starred';
         starActive = true;
     }
-    if (itemExistsInList(playlistLibrary, videoLinkHTML.href)) {
+    if (itemExistsInList(playlistLibrary, latestVideo)) {
         activateButtonIcon(addToPlaylistButton.querySelector('i'));
         addSpan.innerHTML = 'Added';
         addToPlaylistActive = true;
@@ -36,7 +38,11 @@ function checkLibrary() {
  */
 function addToLibrary(libraryType, newItem){
     let library = JSON.parse(localStorage.getItem(libraryType)) || [];
-    library = library.filter(item => Object.keys(item).length !== 0);
+    library = library.filter((item, index, self) =>
+        index === self.findIndex((t) => (
+            t.url === item.url && t.id === item.id
+        ))
+    );
     let [_, id, url] = extractMediaInfo(newItem);
 
     let savedObject = {
@@ -56,6 +62,11 @@ function addToLibrary(libraryType, newItem){
  */
 function removeFromLibrary(libraryType, item) {
     let library = JSON.parse(localStorage.getItem(libraryType)) || [];
+    library = library.filter((item, index, self) =>
+        index === self.findIndex((t) => (
+            t.url === item.url && t.id === item.id
+        ))
+    );
     let indexToRemove = library.findIndex(libraryItem => 
         libraryItem.url === item
     );

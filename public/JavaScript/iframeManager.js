@@ -292,18 +292,16 @@ function mediaInformation(domainResult, linkInput, domainName) {
 function playlistApply(link){
     addToLibrary('starLibrary', link);
     addToLibrary('playlistLibrary', link);
-    let starLibrary = JSON.parse(localStorage.getItem('starLibrary')) || [];
     let playlistLibrary = JSON.parse(localStorage.getItem('playlistLibrary')) || [];
-    starSpan.innerHTML = 'Starred';
-    addSpan.innerHTML = 'Added';
-    starActive = true;
-    addToPlaylistActive = true;
+    let starLibrary = JSON.parse(localStorage.getItem('starLibrary')) || [];
     let starArea = document.querySelector(`#starred-videos > .videos`);
     let playlistArea = document.querySelector(`#playlist > .videos`);
     starArea.innerHTML = '';
     playlistArea.innerHTML = '';
-    createLibraryList(starLibrary, starArea);
-    createLibraryList(playlistLibrary, playlistArea);
+    if (!link.includes('NOT%20FOUND')) {
+        createLibraryList(starLibrary, starArea);
+        createLibraryList(playlistLibrary, playlistArea);
+    }
 }
 
 

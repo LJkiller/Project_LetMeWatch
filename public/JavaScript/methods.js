@@ -69,7 +69,6 @@ function isGibberish(input) {
         return true;
     }
 
-    let linkRegex = /^(http|https|ftp|ssh|telnet|smtp|imap|pop3|dns|snmp|ntp|ldap|sftp|ftps|smtps|rdp|webdav|rtsp|bittorrent):\/\/[^\s/$.?#].[^\s]*$/i;
     if (linkRegex.test(input)) {
         return false;
     }

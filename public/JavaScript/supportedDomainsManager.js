@@ -150,7 +150,7 @@ function saveFrequentDomain(domainInput, allDomains, previousInfo) {
     }
     
     console.log((commandCheck[0]) ? 
-        'Everything added by 1' : 'One domain added by 1'
+        'Everything added by 1' : `One domain added by 1: ${domainInput}`
     );
     for (let i = 0; i < allDomains.length; i++) {
         let domain = allDomains[i].split('|')[1];

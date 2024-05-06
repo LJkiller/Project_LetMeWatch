@@ -28,6 +28,8 @@ let defaultWidth = baseWidth * scaleFactor;
 let defaultHeight = baseHeight * scaleFactor;
 
 let pressedButtonForVideoURL = 0;
+
+let linkRegex = /^(http|https|ftp|ssh|telnet|smtp|imap|pop3|dns|snmp|ntp|ldap|sftp|ftps|smtps|rdp|webdav|rtsp|bittorrent):\/\/[^\s/$.?#].[^\s]*$/i;
 // #endregion
 
 

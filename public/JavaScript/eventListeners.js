@@ -138,19 +138,21 @@ function hoverSolidIcon(location) {
  */
 starButton.addEventListener('click', function(event) {
     event.preventDefault();
+    let videoLinks = JSON.parse(localStorage.getItem('videoLinks'));
+    let latestVideo = videoLinks[videoLinks.length -1].url;
     if (!starActive) {
-        addToLibrary('starLibrary', videoLinkHTML.href);
+        addToLibrary('starLibrary', latestVideo);
         starSpan.innerHTML = 'Starred';
         starActive = true;
     } else {
-        removeFromLibrary('starLibrary', videoLinkHTML.href);
+        removeFromLibrary('starLibrary', latestVideo);
         starSpan.innerHTML = 'Star';
         starActive = false;
     }
     let starLibrary = JSON.parse(localStorage.getItem('starLibrary')) || [];
     let location = document.querySelector(`#starred-videos > .videos`);
     location.innerHTML = '';
-    if (!videoLinkHTML.href.includes('NOT%20FOUND')) {
+    if (linkRegex.test(latestVideo)) {
         createLibraryList(starLibrary, location);
     }
 });
@@ -160,19 +162,21 @@ starButton.addEventListener('click', function(event) {
  */
 addToPlaylistButton.addEventListener('click', function(event) {
     event.preventDefault();
+    let videoLinks = JSON.parse(localStorage.getItem('videoLinks'));
+    let latestVideo = videoLinks[videoLinks.length -1].url;
     if (!addToPlaylistActive) {
-        addToLibrary('playlistLibrary', videoLinkHTML.href);
+        addToLibrary('playlistLibrary', latestVideo);
         addSpan.innerHTML = 'Added';
         addToPlaylistActive = true;
     } else {
-        removeFromLibrary('playlistLibrary', videoLinkHTML.href);
+        removeFromLibrary('playlistLibrary', latestVideo);
         addSpan.innerHTML = 'Add To Playlist';
         addToPlaylistActive = false;
     }
     let playlistLibrary = JSON.parse(localStorage.getItem('playlistLibrary')) || [];
     let location = document.querySelector(`#playlist > .videos`);
     location.innerHTML = '';
-    if (!videoLinkHTML.href.includes('NOT%20FOUND')) {
+    if (linkRegex.test(latestVideo)) {
         createLibraryList(playlistLibrary, location);
     }
 });
