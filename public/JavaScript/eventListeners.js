@@ -150,7 +150,9 @@ starButton.addEventListener('click', function(event) {
     let starLibrary = JSON.parse(localStorage.getItem('starLibrary')) || [];
     let location = document.querySelector(`#starred-videos > .videos`);
     location.innerHTML = '';
-    createLibraryList(starLibrary, location);
+    if (!videoLinkHTML.href.includes('NOT%20FOUND')) {
+        createLibraryList(starLibrary, location);
+    }
 });
 
 /**
@@ -170,7 +172,9 @@ addToPlaylistButton.addEventListener('click', function(event) {
     let playlistLibrary = JSON.parse(localStorage.getItem('playlistLibrary')) || [];
     let location = document.querySelector(`#playlist > .videos`);
     location.innerHTML = '';
-    createLibraryList(playlistLibrary, location);
+    if (!videoLinkHTML.href.includes('NOT%20FOUND')) {
+        createLibraryList(playlistLibrary, location);
+    }
 });
 
 // #endregion

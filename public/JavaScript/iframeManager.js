@@ -201,6 +201,7 @@ function handleLinkInput(linkInput) {
             console.log('Local Storage Manipulated.');
             handleLinkInput(example);
             console.log(`Video Example Applied: ${example}.`);
+            playlistApply(example);
             break;
         default:
             let mediaInfo = extractMediaInfo(linkInput);
@@ -281,18 +282,32 @@ function mediaInformation(domainResult, linkInput, domainName) {
     return;
 }
 
+// #endregion
+
 /**
- * Method responsible of updating metric list.
+ * Command method responsible of applying playlists methods.
+ * 
+ * @param {string} link - Link to apply.
  */
-function updateMetricLists(){
-    let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
-    let frequentDomainData = JSON.parse(localStorage.getItem('frequentDomainData')) || {};
-    let lastVideoSection = document.querySelector(`${metricSelectors.lastVideoId} > .metrics`);
-    let mostFrequentSecton = document.querySelector(`${metricSelectors.mostFrequentId} > .metrics`);
-    lastVideoSection.innerHTML = '';
-    mostFrequentSecton.innerHTML = '';
-    createMetricsList(videoLinksArray, lastVideoSection);
-    createMetricsList(frequentDomainData, mostFrequentSecton);
+function playlistApply(link){
+    addToLibrary('starLibrary', link);
+    addToLibrary('playlistLibrary', link);
+    let starLibrary = JSON.parse(localStorage.getItem('starLibrary')) || [];
+    let playlistLibrary = JSON.parse(localStorage.getItem('playlistLibrary')) || [];
+    starSpan.innerHTML = 'Starred';
+    addSpan.innerHTML = 'Added';
+    starActive = true;
+    addToPlaylistActive = true;
+    let starArea = document.querySelector(`#starred-videos > .videos`);
+    let playlistArea = document.querySelector(`#playlist > .videos`);
+    starArea.innerHTML = '';
+    playlistArea.innerHTML = '';
+    createLibraryList(starLibrary, starArea);
+    createLibraryList(playlistLibrary, playlistArea);
 }
+
+
+// #region Commands 
+
 
 // #endregion

@@ -36,6 +36,7 @@ function checkLibrary() {
  */
 function addToLibrary(libraryType, newItem){
     let library = JSON.parse(localStorage.getItem(libraryType)) || [];
+    library = library.filter(item => Object.keys(item).length !== 0);
     let [_, id, url] = extractMediaInfo(newItem);
 
     let savedObject = {
@@ -133,7 +134,7 @@ function createLibraryList(library, location) {
     if (library.length > iterations){
         let li = document.createElement('li');
         li.innerHTML = `
-            <span>${library.length - iterations} More Items</span>
+            <span>${library.length - iterations} More Items...</span>
             <button class="quick-button">Display More</button>
         `;
         li.classList.add('display-more');

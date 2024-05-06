@@ -1,5 +1,19 @@
 
 /**
+ * Method responsible of updating metric list.
+ */
+function updateMetricLists(){
+    let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
+    let frequentDomainData = JSON.parse(localStorage.getItem('frequentDomainData')) || {};
+    let lastVideoSection = document.querySelector(`${metricSelectors.lastVideoId} > .metrics`);
+    let mostFrequentSecton = document.querySelector(`${metricSelectors.mostFrequentId} > .metrics`);
+    lastVideoSection.innerHTML = '';
+    mostFrequentSecton.innerHTML = '';
+    createMetricsList(videoLinksArray, lastVideoSection);
+    createMetricsList(frequentDomainData, mostFrequentSecton);
+}
+
+/**
  * Method responsible of primarily handling supported websites.
  * 
  * @param {Object} domains - Public domains.
