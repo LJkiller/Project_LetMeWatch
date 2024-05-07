@@ -121,13 +121,13 @@ function createLibraryList(library, location) {
     let originalTextColor = getComputedStyle(root).getPropertyValue('--white');
     let textColor = originalTextColor, bottomColor = originalColor, topColor = originalColor;
 
-    let textLimit = 13, maxIteration = 8, iterations = 0;
+    let maxIteration = 8, iterations = 0;
     let html = '';
     for (let i = 0; i < library.length && i < maxIteration; i++) {
         iterations++;
         let item = library[i];
         let domainName = capitalizeFirstLetter(getWebsiteName(item.url));
-        let urlElement = `<a href="${item.url}" target="_blank">${item.id.slice(0, textLimit)}</a>`;
+        let urlElement = `<a href="${item.url}" target="_blank">${item.id.slice(0, textListLimit)}${item.id.length > textListLimit ? '...' : ''}</a>`;
         html += `
             <li>
                 ${createSVGNumber(root, bottomColor, topColor, textColor, textColor, i + 1, 'circle')}

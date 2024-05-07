@@ -69,7 +69,6 @@ function createMetricsList(items, location) {
     let html = '';
     items['initialized'] = 0;
     if (Array.isArray(items)) {
-        let textLimit = 13;
         for (let i = 0; i < items.length; i++){
             let item = items[i];
             let ifNotFound = item.url === 'NOT FOUND';
@@ -80,7 +79,7 @@ function createMetricsList(items, location) {
             ;
             let urlElement = ifNotFound ?
                 `<span class="url-id">FOUND</span>` :
-                `<a href="${item.url}" target="_blank">${item.id.slice(0, textLimit)}</a>`
+                `<a href="${item.url}" target="_blank">${item.id.slice(0, textListLimit)}${item.id.length > textListLimit ? '...' : ''}</a>`
             ;
 
             html += `

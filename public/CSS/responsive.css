@@ -504,7 +504,7 @@ footer>section:not(#site-information, #site-insight, #user-library) ul li a {
     
 }
 
-@media screen and (min-width: 1536px) {
+@media screen and (min-width: 1560px) {
     /* Footer adjustment*/
 
     footer {
