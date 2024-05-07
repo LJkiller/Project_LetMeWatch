@@ -87,10 +87,12 @@ document.getElementById('next-playlist-button').addEventListener('click', functi
 
 // #region Library Buttons
 
+let starButton = document.getElementById('star-button');
+let addButton = document.getElementById('add-to-playlist-button');
 let playlistButtons = [
     {
-        buttonType: document.getElementById('star-button'),
-        spanElement: document.querySelector('#star-button > span'),
+        buttonType: starButton,
+        spanElement: starButton.querySelector('span'),
         ulElement: document.querySelector('#starred-videos > ul'),
         active: false,
         defaultText: 'Star',
@@ -98,8 +100,8 @@ let playlistButtons = [
         libraryType: 'starLibrary'
     },
     {
-        buttonType: document.getElementById('add-to-playlist-button'),
-        spanElement: document.querySelector('#add-to-playlist-button > span'),
+        buttonType: addButton,
+        spanElement: addButton.querySelector('span'),
         ulElement: document.querySelector('#playlist > ul'),
         active: false,
         defaultText: 'Add To Playlist',
@@ -108,6 +110,9 @@ let playlistButtons = [
     }
 ];
 
+/**
+ * Events for hovering.
+ */
 for (let i = 0; i < playlistButtons.length; i++){
     let button = playlistButtons[i];
     button.buttonType.addEventListener('mouseenter', function(event) {
@@ -136,8 +141,9 @@ function hoverSolidIcon(location) {
 
 }
 
-// #region Click
-
+/**
+ * Event for clicking.
+ */
 for (let i = 0; i < playlistButtons.length; i++){
     let button = playlistButtons[i];
     button.buttonType.addEventListener('click', function (event) {
@@ -160,7 +166,5 @@ for (let i = 0; i < playlistButtons.length; i++){
         }
     });
 }
-
-// #endregion
 
 // #endregion
