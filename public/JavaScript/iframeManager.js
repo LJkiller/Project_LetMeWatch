@@ -36,8 +36,8 @@ function displayVideoSize() {
     let storedWidth = Math.round(localStorage.getItem('videoWidth'));
     let storedHeight = Math.round(storedWidth / aspectRatio);
 
-    heightValueSpan.textContent = `Height: ${storedHeight}px`;
-    widthValueSpan.textContent = `Width: ${storedWidth}px`;
+    document.getElementById('height-value').textContent = `Height: ${storedHeight}px`;
+    document.getElementById('width-value').textContent = `Width: ${storedWidth}px`;
 }
 
 /**
@@ -143,7 +143,7 @@ function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeS
     let publicDomains = typeof domains !== 'undefined' ? domains : {};
     let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
 
-    videoLinkHTML.href = videoLink;
+    document.getElementById('video-link').href = videoLink;
     frequentDomainsAnalysis(videoLink, Object.keys(publicDomains), Object.keys(moreDomains));
     saveVideoLink(videoLink, videoId, iframeSrc);
 }

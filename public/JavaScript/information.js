@@ -1,5 +1,5 @@
 
-// #region Setup.
+// #region Setup
 let root = document.documentElement;
 
 let playerIframe = document.getElementById('falsified-media-player');
@@ -8,10 +8,7 @@ let startPlaylistButton = document.getElementById('start-playlist-button');
 let exitPlaylistButton = document.getElementById('exit-playlist-button');
 let iframeControls = document.getElementById('iframe-controls');
 
-let heightValueSpan = document.getElementById('height-value');
-let widthValueSpan = document.getElementById('width-value');
 let videoIdValueSpan = document.getElementById('video-id');
-let videoLinkHTML = document.getElementById('video-link');
 
 let baseWidth = 560;
 let baseHeight = 315;
@@ -24,9 +21,8 @@ let defaultHeight = baseHeight * scaleFactor;
 
 let pressedButtonForVideoURL = 0;
 
-let linkRegex = /^(http|https|ftp|ssh|telnet|smtp|imap|pop3|dns|snmp|ntp|ldap|sftp|ftps|smtps|rdp|webdav|rtsp|bittorrent):\/\/[^\s/$.?#].[^\s]*$/i;
+let linkRegex = /^(http|https|ftp|ssh|telnet|smtp|imap|dns|snmp|ntp|ldap|sftp|ftps|smtps|webdav|rtsp|bittorrent):\/\/[^\s/$.?#].[^\s]*$/i;
 // #endregion
-
 
 let metricSelectors = {
     lastVideoId: '#last-viewed-video',
