@@ -64,18 +64,14 @@ function updatePlayerDimensions(width, height) {
  * @param {boolean} displayAsLastVideo - If last video id should be displayed.
  */
 function displayVideoId(displayAsLastVideo = false) {
-    let videoLinks = JSON.parse(localStorage.getItem('videoLinks')) || [];
-    let storedVideoID = 'NOT FOUND';
-    try {
-        storedVideoID = videoLinks[videoLinks.length -1].id;
-    } catch (error) {
-        console.error('Id is not found', error);
-    }
+    let videoLinks = JSON.parse(localStorage.getItem('videoLinks'));
+    let storedVideoID = Array.isArray(videoLinks) ? videoLinks[videoLinks.length -1].id: 'NOT FOUND';
+    let displayId = limitText(storedVideoID, textListLimit);
 
     if (displayAsLastVideo) {
-        videoIdValueSpan.textContent = `VideoID: ${storedVideoID}`;
+        videoIdValueSpan.textContent = `VideoID: ${displayId}`;
     } else {
-        videoIdValueSpan.innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${storedVideoID}`;
+        videoIdValueSpan.innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${displayId}`;
     }
 }
 
@@ -138,7 +134,7 @@ function frequentDomainsAnalysis(videoInput, domains = [], additionalDomains = [
  * @param {string[]} iframeSrc - The current video embed source.
  */
 function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeSrc = ['NOT FOUND']) {
-    videoIdValueSpan.textContent = `VideoID: ${videoId}`;
+    videoIdValueSpan.textContent = `VideoID: ${limitText(videoId, textListLimit)}`;
 
     let publicDomains = typeof domains !== 'undefined' ? domains : {};
     let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};

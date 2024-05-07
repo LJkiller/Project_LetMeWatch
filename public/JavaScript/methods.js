@@ -120,6 +120,17 @@ function isGibberish(input) {
     return false;
 }
 
+/**
+ * Method responsible of limiting a text input.
+ * 
+ * @param {string} input - Text to reformat.
+ * @param {number} charLimit - Character limit of the text.
+ * @returns {string} - Limited text.
+ */
+function limitText(input, charLimit){
+    return `${input.slice(0, charLimit)}${input.length > charLimit ? '...': ''}`
+}
+
 
 /**
  * Method responsible of getting a link's domain name.

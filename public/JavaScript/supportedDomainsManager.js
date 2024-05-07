@@ -79,7 +79,7 @@ function createMetricsList(items, location) {
             ;
             let urlElement = ifNotFound ?
                 `<span class="url-id">FOUND</span>` :
-                `<a href="${item.url}" target="_blank">${item.id.slice(0, textListLimit)}${item.id.length > textListLimit ? '...' : ''}</a>`
+                `<a href="${item.url}" target="_blank">${limitText(item.id, textListLimit)}</a>`
             ;
 
             html += `

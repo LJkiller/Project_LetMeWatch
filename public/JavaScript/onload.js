@@ -18,11 +18,12 @@ window.onload = function () {
 function siteSavedCorrection(width){
     let videoLinks = JSON.parse(localStorage.getItem('videoLinks')) || [];
     let latestLink = videoLinks.length ? videoLinks[videoLinks.length - 1] : { id: 'NOT FOUND', url: 'NOT FOUND', src: 'NOT FOUND'};
+    let displayId = `${limitText(latestLink.id, textListLimit)}`;
     if (width) {
         restoreIframeSize(playerIframe, width);
     }
 
-    document.getElementById('video-id').innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${latestLink.id}`;
+    document.getElementById('video-id').innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${displayId}`;
     document.getElementById('video-link').href = latestLink.url;
     document.getElementById('falsified-media-player').src = latestLink.src;
 }

@@ -14,8 +14,8 @@ function itemExistsInList(list, item) {
  * Method responsible of checking the libraries to properly style buttons.
  */
 function checkLibrary() {
-    let videoLinks = JSON.parse(localStorage.getItem('videoLinks'));
-    let latestVideo = videoLinks[videoLinks.length -1].url;
+    let videoLinks = JSON.parse(localStorage.getItem('videoLinks')) || [];
+    let latestVideo = videoLinks.length > 1 ? videoLinks[videoLinks.length -1].url : '';
     for (let i = 0; i < playlistButtons.length; i++){
         let button = playlistButtons[i];
         let library = JSON.parse(localStorage.getItem(button.libraryType)) || [];
@@ -79,7 +79,7 @@ function removeFromLibrary(libraryType, item) {
  */
 function resetMainButtons() {
     for (let i = 0; i < playlistButtons.length; i++){
-        playlistButtons[i].spanElement.innerHTML = 'Star';
+        playlistButtons[i].spanElement.innerHTML = playlistButtons[i].defaultText;
         playlistButtons[i].active = false;
         resetButtonIcon(playlistButtons[i].buttonType);
     }
@@ -127,7 +127,7 @@ function createLibraryList(library, location) {
         iterations++;
         let item = library[i];
         let domainName = capitalizeFirstLetter(getWebsiteName(item.url));
-        let urlElement = `<a href="${item.url}" target="_blank">${item.id.slice(0, textListLimit)}${item.id.length > textListLimit ? '...' : ''}</a>`;
+        let urlElement = `<a href="${item.url}" target="_blank">${limitText(item.id, textListLimit)}</a>`;
         html += `
             <li>
                 ${createSVGNumber(root, bottomColor, topColor, textColor, textColor, i + 1, 'circle')}

@@ -21,7 +21,7 @@ let defaultHeight = baseHeight * scaleFactor;
 
 let pressedButtonForVideoURL = 0;
 
-let textListLimit = 8;
+let textListLimit = 9;
 
 let linkRegex = /^(http|https|ftp|ssh|telnet|smtp|imap|dns|snmp|ntp|ldap|sftp|ftps|smtps|webdav|rtsp|bittorrent):\/\/[^\s/$.?#].[^\s]*$/i;
 // #endregion
@@ -41,7 +41,7 @@ let domains = {
             'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi'
         ],
         regexes: [
-            /(?:https?:\/\/)?(?:www\.)?youtube\.com\/playlist\?list=([^&?/]+)/i,
+            /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?list=([^&?/]+)/i,
             /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)/i,
             /youtu\.be\/([^?]+)/i,
             /(?:https?:\/\/)?(?:www\.)?youtube\.com\/embed\/([^?]+)/i,
