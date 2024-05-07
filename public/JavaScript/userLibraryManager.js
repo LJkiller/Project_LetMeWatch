@@ -14,19 +14,16 @@ function itemExistsInList(list, item) {
  * Method responsible of checking the libraries to properly style buttons.
  */
 function checkLibrary() {
-    let starLibrary = JSON.parse(localStorage.getItem('starLibrary')) || [];
-    let playlistLibrary = JSON.parse(localStorage.getItem('playlistLibrary')) || [];
     let videoLinks = JSON.parse(localStorage.getItem('videoLinks'));
     let latestVideo = videoLinks[videoLinks.length -1].url;
-    if (itemExistsInList(starLibrary, latestVideo)) {
-        activateButtonIcon(starButton.querySelector('i'));
-        starSpan.innerHTML = 'Starred';
-        starActive = true;
-    }
-    if (itemExistsInList(playlistLibrary, latestVideo)) {
-        activateButtonIcon(addToPlaylistButton.querySelector('i'));
-        addSpan.innerHTML = 'Added';
-        addToPlaylistActive = true;
+    for (let i = 0; i < playlistButtons.length; i++){
+        let button = playlistButtons[i];
+        let library = JSON.parse(localStorage.getItem(button.libraryType)) || [];
+        if (itemExistsInList(library, latestVideo)) {
+            activateButtonIcon(button.buttonType.querySelector('i'));
+            button.spanElement.innerHTML = 'Starred';
+            button.active = true;
+        }
     }
 }
 
@@ -81,13 +78,11 @@ function removeFromLibrary(libraryType, item) {
  * Method responsible of resetting main buttons.
  */
 function resetMainButtons() {
-    starSpan.innerHTML = 'Star';
-    starActive = false;
-    resetButtonIcon(starButton);
-
-    addSpan.innerHTML = 'Add To Playlist';
-    addToPlaylistActive = false;
-    resetButtonIcon(addToPlaylistButton);
+    for (let i = 0; i < playlistButtons.length; i++){
+        playlistButtons[i].spanElement.innerHTML = 'Star';
+        playlistButtons[i].active = false;
+        resetButtonIcon(playlistButtons[i].buttonType);
+    }
 }
 
 /**
@@ -126,30 +121,28 @@ function createLibraryList(library, location) {
     let originalTextColor = getComputedStyle(root).getPropertyValue('--white');
     let textColor = originalTextColor, bottomColor = originalColor, topColor = originalColor;
 
-    let fragment = document.createDocumentFragment();
-    let textLimit = 13
-    let iterations = 0;
-    for (let i = 0; i < library.length && i < 10; i++) {
+    let textLimit = 13, maxIteration = 8, iterations = 0;
+    let html = '';
+    for (let i = 0; i < library.length && i < maxIteration; i++) {
         iterations++;
         let item = library[i];
         let domainName = capitalizeFirstLetter(getWebsiteName(item.url));
         let urlElement = `<a href="${item.url}" target="_blank">${item.id.slice(0, textLimit)}</a>`;
-        let li = document.createElement('li');
-        li.innerHTML = `
-            ${createSVGNumber(root, bottomColor, topColor, textColor, textColor, i + 1, 'circle')}
-            <span>${domainName}:</span>
-            ${urlElement}
-        `;
-        fragment.appendChild(li);
+        html += `
+            <li>
+                ${createSVGNumber(root, bottomColor, topColor, textColor, textColor, i + 1, 'circle')}
+                <span>${domainName}:</span>
+                ${urlElement}
+            </li>`
+        ;
     }
     if (library.length > iterations){
-        let li = document.createElement('li');
-        li.innerHTML = `
-            <span>${library.length - iterations} More Items...</span>
-            <button class="quick-button">Display More</button>
-        `;
-        li.classList.add('display-more');
-        fragment.appendChild(li);
+        html += `
+            <li class="display-more">
+                <span>${library.length - iterations} More Items...</span>
+                <button class="quick-button">Display More</button>
+            </li>`
+        ;
     }
-    location.appendChild(fragment);
+    location.innerHTML = html;
 }

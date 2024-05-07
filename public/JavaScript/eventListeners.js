@@ -87,35 +87,42 @@ document.getElementById('next-playlist-button').addEventListener('click', functi
 
 // #region Library Buttons
 
-let starActive = false, addToPlaylistActive = false;
+let playlistButtons = [
+    {
+        buttonType: document.getElementById('star-button'),
+        spanElement: document.querySelector('#star-button > span'),
+        ulElement: document.querySelector('#starred-videos > ul'),
+        active: false,
+        defaultText: 'Star',
+        activeText: 'Starred',
+        libraryType: 'starLibrary'
+    },
+    {
+        buttonType: document.getElementById('add-to-playlist-button'),
+        spanElement: document.querySelector('#add-to-playlist-button > span'),
+        ulElement: document.querySelector('#playlist > ul'),
+        active: false,
+        defaultText: 'Add To Playlist',
+        activeText: 'Added',
+        libraryType: 'playlistLibrary'
+    }
+];
 
-// #region Hover
-
-starButton.addEventListener('mouseenter', function(event) {
-    event.preventDefault();
-    if (!starActive){
-        hoverSolidIcon(starButton);
-    }
-});
-starButton.addEventListener('mouseleave', function(event) {
-    event.preventDefault();
-    if (!starActive){
-        hoverSolidIcon(starButton);
-    }
-});
-
-addToPlaylistButton.addEventListener('mouseenter', function(event) {
-    event.preventDefault();
-    if (!addToPlaylistActive){
-        hoverSolidIcon(addToPlaylistButton);
-    }
-});
-addToPlaylistButton.addEventListener('mouseleave', function(event) {
-    event.preventDefault();
-    if (!addToPlaylistActive){
-        hoverSolidIcon(addToPlaylistButton);
-    }
-});
+for (let i = 0; i < playlistButtons.length; i++){
+    let button = playlistButtons[i];
+    button.buttonType.addEventListener('mouseenter', function(event) {
+        event.preventDefault();
+        if (!button.active){
+            hoverSolidIcon(button.buttonType);
+        }
+    });
+    button.buttonType.addEventListener('mouseleave', function(event) {
+        event.preventDefault();
+        if (!button.active){
+            hoverSolidIcon(button.buttonType);
+        }
+    });
+}
 
 /**
  * Method responsible of hovering over the button to toggle icon.
@@ -129,57 +136,30 @@ function hoverSolidIcon(location) {
 
 }
 
-// #endregion
-
 // #region Click
 
-/**
- * Event for clicking star button.
- */
-starButton.addEventListener('click', function(event) {
-    event.preventDefault();
-    let videoLinks = JSON.parse(localStorage.getItem('videoLinks'));
-    let latestVideo = videoLinks[videoLinks.length -1].url;
-    if (!starActive) {
-        addToLibrary('starLibrary', latestVideo);
-        starSpan.innerHTML = 'Starred';
-        starActive = true;
-    } else {
-        removeFromLibrary('starLibrary', latestVideo);
-        starSpan.innerHTML = 'Star';
-        starActive = false;
-    }
-    let starLibrary = JSON.parse(localStorage.getItem('starLibrary')) || [];
-    let location = document.querySelector(`#starred-videos > .videos`);
-    location.innerHTML = '';
-    if (linkRegex.test(latestVideo)) {
-        createLibraryList(starLibrary, location);
-    }
-});
-
-/**
- * Event for clicking add to playlist.
- */
-addToPlaylistButton.addEventListener('click', function(event) {
-    event.preventDefault();
-    let videoLinks = JSON.parse(localStorage.getItem('videoLinks'));
-    let latestVideo = videoLinks[videoLinks.length -1].url;
-    if (!addToPlaylistActive) {
-        addToLibrary('playlistLibrary', latestVideo);
-        addSpan.innerHTML = 'Added';
-        addToPlaylistActive = true;
-    } else {
-        removeFromLibrary('playlistLibrary', latestVideo);
-        addSpan.innerHTML = 'Add To Playlist';
-        addToPlaylistActive = false;
-    }
-    let playlistLibrary = JSON.parse(localStorage.getItem('playlistLibrary')) || [];
-    let location = document.querySelector(`#playlist > .videos`);
-    location.innerHTML = '';
-    if (linkRegex.test(latestVideo)) {
-        createLibraryList(playlistLibrary, location);
-    }
-});
+for (let i = 0; i < playlistButtons.length; i++){
+    let button = playlistButtons[i];
+    button.buttonType.addEventListener('click', function (event) {
+        event.preventDefault();
+        let videoLinks = JSON.parse(localStorage.getItem('videoLinks'));
+        let latestVideo = videoLinks[videoLinks.length - 1].url;
+        if (!button.active) {
+            addToLibrary(button.libraryType, latestVideo);
+            (button.spanElement).innerHTML = button.activeText;
+            button.active = true;
+        } else {
+            removeFromLibrary(button.libraryType, latestVideo);
+            (button.spanElement).innerHTML = button.defaultText;
+            button.active = false;
+        }
+        let library = JSON.parse(localStorage.getItem(button.libraryType)) || [];
+        (button.ulElement).innerHTML = '';
+        if (linkRegex.test(latestVideo)) {
+            createLibraryList(library, button.ulElement);
+        }
+    });
+}
 
 // #endregion
 

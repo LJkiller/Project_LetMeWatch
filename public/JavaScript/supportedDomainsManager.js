@@ -40,21 +40,18 @@ function createListItems(domains, area) {
         }
         return 0;
     });
+    let html = '';
     for (let i = 0; i < sortedArray.length; i++) {
-        let supportedSiteItem = document.createElement('li');
-        let dot = document.createElement('i');
-        let link = document.createElement('a');
-
-        dot.classList.add('fa-solid', sortedArray[i][0], sortedArray[i][0] === 'flaired' ? 'fa-fire' : 'fa-circle');
-        dot.classList.remove('not');
-
-        link.textContent = capitalizeFirstLetter(sortedArray[i][1]);
-        link.href = `https://www.${sortedArray[i][1]}`;
-        link.target = "_blank";
-
-        supportedSiteItem.append(dot, link);
-        area.appendChild(supportedSiteItem);
+        let [domainClass, domain] = sortedArray[i];
+        domainClass.replace('not', '');
+        let dot = `<i class="fa-solid ${domainClass} ${domainClass === 'flaired' ? 'fa-fire' : 'fa-circle'}"></i>`;
+        let link = `<a href="https://www.${domain}" target="_blank">${capitalizeFirstLetter(domain)}</a>`;
+        html += `
+            <li>
+                ${dot}${link}
+            </li>`;
     }
+    area.innerHTML = html;
 }
 
 /**
@@ -69,7 +66,7 @@ function createMetricsList(items, location) {
     let textColor = originalTextColor, outlineColor = originalTextColor, bottomColor = originalColor, topColor = originalColor;
 
     let svg = 'circle';
-    let fragment = document.createDocumentFragment();
+    let html = '';
     items['initialized'] = 0;
     if (Array.isArray(items)) {
         let textLimit = 13;
@@ -86,13 +83,13 @@ function createMetricsList(items, location) {
                 `<a href="${item.url}" target="_blank">${item.id.slice(0, textLimit)}</a>`
             ;
 
-            let li = document.createElement('li');
-            li.innerHTML = `
-                ${createSVGNumber(root, bottomColor, topColor, textColor, textColor, i + 1, svg)}
-                <span class="date">${item.date[0]}</span>
-                <p class="domain">${urlDomain}${urlElement}</p>
-            `;
-            fragment.appendChild(li);
+            html += `
+                <li>
+                    ${createSVGNumber(root, bottomColor, topColor, textColor, textColor, i + 1, svg)}
+                    <span class="date">${item.date[0]}</span>
+                    <p class="domain">${urlDomain}${urlElement}</p>
+                </li>`
+            ;
         }
     } else {
         let objectArray = Object.keys(items)
@@ -118,16 +115,16 @@ function createMetricsList(items, location) {
             topColor = isHighestValue ? 'var(--yellow)' : originalColor;
             bottomColor = isHighestValue ? 'var(--red)' : originalColor;
 
-            let li = document.createElement('li');
-            li.innerHTML = `
-                ${createSVGNumber(root, bottomColor, topColor, textColor, outlineColor, i + 1, svg)}
-                <span>${uses}</span>
-                <a href="https://${item.key}" target="_blank">${text}</a>
-            `;
-            fragment.appendChild(li);
+            html += `  
+                <li>
+                    ${createSVGNumber(root, bottomColor, topColor, textColor, outlineColor, i + 1, svg)}
+                    <span>${uses}</span>
+                    <a href="https://${item.key}" target="_blank">${text}</a>
+                </li>`
+            ;
         }
     }
-    location.appendChild(fragment);
+    location.innerHTML = html;
 }
 
 /**

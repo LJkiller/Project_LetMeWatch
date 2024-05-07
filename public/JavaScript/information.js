@@ -4,11 +4,6 @@ let root = document.documentElement;
 
 let playerIframe = document.getElementById('falsified-media-player');
 
-let starButton = document.getElementById('star-button');
-let addToPlaylistButton = document.getElementById('add-to-playlist-button');
-let starSpan = starButton.querySelector('span');
-let addSpan = addToPlaylistButton.querySelector('span');
-
 let startPlaylistButton = document.getElementById('start-playlist-button');
 let exitPlaylistButton = document.getElementById('exit-playlist-button');
 let iframeControls = document.getElementById('iframe-controls');
