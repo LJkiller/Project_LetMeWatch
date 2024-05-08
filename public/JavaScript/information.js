@@ -20,6 +20,8 @@ let defaultWidth = baseWidth * scaleFactor;
 let defaultHeight = baseHeight * scaleFactor;
 
 let pressedButtonForVideoURL = 0;
+let maxLoopFunctionIteration = 0;
+let functionIteration = 0;
 
 let textListLimit = 9;
 

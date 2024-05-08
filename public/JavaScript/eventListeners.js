@@ -37,19 +37,6 @@ function resetVideoSize(displayAsLastVideo) {
     displayVideoId(displayAsLastVideo);
 }
 
-// mediaPlayer.onload = function() {
-//     let embedDoc = mediaPlayer.contentDocument || mediaPlayer.contentWindow.document;
-
-//     let aElements = embedDoc.getElementsByTagName('a');
-//     for (let i = 0; i < aElements.length; i++) {
-//         aElements[i].addEventListener('click', function(event) {
-//             event.preventDefault();
-            
-//             // You can add further actions here if needed
-//         });
-//     }
-// };
-
 // #endregion
 
 

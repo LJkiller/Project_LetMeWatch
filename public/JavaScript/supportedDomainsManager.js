@@ -3,7 +3,7 @@
  * Method responsible of updating metric list.
  */
 function updateMetricLists(){
-    let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
+    let videoLinksArray = getVideoLinksArray()[0] || [];
     let frequentDomainData = JSON.parse(localStorage.getItem('frequentDomainData')) || {};
     let lastVideoSection = document.querySelector(`${metricSelectors.lastVideoId} > .metrics`);
     let mostFrequentSecton = document.querySelector(`${metricSelectors.mostFrequentId} > .metrics`);
@@ -145,9 +145,6 @@ function saveFrequentDomain(domainInput, allDomains, previousInfo) {
         }
     }
     
-    console.log((commandCheck[0]) ? 
-        'Everything added by 1' : `One domain added by 1: ${domainInput}`
-    );
     for (let i = 0; i < allDomains.length; i++) {
         let domain = allDomains[i].split('|')[1];
         if (commandCheck[0]) {

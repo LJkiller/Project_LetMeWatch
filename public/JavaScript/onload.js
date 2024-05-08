@@ -81,7 +81,7 @@ function siteStyleCorrection(){
  * Method responsible of generating and correcting HTML in the metrics sections.
  */
 function siteMetricsCorrection(){
-    let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
+    let videoLinksArray = getVideoLinksArray()[0] || [];
     let frequentDomainData = JSON.parse(localStorage.getItem('frequentDomainData')) || {};
     createMetricsList(videoLinksArray, document.querySelector(`${metricSelectors.lastVideoId} > .metrics`));
     createMetricsList(frequentDomainData, document.querySelector(`${metricSelectors.mostFrequentId} > .metrics`));

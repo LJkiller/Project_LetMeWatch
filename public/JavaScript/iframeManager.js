@@ -134,8 +134,6 @@ function frequentDomainsAnalysis(videoInput, domains = [], additionalDomains = [
  * @param {string[]} iframeSrc - The current video embed source.
  */
 function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeSrc = ['NOT FOUND']) {
-    videoIdValueSpan.textContent = `VideoID: ${limitText(videoId, textListLimit)}`;
-
     let publicDomains = typeof domains !== 'undefined' ? domains : {};
     let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
     let compiledDomains = [];
@@ -166,8 +164,8 @@ function handleLinkInput(linkInput) {
         return;
     }
 
-    let examples = getAllDomainExamples();
-    let example = getRandomValue(examples);
+    let mediaInfo;
+    let examples = getAllDomainExamples(), example = getRandomValue(examples);
     let publicDomains = typeof domains !== 'undefined' ? domains : {};
     let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
     
@@ -184,10 +182,10 @@ function handleLinkInput(linkInput) {
             break;
         case commandCheck[1] === commands.loop:
             let interval = (input.length > 1 && input[1] !== undefined && !isNaN(parseInt(input[1]))) ? parseInt(input[1]) : 20;
+            maxLoopFunctionIteration = interval;
             executeAtInterval(100, interval, () => {
                 handleLinkInput('test');
             });
-
             break;
         case commandCheck[1] === commands.localClear:
             localStorage.clear();
@@ -202,22 +200,44 @@ function handleLinkInput(linkInput) {
             checkLocalStorage();
             break;
         case commandCheck[1] === commands.localTest:
+            functionIteration++;
             frequentDomainsAnalysis(commandCheck, Object.keys(publicDomains), Object.keys(moreDomains));
-            console.log('Local Storage Manipulated.');
-            handleLinkInput(example);
-            console.log(`Video Example Applied: ${example}.`);
-            playlistApply(example);
+            mediaInfo = mediaResult(example);
+            let applyMediaInfo = () => {
+                videoIdValueSpan.textContent = `VideoID: ${limitText(mediaInfo[0], textListLimit)}`;
+                mediaPlayer.src = mediaInfo[1];
+            };
+            
+            if (functionIteration >= maxLoopFunctionIteration || maxLoopFunctionIteration === 0) {
+                console.log(['Local Storage Manipulated.', `Video Example Applied: ${example}.`]);
+                playlistApply(example);            
+                applyMediaInfo();
+                functionIteration = 0;
+                maxLoopFunctionIteration = 0;
+            }
             break;
         default:
-            let mediaInfo = extractMediaInfo(input);
-            videoIdValueSpan.textContent = `VideoID: ${mediaInfo[1]}`;
-            updateVideoInfo(mediaInfo[1], mediaInfo[2], mediaInfo[3]);
-            mediaPlayer.src = mediaInfo[3];
+            mediaInfo = mediaResult(input);
+            mediaPlayer.src = mediaInfo[1];
+            videoIdValueSpan.textContent = `VideoID: ${limitText(mediaInfo[0], textListLimit)}`;
             break;
     }
     updateMetricLists();
     resetMainButtons();
     checkLibrary();
+}
+
+/**
+ * Method responsible of executing result of media functions.
+ * 
+ * @param {string} input - Link input. 
+ * @returns {string[]} - Array of id and src.
+ */
+function mediaResult(input){
+    let mediaInfo = extractMediaInfo(input);
+    updateVideoInfo(mediaInfo[1], mediaInfo[2], mediaInfo[3]);
+    mediaPlayer.src = mediaInfo[3];
+    return [mediaInfo[1], mediaInfo[3]];
 }
 
 /**
