@@ -37,6 +37,19 @@ function resetVideoSize(displayAsLastVideo) {
     displayVideoId(displayAsLastVideo);
 }
 
+// mediaPlayer.onload = function() {
+//     let embedDoc = mediaPlayer.contentDocument || mediaPlayer.contentWindow.document;
+
+//     let aElements = embedDoc.getElementsByTagName('a');
+//     for (let i = 0; i < aElements.length; i++) {
+//         aElements[i].addEventListener('click', function(event) {
+//             event.preventDefault();
+            
+//             // You can add further actions here if needed
+//         });
+//     }
+// };
+
 // #endregion
 
 
@@ -149,9 +162,9 @@ for (let i = 0; i < playlistButtons.length; i++){
     button.buttonType.addEventListener('click', function (event) {
         event.preventDefault();
         let videoLinks = getVideoLinksArray();
-        let latestVideo = videoLinks[videoLinks.length - 1].url;
+        let latestVideo = videoLinks[videoLinks.length - 1];
         if (!button.active) {
-            addToLibrary(button.libraryType, latestVideo);
+            addToLibrary(button.libraryType, latestVideo.url);
             (button.spanElement).innerHTML = button.activeText;
             button.active = true;
         } else {
@@ -161,7 +174,7 @@ for (let i = 0; i < playlistButtons.length; i++){
         }
         let library = JSON.parse(localStorage.getItem(button.libraryType)) || [];
         (button.ulElement).innerHTML = '';
-        if (linkRegex.test(latestVideo)) {
+        if (linkRegex.test(latestVideo.url)) {
             createLibraryList(library, button.ulElement);
         }
     });

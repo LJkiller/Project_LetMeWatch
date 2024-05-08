@@ -19,7 +19,7 @@ function updateMetricLists(){
  * @param {Object} domains - Public domains.
  * @param {Object} additionalDomains - Additional domains.
  */
-function supportedWebsites(domains, additionalDomains = {}) {
+function generateSupportedWebsites(domains, additionalDomains = {}) {
     createListItems(getWebsiteNames(domains), document.querySelector('#supported-domains > ul'));
     createListItems(getWebsiteNames(additionalDomains), document.querySelector('#additional-domains > ul'));
 }
@@ -75,7 +75,7 @@ function createMetricsList(items, location) {
 
             let urlDomain = ifNotFound ?
                 `<span class="url-name">NOT</span>` :
-                `<span class="url-name">${capitalizeFirstLetter(getWebsiteName(item.url))}:</span>`
+                `<span class="url-name">${capitalizeFirstLetter(item.domainName)}:</span>`
             ;
             let urlElement = ifNotFound ?
                 `<span class="url-id">FOUND</span>` :

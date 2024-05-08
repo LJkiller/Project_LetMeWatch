@@ -170,7 +170,7 @@ function executeAtInterval(interval, limit, command) {
  * @param {string} link - Link to analyze and get domain name.
  * @returns {string} - Domain name.
  */
-function getWebsiteName(link) {
+function getWebsiteName(link, domains = []) {
     let returnValue = link.includes('www.') ? 
         link.split('www.')[1].split('/')[0] : link.split('://')[1].split('/')[0]
     ;
@@ -178,6 +178,26 @@ function getWebsiteName(link) {
         let splitArray = returnValue.split('.');
         splitArray.shift();
         returnValue = splitArray.join('.');
+    }
+
+    if (domains.length > 0){
+        let parsedDomains = [];
+        for (let i = 0; i < domains.length; i++) {
+            let domain = domains[i];
+            let parts = domain.split('|');
+            if (parts.length >= 2) {
+                let parsedDomain = parts.slice(1).join('|');
+                parsedDomains.push(parsedDomain.includes('www.') ? parsedDomain.replace('www.', '') : parsedDomain);
+            }
+        }
+        let input = getWebsiteName(link);
+        for (let i = 0; i < parsedDomains.length; i++) {
+            let domain = parsedDomains[i];
+            if (input === domain || input === domain.split('|')[1]) {
+                returnValue = input === domain ? domain : domain.split('|')[0];
+                break;
+            }
+        }
     }
     
     return returnValue;

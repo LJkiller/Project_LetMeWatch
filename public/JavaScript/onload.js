@@ -62,7 +62,7 @@ function siteDomainsCorrection(){
     let supportedUl = document.querySelector('#supported-domains > ul');
     let supportedLi = document.createElement('li');
     supportedLi.style.marginLeft = 'calc(var(--standard-spacing) * 2)';
-    typeof supportedWebsites === 'function' ? supportedWebsites(publicDomains, moreDomains) : supportedLi.innerHTML = '<i class="fa-solid fa-circle"></i>No domains found';
+    typeof generateSupportedWebsites === 'function' ? generateSupportedWebsites(publicDomains, moreDomains) : supportedLi.innerHTML = '<i class="fa-solid fa-circle"></i>No domains found';
     supportedUl.appendChild(supportedLi);
 }
 

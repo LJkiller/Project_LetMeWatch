@@ -7,7 +7,7 @@
  * @returns {boolean} - If item exists or not.
  */
 function itemExistsInList(list, item) {
-    return list.some(obj => obj.url === item);
+    return list.some(obj => obj.id === item.id && obj.domainName === item.domainName);
 }
 
 /**
@@ -18,9 +18,9 @@ function checkLibrary() {
     for (let i = 0; i < playlistButtons.length; i++){
         let button = playlistButtons[i];
         let library = JSON.parse(localStorage.getItem(button.libraryType)) || [];
-        if (itemExistsInList(library, videoLinksArray[1].url)) {
+        if (itemExistsInList(library, videoLinksArray[1])) {
             activateButtonIcon(button.buttonType.querySelector('i'));
-            button.spanElement.innerHTML = 'Starred';
+            button.spanElement.innerHTML = button.activeText;
             button.active = true;
         }
     }
@@ -35,13 +35,17 @@ function checkLibrary() {
 function addToLibrary(libraryType, newItem){
     let library = JSON.parse(localStorage.getItem(libraryType)) || [];
     library = library.filter((item, index, self) =>
-        index === self.findIndex((t) => (
-            t.url === item.url && t.id === item.id
+        index === self.findIndex((imu) => (
+            imu.domainName === item.domainName && imu.id === item.id
         ))
     );
     let [_, id, url] = extractMediaInfo(newItem);
+    let publicDomains = typeof domains !== 'undefined' ? domains : {};
+    let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
+    let compiledDomains = [];
 
     let savedObject = {
+        domainName: getWebsiteName(newItem, compiledDomains.concat(Object.keys(publicDomains), Object.keys(moreDomains))),
         url: url,
         id: id
     };
@@ -58,19 +62,15 @@ function addToLibrary(libraryType, newItem){
  */
 function removeFromLibrary(libraryType, item) {
     let library = JSON.parse(localStorage.getItem(libraryType)) || [];
-    library = library.filter((item, index, self) =>
-        index === self.findIndex((t) => (
-            t.url === item.url && t.id === item.id
-        ))
-    );
     let indexToRemove = library.findIndex(libraryItem => 
-        libraryItem.url === item
+        libraryItem.domainName === item.domainName && libraryItem.id === item.id
     );
     if (indexToRemove !== -1) {
         library.splice(indexToRemove, 1);
         localStorage.setItem(libraryType, JSON.stringify(library));
     }
 }
+
 
 
 /**
@@ -125,7 +125,7 @@ function createLibraryList(library, location) {
     for (let i = 0; i < library.length && i < maxIteration; i++) {
         iterations++;
         let item = library[i];
-        let domainName = capitalizeFirstLetter(getWebsiteName(item.url));
+        let domainName = capitalizeFirstLetter(item.domainName);
         let urlElement = `<a href="${item.url}" target="_blank">${limitText(item.id, textListLimit)}</a>`;
         html += `
             <li>

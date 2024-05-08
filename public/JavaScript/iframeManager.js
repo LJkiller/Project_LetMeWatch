@@ -81,13 +81,14 @@ function displayVideoId(displayAsLastVideo = false) {
  * @param {string} videoId - Video ID.
  * @param {string[]} iframeSrc - Video iframeSrc.
  */
-function saveVideoLink(videoLink, videoId, iframeSrc) {
+function saveVideoLink(videoLink, videoId, iframeSrc, domains = []) {
     let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [];
     if (videoLinksArray.length >= 5) {
         videoLinksArray.shift();
     }
 
     let videoObject = {
+        domainName: getWebsiteName(videoLink, domains),
         url: videoLink,
         date: formatDate(new Date),
         id: videoId,
@@ -137,10 +138,11 @@ function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeS
 
     let publicDomains = typeof domains !== 'undefined' ? domains : {};
     let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
+    let compiledDomains = [];
 
     document.getElementById('video-link').href = videoLink;
     frequentDomainsAnalysis(videoLink, Object.keys(publicDomains), Object.keys(moreDomains));
-    saveVideoLink(videoLink, videoId, iframeSrc);
+    saveVideoLink(videoLink, videoId, iframeSrc, compiledDomains.concat(Object.keys(publicDomains), Object.keys(moreDomains)));
 }
 
 // #endregion
@@ -180,7 +182,7 @@ function handleLinkInput(linkInput) {
             console.log(`Video Example Applied: ${example}.`);
             break;
         case commandCheck[1] === commands.loop:
-            executeAtInterval(2000, 15, () => {
+            executeAtInterval(500, 30, () => {
                 handleLinkInput('test');
             });
             break;
