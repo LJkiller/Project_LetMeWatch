@@ -85,7 +85,7 @@ function createMetricsList(items, location) {
             html += `
                 <li>
                     ${createSVGNumber(root, bottomColor, topColor, textColor, textColor, i + 1, svg)}
-                    <span class="date">${item.date[0]}</span>
+                    <span class="date">${ifNotFound ? '': item.date[0]}</span>
                     <p class="domain">${urlDomain}${urlElement}</p>
                 </li>`
             ;

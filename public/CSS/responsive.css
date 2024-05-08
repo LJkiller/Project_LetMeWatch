@@ -26,12 +26,26 @@ header #let-me-watch-logo {
     justify-content: start;
     align-items: center;
 }
-header #falsified-media-link {
+header #media-form {
     display: flex;
     justify-content: end;
     align-items: center;
     margin-right: calc(var(--standard-spacing) * 1.6);
     gap: var(--standard-spacing);
+}
+header #media-form #media-form-buttons{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: start;
+    align-items: center;
+    gap: calc(var(--standard-spacing) * 0.5);
+}
+header #media-form #media-form-buttons button {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: calc(var(--standard-spacing) * 0.1);
 }
 
 /*#endregion*/

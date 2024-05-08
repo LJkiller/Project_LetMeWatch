@@ -87,45 +87,58 @@ document.getElementById('next-playlist-button').addEventListener('click', functi
 
 // #region Library Buttons
 
-let starButton = document.getElementById('star-button');
-let qAddButton = document.getElementById('q-add-playlist-button');
-let addButton = document.getElementById('add-playlist-button');
-let playlistButtonConfigs = [
+let starButton = document.getElementById('star-button'), addButton = document.getElementById('add-playlist-button');
+let qStarButton = document.getElementById('q-star-button'), qAddButton = document.getElementById('q-add-playlist-button');
+let starUl = document.querySelector('#starred-videos > ul'), playlistUl = document.querySelector('#playlist > ul');
+let starLibraryType = 'starLibrary', playlistLibraryType = 'playlistLibrary';
+
+let buttonConfigs = [
     {
         buttonLocation: starButton,
-        spanElement: starButton.querySelector('span'),
-        ulElement: document.querySelector('#starred-videos > ul'),
+        ulElement: starUl,
+        active: false,
+        libraryType: starLibraryType
+    },
+    {
+        buttonLocation: addButton,
+        ulElement: playlistUl,
+        active: false,
+        libraryType: playlistLibraryType
+    }
+]
+let qButtonConfigs = [
+    {
+        buttonLocation: qStarButton,
+        spanElement: qStarButton.querySelector('span'),
+        ulElement: starUl,
         active: false,
         defaultText: 'Star',
         activeText: 'Starred',
-        libraryType: 'starLibrary'
+        libraryType: starLibraryType
     },
     {
         buttonLocation: qAddButton,
         spanElement: qAddButton.querySelector('span'),
-        ulElement: document.querySelector('#playlist > ul'),
+        ulElement: playlistUl,
         active: false,
         defaultText: 'Add To Playlist',
         activeText: 'Added',
-        libraryType: 'playlistLibrary'
+        libraryType: playlistLibraryType
     }
 ];
-let addButtonConfig = {
-    buttonLocation: addButton,
-    ulElement: document.querySelector('#playlist > ul'),
-    active: false,
-    libraryType: 'playlistLibrary'
-};
 
 // Area for attaching events.
-addButtonConfig.buttonLocation.addEventListener('mouseenter', (event) => handleHoverEvent(event, addButtonConfig));
-addButtonConfig.buttonLocation.addEventListener('mouseleave', (event) => handleHoverEvent(event, addButtonConfig));
-addButtonConfig.buttonLocation.addEventListener('click', (event) => handleAddPlaylistEvent(event, addButtonConfig));
-for (let i = 0; i < playlistButtonConfigs.length; i++){
-    let button = playlistButtonConfigs[i];
+for (let i = 0; i < buttonConfigs.length; i++){
+    let button = buttonConfigs[i];
     button.buttonLocation.addEventListener('mouseenter', (event) => handleHoverEvent(event, button));
     button.buttonLocation.addEventListener('mouseleave', (event) => handleHoverEvent(event, button));
-    button.buttonLocation.addEventListener('click', (event) => handleClickEvent(event, button));
+    button.buttonLocation.addEventListener('click', (event) => handleClickAddEvent(event, button));
+}
+for (let i = 0; i < qButtonConfigs.length; i++){
+    let button = qButtonConfigs[i];
+    button.buttonLocation.addEventListener('mouseenter', (event) => handleHoverEvent(event, button));
+    button.buttonLocation.addEventListener('mouseleave', (event) => handleHoverEvent(event, button));
+    button.buttonLocation.addEventListener('click', (event) => handleClickqAddEvemt(event, button));
 }
 
 /**
@@ -150,27 +163,33 @@ function handleHoverEvent(event, buttonConfig) {
  * @param {Event} event - Event.
  * @param {object} button - Button configs. 
  */
-function handleClickEvent(event, buttonConfig){
+function handleClickqAddEvemt(event, buttonConfig){
     event.preventDefault();
     let videoLinks = getVideoLinksArray();
-    let latestVideo = videoLinks[videoLinks.length - 1];
     if (!buttonConfig.active) {
-        addToLibrary(buttonConfig.libraryType, latestVideo.url);
-        (buttonConfig.spanElement).innerHTML = buttonConfig.activeText;
+        addToLibrary(buttonConfig.libraryType, videoLinks[1].url);
+        buttonConfig.spanElement.innerHTML = buttonConfig.activeText;
         buttonConfig.active = true;
     } else {
-        removeFromLibrary(buttonConfig.libraryType, latestVideo);
-        (buttonConfig.spanElement).innerHTML = buttonConfig.defaultText;
+        removeFromLibrary(buttonConfig.libraryType, videoLinks[1].url);
+        buttonConfig.spanElement.innerHTML = buttonConfig.defaultText;
         buttonConfig.active = false;
     }
     let library = JSON.parse(localStorage.getItem(buttonConfig.libraryType)) || [];
-    (buttonConfig.ulElement).innerHTML = '';
-    if (linkRegex.test(latestVideo.url)) {
+    buttonConfig.ulElement.innerHTML = '';
+    if (linkRegex.test(videoLinks[1].url)) {
         createLibraryList(library, buttonConfig.ulElement);
     }
 }
 
-function handleAddPlaylistEvent(event, buttonConfig) {
+/**
+ * Method responsible of handling click event for media form buttons.
+ * 
+ * @param {Event} event - Event.
+ * @param {object} buttonConfig - Button object.
+ * @returns 
+ */
+function handleClickAddEvent(event, buttonConfig) {
     event.preventDefault();
     let linkElement = document.getElementById('link-input');
     let linkInput = linkElement.value;
@@ -188,6 +207,7 @@ function handleAddPlaylistEvent(event, buttonConfig) {
             buttonConfig.active = false;
             resetButtonIcon(buttonConfig.buttonLocation);
         }, 500);
+        checkLibrary();
     }
 }
 

@@ -15,8 +15,8 @@ function itemExistsInList(list, item) {
  */
 function checkLibrary() {
     let videoLinksArray = getVideoLinksArray();
-    for (let i = 0; i < playlistButtonConfigs.length; i++){
-        let button = playlistButtonConfigs[i];
+    for (let i = 0; i < qButtonConfigs.length; i++){
+        let button = qButtonConfigs[i];
         let library = JSON.parse(localStorage.getItem(button.libraryType)) || [];
         if (itemExistsInList(library, videoLinksArray[1])) {
             activateButtonIcon(button.buttonLocation.querySelector('i'));
@@ -74,10 +74,10 @@ function removeFromLibrary(libraryType, item) {
  * Method responsible of resetting main buttons.
  */
 function resetMainButtons() {
-    for (let i = 0; i < playlistButtonConfigs.length; i++){
-        playlistButtonConfigs[i].spanElement.innerHTML = playlistButtonConfigs[i].defaultText;
-        playlistButtonConfigs[i].active = false;
-        resetButtonIcon(playlistButtonConfigs[i].buttonLocation);
+    for (let i = 0; i < qButtonConfigs.length; i++){
+        qButtonConfigs[i].spanElement.innerHTML = qButtonConfigs[i].defaultText;
+        qButtonConfigs[i].active = false;
+        resetButtonIcon(qButtonConfigs[i].buttonLocation);
     }
 }
 

@@ -6,7 +6,7 @@ header {
     background-color: var(--primary-bg-color);
 }
 
-header #let-me-watch-logo, header #falsified-media-link{
+header #let-me-watch-logo, header #media-form{
     color: var(--normal-text-color);
 }
 
@@ -34,7 +34,7 @@ header #let-me-watch-logo:hover>span>span{
 
 /*#region Right*/
 
-header #falsified-media-link{
+header #media-form{
     height: var(--logo-dimensions);
 }
 

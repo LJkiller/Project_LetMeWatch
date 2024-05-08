@@ -8,8 +8,11 @@
     border-radius: var(--standard-border-radius);
     background-color: var(--black);
 }
-#falsified-media-link #add-playlist-button.form-button {
+#media-form div .form-button {
     min-width: calc(var(--min-button-width) * 0.425);
+}
+#media-form>#menu-button {
+    min-width: calc(var(--min-button-width) * 0.37);
 }
 
 .form-input{
