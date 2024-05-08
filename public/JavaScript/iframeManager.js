@@ -271,7 +271,7 @@ function domainAnalyzis(domains, domainName) {
 function mediaInformation(domainResult, linkInput, domainName) {
     let { regexes, iframeSrc } = domainResult;
     let combinedRegex = new RegExp(regexes.map(pattern => `(?:${pattern.source})`).join('|'), 'i');
-    
+
     let match = linkInput.match(combinedRegex);
     if (match) {
         let urlId = match.slice(1).find(id => !!id) || '';

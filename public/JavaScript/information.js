@@ -41,7 +41,7 @@ let domains = {
             'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi'
         ],
         regexes: [
-            /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?list=([^&?/]+)/i,
+            /(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:watch\?.*?&|playlist\?)list=([^&?/]+)/,
             /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)/i,
             /youtu\.be\/([^?]+)/i,
             /(?:https?:\/\/)?(?:www\.)?youtube\.com\/embed\/([^?]+)/i,
