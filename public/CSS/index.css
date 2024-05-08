@@ -92,9 +92,11 @@ footer>#site-insight>div section ul{
     list-style: none;
 }
 
-footer>section:not(#site-information, #site-insight, #user-library) #add-custom-button{
+
+footer>section:not(#site-information, #site-insight, #user-library) #add-custom-button,
+footer>#user-library div ul li.display-more {
     margin: 0 auto;
-    width: 90%;
+    width: 85%;
 }
 
 /*#endregion*/

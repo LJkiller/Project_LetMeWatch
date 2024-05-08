@@ -63,11 +63,12 @@
 			<span id="letMeWatchTitle">LetMeWatch <span>DAMMIT</span></span>
 		</a>
 
-		<form id="falsified-media-link">
-			<labeL for="link-input">Enter Link |</labeL>
+		<div id="falsified-media-link" class="form">
+			<label>Enter Link |</label>
+			<button id="add-playlist-button" class="form-button"><i class="fa-solid fa-plus"></i> <i class="fa-regular fa-bookmark"></i></button>
 			<input id="link-input" class="form-input" type="text" placeholder="Link" autocomplete="off">
-			<button class="form-button">Update Video</button>
-		</form>
+			<button id="media-link-button" class="form-button">Update Video</button>
+		</div>
 	</header>
 
 	<main>
@@ -79,7 +80,7 @@
 					<span>|</span>
 					<span id="height-value">Height : $(storedHeight)px</span>
 				</div>
-				<form id="media-controller" onsubmit="return false;">
+				<form id="media-controller" onsubmit="return false;" class="form">
 					<section id="width">
 						<label for="width-input">Enter Width |</label>
 						<input id="width-input" class="form-input" type="number" placeholder="Width" autocomplete="off">
@@ -97,7 +98,7 @@
 				<span id="video-id">VideoID: $(storedVideoID)</span>
 				<span>-</span>
 				<a id="video-link" target="_blank" href="">Video</a>
-				<button id="add-to-playlist-button" class="quick-button"><i class="fa-regular fa-bookmark"></i><span>Add To Playlist</span></button>
+				<button id="q-add-playlist-button" class="quick-button"><i class="fa-regular fa-bookmark"></i><span>Add To Playlist</span></button>
 				<button id="star-button" class="quick-button"><i class="fa-regular fa-star"></i><span>Star</span></button>
 			</div>
 

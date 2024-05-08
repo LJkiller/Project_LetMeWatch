@@ -15,11 +15,11 @@ function itemExistsInList(list, item) {
  */
 function checkLibrary() {
     let videoLinksArray = getVideoLinksArray();
-    for (let i = 0; i < playlistButtons.length; i++){
-        let button = playlistButtons[i];
+    for (let i = 0; i < playlistButtonConfigs.length; i++){
+        let button = playlistButtonConfigs[i];
         let library = JSON.parse(localStorage.getItem(button.libraryType)) || [];
         if (itemExistsInList(library, videoLinksArray[1])) {
-            activateButtonIcon(button.buttonType.querySelector('i'));
+            activateButtonIcon(button.buttonLocation.querySelector('i'));
             button.spanElement.innerHTML = button.activeText;
             button.active = true;
         }
@@ -31,27 +31,24 @@ function checkLibrary() {
  * 
  * @param {string} libraryType - Which library to add to.
  * @param {string} newItem - Item to add.
+ * @returns - Nothing.
  */
 function addToLibrary(libraryType, newItem){
     let library = JSON.parse(localStorage.getItem(libraryType)) || [];
-    library = library.filter((item, index, self) =>
-        index === self.findIndex((imu) => (
-            imu.domainName === item.domainName && imu.id === item.id
-        ))
-    );
     let [_, id, url] = extractMediaInfo(newItem);
     let publicDomains = typeof domains !== 'undefined' ? domains : {};
     let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
     let compiledDomains = [];
 
-    let savedObject = {
+    let newObject = {
         domainName: getWebsiteName(newItem, compiledDomains.concat(Object.keys(publicDomains), Object.keys(moreDomains))),
         url: url,
         id: id
     };
-
-    library.push(savedObject);
-    localStorage.setItem(libraryType, JSON.stringify(library));
+    
+    let doesExist = itemExistsInList(library, newObject)
+    doesExist ? '': library.push(newObject);
+    doesExist ? '': localStorage.setItem(libraryType, JSON.stringify(library));
 }
 
 /**
@@ -77,10 +74,10 @@ function removeFromLibrary(libraryType, item) {
  * Method responsible of resetting main buttons.
  */
 function resetMainButtons() {
-    for (let i = 0; i < playlistButtons.length; i++){
-        playlistButtons[i].spanElement.innerHTML = playlistButtons[i].defaultText;
-        playlistButtons[i].active = false;
-        resetButtonIcon(playlistButtons[i].buttonType);
+    for (let i = 0; i < playlistButtonConfigs.length; i++){
+        playlistButtonConfigs[i].spanElement.innerHTML = playlistButtonConfigs[i].defaultText;
+        playlistButtonConfigs[i].active = false;
+        resetButtonIcon(playlistButtonConfigs[i].buttonLocation);
     }
 }
 
@@ -90,7 +87,8 @@ function resetMainButtons() {
  * @param {HTMLButtonElement} button - Button element to reset.
  */
 function resetButtonIcon(button) {
-    let icon = button.querySelector('i');
+    let icons = button.querySelectorAll('i');
+    let icon = icons.length > 1 ? icons[1] : icons[0];
     if (icon.classList.contains('fa-solid')) {
         icon.classList.remove('fa-solid');
     }

@@ -203,18 +203,15 @@ function handleLinkInput(linkInput) {
             functionIteration++;
             frequentDomainsAnalysis(commandCheck, Object.keys(publicDomains), Object.keys(moreDomains));
             mediaInfo = mediaResult(example);
-            let applyMediaInfo = () => {
-                videoIdValueSpan.textContent = `VideoID: ${limitText(mediaInfo[0], textListLimit)}`;
-                mediaPlayer.src = mediaInfo[1];
-            };
             
             if (functionIteration >= maxLoopFunctionIteration || maxLoopFunctionIteration === 0) {
                 console.log(['Local Storage Manipulated.', `Video Example Applied: ${example}.`]);
-                playlistApply(example);            
-                applyMediaInfo();
                 functionIteration = 0;
                 maxLoopFunctionIteration = 0;
+                mediaPlayer.src = mediaInfo[1];
+                videoIdValueSpan.textContent = `VideoID: ${limitText(mediaInfo[0], textListLimit)}`;
             }
+            playlistApply(example);
             break;
         default:
             mediaInfo = mediaResult(input);

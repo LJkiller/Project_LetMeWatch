@@ -4,7 +4,7 @@
 /**
  * Event for initiating media link input management.
  */
-document.getElementById('falsified-media-link').addEventListener('submit', function (event) {
+document.getElementById('media-link-button').addEventListener('click', function (event) {
     event.preventDefault();
     handleLinkInput(document.getElementById('link-input').value);
 });
@@ -88,10 +88,11 @@ document.getElementById('next-playlist-button').addEventListener('click', functi
 // #region Library Buttons
 
 let starButton = document.getElementById('star-button');
-let addButton = document.getElementById('add-to-playlist-button');
-let playlistButtons = [
+let qAddButton = document.getElementById('q-add-playlist-button');
+let addButton = document.getElementById('add-playlist-button');
+let playlistButtonConfigs = [
     {
-        buttonType: starButton,
+        buttonLocation: starButton,
         spanElement: starButton.querySelector('span'),
         ulElement: document.querySelector('#starred-videos > ul'),
         active: false,
@@ -100,8 +101,8 @@ let playlistButtons = [
         libraryType: 'starLibrary'
     },
     {
-        buttonType: addButton,
-        spanElement: addButton.querySelector('span'),
+        buttonLocation: qAddButton,
+        spanElement: qAddButton.querySelector('span'),
         ulElement: document.querySelector('#playlist > ul'),
         active: false,
         defaultText: 'Add To Playlist',
@@ -109,62 +110,86 @@ let playlistButtons = [
         libraryType: 'playlistLibrary'
     }
 ];
+let addButtonConfig = {
+    buttonLocation: addButton,
+    ulElement: document.querySelector('#playlist > ul'),
+    active: false,
+    libraryType: 'playlistLibrary'
+};
 
-/**
- * Events for hovering.
- */
-for (let i = 0; i < playlistButtons.length; i++){
-    let button = playlistButtons[i];
-    button.buttonType.addEventListener('mouseenter', function(event) {
-        event.preventDefault();
-        if (!button.active){
-            hoverSolidIcon(button.buttonType);
-        }
-    });
-    button.buttonType.addEventListener('mouseleave', function(event) {
-        event.preventDefault();
-        if (!button.active){
-            hoverSolidIcon(button.buttonType);
-        }
-    });
+// Area for attaching events.
+addButtonConfig.buttonLocation.addEventListener('mouseenter', (event) => handleHoverEvent(event, addButtonConfig));
+addButtonConfig.buttonLocation.addEventListener('mouseleave', (event) => handleHoverEvent(event, addButtonConfig));
+addButtonConfig.buttonLocation.addEventListener('click', (event) => handleAddPlaylistEvent(event, addButtonConfig));
+for (let i = 0; i < playlistButtonConfigs.length; i++){
+    let button = playlistButtonConfigs[i];
+    button.buttonLocation.addEventListener('mouseenter', (event) => handleHoverEvent(event, button));
+    button.buttonLocation.addEventListener('mouseleave', (event) => handleHoverEvent(event, button));
+    button.buttonLocation.addEventListener('click', (event) => handleClickEvent(event, button));
 }
 
 /**
- * Method responsible of hovering over the button to toggle icon.
+ * Method responsible of handling hover events.
  * 
- * @param {HTMLButtonElement} location - Button element.
+ * @param {Event} event - Event. 
+ * @param {object} button - Button configs. 
  */
-function hoverSolidIcon(location) {
-    let icon = location.querySelector('i');
-    icon.classList.toggle('fa-regular');
-    icon.classList.toggle('fa-solid');
-
+function handleHoverEvent(event, buttonConfig) {
+    event.preventDefault();
+    if (!buttonConfig.active) {
+        let icons = buttonConfig.buttonLocation.querySelectorAll('i');
+        let icon = icons.length > 1 ? icons[1] : icons[0];
+        icon.classList.toggle('fa-regular');
+        icon.classList.toggle('fa-solid');
+    }
 }
 
 /**
- * Event for clicking.
+ * Method responsible of adding click events.
+ * 
+ * @param {Event} event - Event.
+ * @param {object} button - Button configs. 
  */
-for (let i = 0; i < playlistButtons.length; i++){
-    let button = playlistButtons[i];
-    button.buttonType.addEventListener('click', function (event) {
-        event.preventDefault();
-        let videoLinks = getVideoLinksArray();
-        let latestVideo = videoLinks[videoLinks.length - 1];
-        if (!button.active) {
-            addToLibrary(button.libraryType, latestVideo.url);
-            (button.spanElement).innerHTML = button.activeText;
-            button.active = true;
-        } else {
-            removeFromLibrary(button.libraryType, latestVideo);
-            (button.spanElement).innerHTML = button.defaultText;
-            button.active = false;
-        }
-        let library = JSON.parse(localStorage.getItem(button.libraryType)) || [];
-        (button.ulElement).innerHTML = '';
-        if (linkRegex.test(latestVideo.url)) {
-            createLibraryList(library, button.ulElement);
-        }
-    });
+function handleClickEvent(event, buttonConfig){
+    event.preventDefault();
+    let videoLinks = getVideoLinksArray();
+    let latestVideo = videoLinks[videoLinks.length - 1];
+    if (!buttonConfig.active) {
+        addToLibrary(buttonConfig.libraryType, latestVideo.url);
+        (buttonConfig.spanElement).innerHTML = buttonConfig.activeText;
+        buttonConfig.active = true;
+    } else {
+        removeFromLibrary(buttonConfig.libraryType, latestVideo);
+        (buttonConfig.spanElement).innerHTML = buttonConfig.defaultText;
+        buttonConfig.active = false;
+    }
+    let library = JSON.parse(localStorage.getItem(buttonConfig.libraryType)) || [];
+    (buttonConfig.ulElement).innerHTML = '';
+    if (linkRegex.test(latestVideo.url)) {
+        createLibraryList(library, buttonConfig.ulElement);
+    }
 }
+
+function handleAddPlaylistEvent(event, buttonConfig) {
+    event.preventDefault();
+    let linkElement = document.getElementById('link-input');
+    let linkInput = linkElement.value;
+    linkElement.value = '';
+    
+    if (isGibberish(linkInput)){
+        return;
+    }
+
+    if (!buttonConfig.active) {
+        buttonConfig.active = true;
+        addToLibrary(buttonConfig.libraryType, linkInput);
+        createLibraryList(JSON.parse(localStorage.getItem(buttonConfig.libraryType)) || [], buttonConfig.ulElement);
+        setTimeout(() => {
+            buttonConfig.active = false;
+            resetButtonIcon(buttonConfig.buttonLocation);
+        }, 500);
+    }
+}
+
 
 // #endregion

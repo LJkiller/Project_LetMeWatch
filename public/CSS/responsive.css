@@ -434,7 +434,7 @@ footer>section:not(#site-information, #site-insight, #user-library) ul li a {
     
 }
 
-@media screen and (min-width: 721px) {
+@media screen and (min-width: 779px) {
     /* a-elemnt & Header adjustment*/
 
     :root {
