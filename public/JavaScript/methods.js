@@ -131,6 +131,38 @@ function limitText(input, charLimit){
     return `${input.slice(0, charLimit)}${input.length > charLimit ? '...': ''}`
 }
 
+/**
+ * Method responsible of getting videoLinks array.
+ * 
+ * @returns {array} - Array containing videoLinks and latestVideo.
+ */
+function getVideoLinksArray(){
+    let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [{id: 'NOT FOUND', src: 'NOT FOUND', url: 'NOT FOUND'}];
+    let latestVideo = videoLinksArray[videoLinksArray.length - 1];
+    return [videoLinksArray, latestVideo];
+}
+
+/**
+ * Method responsible of repeating continous task.
+ * 
+ * @param {number} interval - Time interval between command executions: ms.
+ * @param {number} limit - Maximum amount of iterations.
+ * @param {Function} command - Function to repeat.
+ */
+function executeAtInterval(interval, limit, command) {
+    console.log(`Command execution duration: ${interval * limit / 1000} seconds`);
+    let counter = 0;
+    let intervalId = setInterval(() => {
+        if (counter < limit) {
+            command();
+            counter++;
+        } else {
+            clearInterval(intervalId);
+            console.log('Loop completed');
+        }
+    }, interval);
+}
+
 
 /**
  * Method responsible of getting a link's domain name.

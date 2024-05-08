@@ -47,8 +47,8 @@ function displayVideoSize() {
  * @param {number} height - The new height of iframe.
  */
 function updatePlayerDimensions(width, height) {
-    playerIframe.width = width;
-    playerIframe.height = height;
+    mediaPlayer.width = width;
+    mediaPlayer.height = height;
 }
 
 // #endregion
@@ -64,9 +64,8 @@ function updatePlayerDimensions(width, height) {
  * @param {boolean} displayAsLastVideo - If last video id should be displayed.
  */
 function displayVideoId(displayAsLastVideo = false) {
-    let videoLinks = JSON.parse(localStorage.getItem('videoLinks'));
-    let storedVideoID = Array.isArray(videoLinks) ? videoLinks[videoLinks.length -1].id: 'NOT FOUND';
-    let displayId = limitText(storedVideoID, textListLimit);
+    let videoLinksArray = getVideoLinksArray();
+    let displayId = limitText(videoLinksArray[1].id, textListLimit);
 
     if (displayAsLastVideo) {
         videoIdValueSpan.textContent = `VideoID: ${displayId}`;
@@ -180,6 +179,11 @@ function handleLinkInput(linkInput) {
             handleLinkInput(example);
             console.log(`Video Example Applied: ${example}.`);
             break;
+        case commandCheck[1] === commands.loop:
+            executeAtInterval(2000, 15, () => {
+                handleLinkInput('test');
+            });
+            break;
         case commandCheck[1] === commands.localClear:
             localStorage.clear();
             console.log('Local Storage Cleared.');
@@ -203,7 +207,7 @@ function handleLinkInput(linkInput) {
             let mediaInfo = extractMediaInfo(linkInput);
             videoIdValueSpan.textContent = `VideoID: ${mediaInfo[1]}`;
             updateVideoInfo(mediaInfo[1], mediaInfo[2], mediaInfo[3]);
-            playerIframe.src = mediaInfo[3];
+            mediaPlayer.src = mediaInfo[3];
             break;
     }
     updateMetricLists();
@@ -280,6 +284,11 @@ function mediaInformation(domainResult, linkInput, domainName) {
 
 // #endregion
 
+
+
+
+// #region Commands 
+
 /**
  * Command method responsible of applying playlists methods.
  * 
@@ -299,9 +308,5 @@ function playlistApply(link){
         createLibraryList(playlistLibrary, playlistArea);
     }
 }
-
-
-// #region Commands 
-
 
 // #endregion

@@ -20,7 +20,7 @@ function siteSavedCorrection(width){
     let latestLink = videoLinks.length ? videoLinks[videoLinks.length - 1] : { id: 'NOT FOUND', url: 'NOT FOUND', src: 'NOT FOUND'};
     let displayId = `${limitText(latestLink.id, textListLimit)}`;
     if (width) {
-        restoreIframeSize(playerIframe, width);
+        restoreIframeSize(mediaPlayer, width);
     }
 
     document.getElementById('video-id').innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${displayId}`;
@@ -31,18 +31,18 @@ function siteSavedCorrection(width){
 /**
  * Method responsible of restoring iframe size.
  * 
- * @param {HTMLIFrameElement} playerIframe - Iframe to be handled.
+ * @param {HTMLIFrameElement} mediaPlayer - Iframe to be handled.
  * @param {number} storedWidth - Stored iframe width to be updated.
  */
-function restoreIframeSize(playerIframe, storedWidth) {
+function restoreIframeSize(mediaPlayer, storedWidth) {
     let baseWidth = 426;
     let baseHeight = 240;
     let aspectRatio = baseWidth / baseHeight;
     let calculatedHeight = storedWidth / aspectRatio;
 
     // Update iframe dimensions.
-    playerIframe.width = storedWidth;
-    playerIframe.height = calculatedHeight;
+    mediaPlayer.width = storedWidth;
+    mediaPlayer.height = calculatedHeight;
 }
 
 /**

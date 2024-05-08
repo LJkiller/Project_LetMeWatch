@@ -2,7 +2,7 @@
 // #region Setup
 let root = document.documentElement;
 
-let playerIframe = document.getElementById('falsified-media-player');
+let mediaPlayer = document.getElementById('falsified-media-player');
 
 let startPlaylistButton = document.getElementById('start-playlist-button');
 let exitPlaylistButton = document.getElementById('exit-playlist-button');
@@ -79,6 +79,7 @@ let domains = {
 let commands = {
     cmdList: ['commands', 'command', 'cmds', 'cmd'],
     example: ['videoexample', "videoex", "example", 'ex'],
+    loop: ['looptest', 'forloop', 'loop'],
     localClear: ['localclear', 'localreset', 'clear', 'reset', 'clr'],
     localStorage: ['localstorage', 'localstore', 'storage', 'store', 'check', 'str'],
     localFill: ['localfill', 'fill', 'fl'],

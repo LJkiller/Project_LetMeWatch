@@ -14,12 +14,11 @@ function itemExistsInList(list, item) {
  * Method responsible of checking the libraries to properly style buttons.
  */
 function checkLibrary() {
-    let videoLinks = JSON.parse(localStorage.getItem('videoLinks')) || [];
-    let latestVideo = videoLinks.length > 1 ? videoLinks[videoLinks.length -1].url : '';
+    let videoLinksArray = getVideoLinksArray();
     for (let i = 0; i < playlistButtons.length; i++){
         let button = playlistButtons[i];
         let library = JSON.parse(localStorage.getItem(button.libraryType)) || [];
-        if (itemExistsInList(library, latestVideo)) {
+        if (itemExistsInList(library, videoLinksArray[1].url)) {
             activateButtonIcon(button.buttonType.querySelector('i'));
             button.spanElement.innerHTML = 'Starred';
             button.active = true;

@@ -148,7 +148,7 @@ for (let i = 0; i < playlistButtons.length; i++){
     let button = playlistButtons[i];
     button.buttonType.addEventListener('click', function (event) {
         event.preventDefault();
-        let videoLinks = JSON.parse(localStorage.getItem('videoLinks'));
+        let videoLinks = getVideoLinksArray();
         let latestVideo = videoLinks[videoLinks.length - 1].url;
         if (!button.active) {
             addToLibrary(button.libraryType, latestVideo);
