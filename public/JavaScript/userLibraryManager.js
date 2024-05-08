@@ -19,7 +19,7 @@ function checkLibrary() {
         let button = qButtonConfigs[i];
         let library = JSON.parse(localStorage.getItem(button.libraryType)) || [];
         if (itemExistsInList(library, videoLinksArray[1])) {
-            activateButtonIcon(button.buttonLocation.querySelector('i'));
+            activateButtonIcon(button);
             button.spanElement.innerHTML = button.activeText;
             button.active = true;
         }
@@ -58,6 +58,7 @@ function addToLibrary(libraryType, newItem){
  * @param {string} newItem - Item to remove.
  */
 function removeFromLibrary(libraryType, item) {
+    console.log(item);
     let library = JSON.parse(localStorage.getItem(libraryType)) || [];
     let indexToRemove = library.findIndex(libraryItem => 
         libraryItem.domainName === item.domainName && libraryItem.id === item.id
@@ -100,11 +101,18 @@ function resetButtonIcon(button) {
 /**
  * Method responsible of 
  * 
- * @param {HTMLElement} icon - Icon to activate.
+ * @param {HTMLElement} buttonConfig - Button config information.
  */
-function activateButtonIcon(icon) {
-    icon.classList.toggle('fa-regular');
-    icon.classList.toggle('fa-solid');
+function activateButtonIcon(buttonConfig) {
+    let icon = buttonConfig.buttonLocation.querySelector('i');
+    let isActive = buttonConfig.activeText === buttonConfig.buttonLocation.querySelector('span').textContent;
+    if (isActive){
+        icon.classList.remove('fa-regular');
+        icon.classList.add('fa-solid');
+    } else {
+        icon.classList.toggle('fa-regular');
+        icon.classList.toggle('fa-solid');
+    }
 }
 
 /**

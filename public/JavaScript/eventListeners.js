@@ -97,12 +97,14 @@ let buttonConfigs = [
         buttonLocation: starButton,
         ulElement: starUl,
         active: false,
+        activeText: 'Starred',
         libraryType: starLibraryType
     },
     {
         buttonLocation: addButton,
         ulElement: playlistUl,
         active: false,
+        activeText: 'Added',
         libraryType: playlistLibraryType
     }
 ]
@@ -138,7 +140,7 @@ for (let i = 0; i < qButtonConfigs.length; i++){
     let button = qButtonConfigs[i];
     button.buttonLocation.addEventListener('mouseenter', (event) => handleHoverEvent(event, button));
     button.buttonLocation.addEventListener('mouseleave', (event) => handleHoverEvent(event, button));
-    button.buttonLocation.addEventListener('click', (event) => handleClickqAddEvemt(event, button));
+    button.buttonLocation.addEventListener('click', (event) => handleClickQAddEvent(event, button));
 }
 
 /**
@@ -163,7 +165,7 @@ function handleHoverEvent(event, buttonConfig) {
  * @param {Event} event - Event.
  * @param {object} button - Button configs. 
  */
-function handleClickqAddEvemt(event, buttonConfig){
+function handleClickQAddEvent(event, buttonConfig){
     event.preventDefault();
     let videoLinks = getVideoLinksArray();
     if (!buttonConfig.active) {
@@ -171,7 +173,7 @@ function handleClickqAddEvemt(event, buttonConfig){
         buttonConfig.spanElement.innerHTML = buttonConfig.activeText;
         buttonConfig.active = true;
     } else {
-        removeFromLibrary(buttonConfig.libraryType, videoLinks[1].url);
+        removeFromLibrary(buttonConfig.libraryType, videoLinks[1]);
         buttonConfig.spanElement.innerHTML = buttonConfig.defaultText;
         buttonConfig.active = false;
     }
@@ -207,8 +209,8 @@ function handleClickAddEvent(event, buttonConfig) {
             buttonConfig.active = false;
             resetButtonIcon(buttonConfig.buttonLocation);
         }, 500);
-        checkLibrary();
     }
+    checkLibrary(buttonConfig);
 }
 
 
