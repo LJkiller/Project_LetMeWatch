@@ -38,7 +38,25 @@ let domains = {
             'https://youtu.be/PEvURuyHcXM?si=LQ1x4Q4DTbGMI4nP',
             'https://www.youtube.com/embed/PEvURuyHcXM?si=LQ1x4Q4DTbGMI4nP',
             'https://www.youtube.com/shorts/qdGatFkber8',
-            'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi'
+            'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',
+
+            // Gonna keep this for testing a lot of links (loop command).
+            'https://www.youtube.com/watch?v=ORMx45xqWkA',
+            'https://www.youtube.com/watch?v=cFslUSyfZPc',
+            'https://www.youtube.com/watch?v=xFFs9UgOAlE',
+            'https://www.youtube.com/watch?v=A5w-dEgIU1M',
+            'https://www.youtube.com/watch?v=A60q6dcoCjw',
+            'https://www.youtube.com/shorts/D2nXE1CXVx8',
+            'https://www.youtube.com/shorts/aHH2oYzJGnI',
+            'https://www.youtube.com/watch?v=QCX62YJCmGk&list=PLZHQObOWTQDMKqfyUvG2kTlYt-QQ2x-ui&pp=iAQB',
+            'https://www.youtube.com/watch?v=zeJD6dqJ5lo&list=PLZHQObOWTQDOMxJDswBaLu8xBMKxSTvg8&pp=iAQB',
+            'https://www.youtube.com/watch?v=QCX62YJCmGk&list=PLZHQObOWTQDPHLHBuY0nPbAQ_WGEjtzLW&pp=iAQB',
+            'https://www.youtube.com/watch?v=r6sGWTCMz2k&list=PLZHQObOWTQDN52m7Y21ePrTbvXkPaWVSg&pp=iAQB',
+            'https://www.youtube.com/playlist?list=PLZHQObOWTQDMVQcT3414TcPMeEYf_VtPM',
+            'https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr',
+            'https://www.youtube.com/playlist?list=PLZHQObOWTQDMRtm8h9bG9P06WINNoBnCR',
+            'https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab',
+            'https://www.youtube.com/watch?v=RU0wScIj36o&list=PLZHQObOWTQDO__zBYmoxntqx3yBpuXQBl',
         ],
         regexes: [
             /(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:watch\?.*?&|playlist\?)list=([^&?/]+)/,
@@ -79,7 +97,7 @@ let domains = {
 let commands = {
     cmdList: ['commands', 'command', 'cmds', 'cmd'],
     example: ['videoexample', "videoex", "example", 'ex'],
-    loop: ['looptest', 'forloop', 'loop'],
+    loop: ['looptest', 'forloop', 'loops', 'loop'],
     localClear: ['localclear', 'localreset', 'clear', 'reset', 'clr'],
     localStorage: ['localstorage', 'localstore', 'storage', 'store', 'check', 'str'],
     localFill: ['localfill', 'fill', 'fl'],

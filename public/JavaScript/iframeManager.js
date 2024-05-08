@@ -158,10 +158,11 @@ function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeS
  * @param {string} linkInput - Video link.
  */
 function handleLinkInput(linkInput) {
-    let inputChecking = linkInput.toLowerCase();
+    let input = linkInput.includes(' ') ? linkInput.split(' ') : linkInput;
+    let inputChecking = Array.isArray(input) ? input[0].toLowerCase() : input.toLowerCase();
     document.getElementById('link-input').value = '';
     
-    if (isGibberish(linkInput)){
+    if (isGibberish(inputChecking)){
         return;
     }
 
@@ -169,7 +170,7 @@ function handleLinkInput(linkInput) {
     let example = getRandomValue(examples);
     let publicDomains = typeof domains !== 'undefined' ? domains : {};
     let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
-
+    
     let commandCheck = isCommand(inputChecking);
     switch(true){
         case commandCheck[1] === commands.cmdList:
@@ -182,9 +183,11 @@ function handleLinkInput(linkInput) {
             console.log(`Video Example Applied: ${example}.`);
             break;
         case commandCheck[1] === commands.loop:
-            executeAtInterval(500, 30, () => {
+            let interval = (input.length > 1 && input[1] !== undefined && !isNaN(parseInt(input[1]))) ? parseInt(input[1]) : 20;
+            executeAtInterval(100, interval, () => {
                 handleLinkInput('test');
             });
+
             break;
         case commandCheck[1] === commands.localClear:
             localStorage.clear();
@@ -206,7 +209,7 @@ function handleLinkInput(linkInput) {
             playlistApply(example);
             break;
         default:
-            let mediaInfo = extractMediaInfo(linkInput);
+            let mediaInfo = extractMediaInfo(input);
             videoIdValueSpan.textContent = `VideoID: ${mediaInfo[1]}`;
             updateVideoInfo(mediaInfo[1], mediaInfo[2], mediaInfo[3]);
             mediaPlayer.src = mediaInfo[3];

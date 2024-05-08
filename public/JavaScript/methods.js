@@ -150,7 +150,6 @@ function getVideoLinksArray(){
  * @param {Function} command - Function to repeat.
  */
 function executeAtInterval(interval, limit, command) {
-    console.log(`Command execution duration: ${interval * limit / 1000} seconds`);
     let counter = 0;
     let intervalId = setInterval(() => {
         if (counter < limit) {
@@ -158,7 +157,7 @@ function executeAtInterval(interval, limit, command) {
             counter++;
         } else {
             clearInterval(intervalId);
-            console.log('Loop completed');
+            console.log(`Loop completed: ${limit} iterations & ${interval * limit / 1000} seconds`);
         }
     }, interval);
 }
