@@ -100,8 +100,6 @@ settingsButton.addEventListener('click', () => {
     popup.classList.toggle('active');
     document.getElementById('settings').classList.toggle('active');
 });
-popup.classList.toggle('active');
-document.getElementById('settings').classList.toggle('active');
 
 // Close the dialog when the close button is clicked
 closePopupButton.addEventListener('click', () => {
