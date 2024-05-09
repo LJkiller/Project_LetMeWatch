@@ -1,5 +1,4 @@
 
-
 noscript {
     position: fixed;
     height: 100vh;
@@ -8,14 +7,75 @@ noscript {
     justify-content: center;
     align-items: center;
     background-color: rgba(0,0,0,0.4);
-    z-index: 101;
+    z-index: var(--popup-z-index);
 }
 noscript section {
-    padding: calc(var(--standard-spacing)  * 4);
+    padding: calc(var(--standard-spacing) * 4);
+    min-height: var(--popup-min-height);
     border-radius: var(--standard-size);
     background-color: var(--primary-bg-color);
     border: 5px solid var(--primary-color);
 }
 noscript section span {
     font-style: italic;
+}
+
+
+#popup {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    z-index: var(--popup-z-index);
+    font-weight: bold;
+}
+#popup.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#popup>section {
+    background-color: var(--secondary-bg-color);
+    padding: calc(var(--standard-spacing) * 3);
+    min-height: var(--popup-min-height);
+    max-height: 50%;
+    border-radius: var(--standard-border-radius);
+    outline: 5px solid var(--primary-color);
+    display: none;
+}
+#popup>section.active {
+    display: block;
+}
+
+#popup>section>p, #popup>section>span {
+    box-sizing: border-box;
+    padding-right: calc(var(--standard-spacing) * 5);
+}
+#popup h2,
+#popup h2 span {
+    color: var(--bigger-text-color);
+}
+#popup h3 {
+    color: var(--big-text-color);
+}
+#popup p {
+    color: var(--small-text-color);
+}
+#popup span {
+    color: var(--smaller-text-color);
+}
+
+#popup h2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#popup h2,
+#popup p,
+#popup>section section {
+    margin-bottom: var(--standard-spacing);
 }

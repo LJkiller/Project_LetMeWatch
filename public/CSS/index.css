@@ -7,7 +7,7 @@ header {
 }
 
 header #let-me-watch-logo, header #media-form{
-    color: var(--normal-text-color);
+    color: var(--bigger-text-color);
 }
 
 /*#region Left*/
@@ -46,7 +46,7 @@ header #media-form{
 
 main #content .media-information{
     font-weight: bold;
-    color: var(--gray);
+    color: var(--small-text-color);
 }
 
 main #content #falsified-media-player{
@@ -97,6 +97,14 @@ footer>section:not(#site-information, #site-insight, #user-library) #add-custom-
 footer>#user-library div ul li.display-more {
     margin: 0 auto;
     width: 85%;
+}
+
+
+footer>#site-information span#site-info-content {
+    color: var(--normal-text-color);
+}
+footer>#site-information span#site-info-copy {
+    color: var(--smaller-text-color);
 }
 
 /*#endregion*/

@@ -91,6 +91,29 @@ exitPlaylistButton.addEventListener('click', function(event){
 
 // #endregion
 
+let popup = document.getElementById('popup');
+let settingsButton = document.getElementById('settings-button');
+let closePopupButton = document.getElementById('close-settings-button');
+
+// Open the dialog when the button is clicked
+settingsButton.addEventListener('click', () => {
+    popup.classList.toggle('active');
+    document.getElementById('settings').classList.toggle('active');
+});
+popup.classList.toggle('active');
+document.getElementById('settings').classList.toggle('active');
+
+// Close the dialog when the close button is clicked
+closePopupButton.addEventListener('click', () => {
+    let sections = popup.querySelectorAll('section');
+    for (let i = 0; i < sections.length; i++){
+        if (sections[i].classList.contains('active')){
+            sections[i].classList.toggle('active');
+            break;
+        }
+    }
+    popup.classList.toggle('active');
+});
 
 
 // #region Library Buttons

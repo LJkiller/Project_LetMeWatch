@@ -11,7 +11,7 @@
 #media-form div .form-button {
     min-width: calc(var(--min-button-width) * 0.425);
 }
-#media-form>#settings-button {
+button.single-icon-button{
     min-width: calc(var(--min-button-width) * 0.37);
 }
 
@@ -46,7 +46,7 @@
 
 .form-button:hover, 
 .quick-button:hover {
-    color: var(--normal-text-color);
+    color: var(--big-text-color);
     background-color: var(--primary-color);
     cursor: pointer;
 }
@@ -61,7 +61,7 @@
 
 .form label{
     font-weight: bold;
-    color: var(--darker-gray);
+    color: var(--smallest-text-color);
 }  
 
 input[type="number"]::-webkit-inner-spin-button,

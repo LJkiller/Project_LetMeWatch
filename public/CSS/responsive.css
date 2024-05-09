@@ -143,7 +143,6 @@ footer>#site-information span#site-info-content {
 }
 footer>#site-information span#site-info-copy {
     grid-area: site-info-copy;
-    color: var(--small-text-color);
 }
 
 /*#endregion*/
@@ -448,7 +447,7 @@ footer>section:not(#site-information, #site-insight, #user-library) ul li a {
     
 }
 
-@media screen and (min-width: 884px) {
+@media screen and (min-width: 964px) {
     /* a-elemnt & Header adjustment*/
 
     :root {
@@ -468,7 +467,7 @@ footer>section:not(#site-information, #site-insight, #user-library) ul li a {
         justify-content: space-between;
         flex-direction: row;
         gap: var(--standard-spacing);
-        z-index: 100;
+        z-index: var(--header-z-index);
     }
 
 }

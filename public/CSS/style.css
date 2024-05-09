@@ -14,11 +14,14 @@
     --secondary-scroll-color: var(--red);
 
     --primary-bg-color: rgba(0,0,0,1);
-    --seconday-bg-color: rgba(20,20,20,1);
+    --secondary-bg-color: rgba(20,20,20,1);
 
-    --big-text-color: var(--white);
-    --normal-text-color: var(--lightest-gray);
+    --bigger-text-color: var(--white);
+    --big-text-color: var(--lightest-gray);
+    --normal-text-color: var(--lighter-gray);
     --small-text-color: var(--light-gray);
+    --smaller-text-color: var(--gray);
+    --smallest-text-color: var(--dark-gray);
 
     --white: rgba(255,255,255,1);
     --lightest-gray: rgba(225,225,225,1);
@@ -39,7 +42,7 @@
     --normal-font-family: Arial, sans-serif;
 }
 
-/*Units*/
+/*Numbers*/
 :root{
     --standard-size: 0.625rem;
 
@@ -79,6 +82,10 @@
     --media-aspect-ratio: var(--base-height)/var(--base-width);
     --max-media-width: 97vw;
     --max-media-height: (var(--max-media-width)/var(--media-aspect-ratio))vw; 
+
+    --header-z-index: 100;
+    --popup-z-index: 101;
+    --popup-min-height: 20rem;
 }
 
 /*Animation*/
@@ -101,7 +108,7 @@ html{
 }
 
 body {
-    background-color: var(--seconday-bg-color);
+    background-color: var(--secondary-bg-color);
     font-family: var(--normal-font-family);
     color: var(--normal-text-color);
     height: 100vh;
