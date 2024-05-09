@@ -77,7 +77,8 @@ exitPlaylistButton.addEventListener('click', function(event){
     }
 
     let videoLinksArray = getVideoLinksArray();
-    mediaPlayer.src = videoLinksArray[1].url;
+    console.log(videoLinksArray[1]);
+    mediaPlayer.src = videoLinksArray[1].src;
     videoIdValueSpan.textContent = `VideoID: ${limitText(videoLinksArray[1].id, textListLimit)}`;
     updateMetricLists();
     resetMainButtons();
