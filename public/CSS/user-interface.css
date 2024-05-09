@@ -11,7 +11,7 @@
 #media-form div .form-button {
     min-width: calc(var(--min-button-width) * 0.425);
 }
-#media-form>#menu-button {
+#media-form>#settings-button {
     min-width: calc(var(--min-button-width) * 0.37);
 }
 
@@ -38,10 +38,10 @@
 .quick-button{
     transition: var(--fast-eio-transition);
     color: var(--primary-color);
-    display: flex;
     padding: calc(var(--standard-spacing) / 3) var(--standard-spacing);
+    display: flex;
     justify-content: center;
-    gap: var(--standard-spacing);
+    gap: calc(var(--standard-spacing) * 0.5);
 }
 
 .form-button:hover, 
@@ -76,6 +76,12 @@ input[type="number"]::-webkit-outer-spin-button {
     width: var(--input-special-width);
 }
 
+
+#media-form #media-form-buttons button, #media-form button, #media-form input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 
 #media-bottom {

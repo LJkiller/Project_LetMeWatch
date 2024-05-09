@@ -71,21 +71,18 @@ function createMetricsList(items, location) {
     if (Array.isArray(items)) {
         for (let i = 0; i < items.length; i++){
             let item = items[i];
-            let ifNotFound = item.url === 'NOT FOUND';
+            console.log(item);
+            if (item.url === 'NOT FOUND'){
+                break;
+            }
 
-            let urlDomain = ifNotFound ?
-                `<span class="url-name">NOT</span>` :
-                `<span class="url-name">${capitalizeFirstLetter(item.domainName)}:</span>`
-            ;
-            let urlElement = ifNotFound ?
-                `<span class="url-id">FOUND</span>` :
-                `<a href="${item.url}" target="_blank">${limitText(item.id, textListLimit)}</a>`
-            ;
+            let urlDomain = `<span class="url-name">${capitalizeFirstLetter(item.domainName)}:</span>`;
+            let urlElement = `<a href="${item.url}" target="_blank">${limitText(item.id, textListLimit)}</a>`;
 
             html += `
                 <li>
                     ${createSVGNumber(root, bottomColor, topColor, textColor, textColor, i + 1, svg)}
-                    <span class="date">${ifNotFound ? '': item.date[0]}</span>
+                    <span class="date">${item.date[0]}</span>
                     <p class="domain">${urlDomain}${urlElement}</p>
                 </li>`
             ;

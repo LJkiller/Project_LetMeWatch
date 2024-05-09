@@ -106,13 +106,8 @@ function resetButtonIcon(button) {
 function activateButtonIcon(buttonConfig) {
     let icon = buttonConfig.buttonLocation.querySelector('i');
     let isActive = buttonConfig.activeText === buttonConfig.buttonLocation.querySelector('span').textContent;
-    if (isActive){
-        icon.classList.remove('fa-regular');
-        icon.classList.add('fa-solid');
-    } else {
-        icon.classList.toggle('fa-regular');
-        icon.classList.toggle('fa-solid');
-    }
+    isActive ? icon.classList.remove('fa-regular') : icon.classList.toggle('fa-regular');
+    isActive ? icon.classList.add('fa-solid') : icon.classList.toggle('fa-solid');
 }
 
 /**
