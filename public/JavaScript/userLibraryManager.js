@@ -58,7 +58,6 @@ function addToLibrary(libraryType, newItem){
  * @param {string} newItem - Item to remove.
  */
 function removeFromLibrary(libraryType, item) {
-    console.log(item);
     let library = JSON.parse(localStorage.getItem(libraryType)) || [];
     let indexToRemove = library.findIndex(libraryItem => 
         libraryItem.domainName === item.domainName && libraryItem.id === item.id

@@ -71,7 +71,6 @@ function createMetricsList(items, location) {
     if (Array.isArray(items)) {
         for (let i = 0; i < items.length; i++){
             let item = items[i];
-            console.log(item);
             if (item.url === 'NOT FOUND'){
                 break;
             }

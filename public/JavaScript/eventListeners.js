@@ -43,15 +43,24 @@ function resetVideoSize(displayAsLastVideo) {
 
 // #region Iframe Controller Events
 
-
 /**
  * Event for starting playlist.
  */
-startPlaylistButton.addEventListener('click', function(event){
+startPlaylistButton.addEventListener('click', function (event) {
     event.preventDefault();
     iframeControls.classList.add('active');
     startPlaylistButton.classList.remove('active');
     document.getElementById("media-top").scrollIntoView();
+    playlist = JSON.parse(localStorage.getItem('playlistLibrary'));
+    
+    saveVideoPositions(currentVideoNumber);
+    changeMediaPlayerSrc();
+    if (playlist) {
+        document.getElementById('prev-playlist-button').addEventListener('click', playPreviousVideo);
+        document.getElementById('next-playlist-button').addEventListener('click', playNextVideo);
+    } else {
+        console.error('Playlist not found');
+    }
 });
 
 /**
@@ -61,25 +70,23 @@ exitPlaylistButton.addEventListener('click', function(event){
     event.preventDefault();
     iframeControls.classList.remove('active');
     startPlaylistButton.classList.add('active');
+
+    let playlistDetails = JSON.parse(localStorage.getItem('playlistDetails'));
+    for (let i = 0; i < playlistDetails.length; i++) {
+        removeFromLibrary('playlistLibrary', playlistDetails[i]);
+    }
+
+    let videoLinksArray = getVideoLinksArray();
+    mediaPlayer.src = videoLinksArray[1].url;
+    videoIdValueSpan.textContent = `VideoID: ${limitText(videoLinksArray[1].id, textListLimit)}`;
+    updateMetricLists();
+    resetMainButtons();
+    checkLibrary();
+    siteLibraryCorrection();
+    playlist = [];
 });
 
 
-
-/**
- * Event for playing previous video.
- */
-document.getElementById('prev-playlist-button').addEventListener('click', function(event){
-    event.preventDefault();
-    console.log('back');
-});
-
-/**
- * Event for playing next video.
- */
-document.getElementById('next-playlist-button').addEventListener('click', function(event){
-    event.preventDefault();
-    console.log('forward');
-});
 
 // #endregion
 
