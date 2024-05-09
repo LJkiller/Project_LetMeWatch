@@ -61,10 +61,10 @@ noscript section span {
     color: var(--big-text-color);
 }
 #popup p {
-    color: var(--small-text-color);
+    color: var(--smaller-text-color);
 }
 #popup span {
-    color: var(--smaller-text-color);
+    color: var(--smallest-text-color);
 }
 
 #popup h2 {
@@ -76,6 +76,7 @@ noscript section span {
 
 #popup h2,
 #popup p,
-#popup>section section {
-    margin-bottom: var(--standard-spacing);
+#popup>section>section,
+#popup>section section>section {
+    margin-bottom: calc(var(--standard-spacing) * 1.5);
 }

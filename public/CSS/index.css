@@ -26,8 +26,10 @@ header #let-me-watch-logo>span{
     font-size: var(--header-fontsize);
 }
 
-header #let-me-watch-logo:hover>span>span{
+header #let-me-watch-logo>span>span{
     transition: var(--standard-eio-transition);
+}
+header #let-me-watch-logo:hover>span>span{
     color: var(--primary-color);
 }
 /*#endregion*/

@@ -11,7 +11,7 @@
     --primary-color: var(--blue);
     
     --primary-scroll-color: var(--primary-color);
-    --secondary-scroll-color: var(--red);
+    --secondary-scroll-color: var(--white);
 
     --primary-bg-color: rgba(0,0,0,1);
     --secondary-bg-color: rgba(20,20,20,1);

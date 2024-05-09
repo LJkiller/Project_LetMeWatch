@@ -1,4 +1,6 @@
 
+// #region Events
+
 /**
  * Method responsible of handling hover events.
  * 
@@ -69,7 +71,7 @@ function handleClickAddEvent(event, buttonConfig) {
     checkLibrary(buttonConfig);
 }
 
-
+// #endregion
 
 let playlist;
 let currentVideoNumber = 0;

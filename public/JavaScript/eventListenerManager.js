@@ -91,31 +91,9 @@ exitPlaylistButton.addEventListener('click', function(event){
 
 // #endregion
 
-let popup = document.getElementById('popup');
-let settingsButton = document.getElementById('settings-button');
-let closePopupButton = document.getElementById('close-settings-button');
-
-// Open the dialog when the button is clicked
-settingsButton.addEventListener('click', () => {
-    popup.classList.toggle('active');
-    document.getElementById('settings').classList.toggle('active');
-});
-
-// Close the dialog when the close button is clicked
-closePopupButton.addEventListener('click', () => {
-    let sections = popup.querySelectorAll('section');
-    for (let i = 0; i < sections.length; i++){
-        if (sections[i].classList.contains('active')){
-            sections[i].classList.toggle('active');
-            break;
-        }
-    }
-    popup.classList.toggle('active');
-});
 
 
-// #region Library Buttons
-
+// #region Library Buttons Events
 let starButton = document.getElementById('star-button'), addButton = document.getElementById('add-playlist-button');
 let qStarButton = document.getElementById('q-star-button'), qAddButton = document.getElementById('q-add-playlist-button');
 let starUl = document.querySelector('#starred-videos > ul'), playlistUl = document.querySelector('#playlist > ul');
@@ -172,5 +150,18 @@ for (let i = 0; i < qButtonConfigs.length; i++){
     button.buttonLocation.addEventListener('click', (event) => handleClickQAddEvent(event, button));
 }
 
+// #endregion
+
+
+
+// #region Settings Events
+
+let popup = document.getElementById('popup');
+let settingsButton = document.getElementById('settings-button');
+let closePopupButton = document.getElementById('close-settings-button');
+
+settingsButton.addEventListener('click', (event) => { openPopup(event, 'settings')});
+closePopupButton.addEventListener('click', closePopup);
+popup.addEventListener('click', closePopupOutside);
 
 // #endregion
