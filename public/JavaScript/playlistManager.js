@@ -45,6 +45,6 @@ function saveVideoPositions(currentVideoNumber) {
 function changeMediaPlayerSrc() {
     let mediaInfo = extractMediaInfo(playlist[currentVideoNumber].url);
     mediaPlayer.src = mediaInfo[3];
-    videoIdValueSpan.textContent = `VideoID: ${limitText(mediaInfo[0], textListLimit)}`;
+    videoIdValueSpan.textContent = `VideoID: ${limitText(mediaInfo[1], textListLimit)}`;
     checkLibrary();
 }
