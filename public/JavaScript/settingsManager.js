@@ -63,24 +63,41 @@ function disableOtherCheckboxes(checkedCheckbox, checkboxes) {
  * 
  * @param {Array} options - Array of options.
  * @param {string} type - String to which html should be generated
- * @param {HTMLElement} location - HTML location to add the html to.
+ * @param {HTMLElement} location - HTML location to add the settings list to.
  */
 function createSettingsList(options, type, location){
+    switch (type){
+        case 'colors':
+            location.innerHTML = createHTMLSettingsList(options, type);
+            multipleBoxCheck(location.querySelectorAll('.option'));
+            break;
+        default:
+            break;
+    }
+}
+
+/**
+ * Method responsible of creating HTML settings list.
+ * 
+ * @param {Array} options - Array of options.
+ * @param {string} type - String to which html should be generated
+ * @returns {HTMLElement} - HTML element of the list.
+ */
+function createHTMLSettingsList(options, type) {
     let html = '';
     for (let i = 0; i < options.length; i++) {
         let option = options[i];
-        if (type === 'colors'){
-            let text = option;
-            if (text === 'blue'){
-                text = 'blue (Default)';
-            }
-            html += `<label><input type="checkbox" name="primary-color-${option}" id="${option}-option" class="option" style="--checkbox-color: var(--${option});">${capitalizeFirstLetter(text)}</label>`;
+        switch (type) {
+            case 'colors':
+                let text = option === 'blue' ? 'blue (Default)' : option;
+                html += `<label><input type="checkbox" name="primary-color-${option}" id="${option}-option" class="option" style="--checkbox-color: var(--${option});">${capitalizeFirstLetter(text)}</label>`;
+                break;
+            default:
+                break;
         }
     }
-    location.innerHTML = html;
-    multipleBoxCheck(location.querySelectorAll('.option'));
+    return html;
 }
-
 
 
 
