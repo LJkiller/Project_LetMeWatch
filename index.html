@@ -80,7 +80,11 @@
 					</section>
 				</form>
 			</div>
-			<embed id="falsified-media-player" src="https://www.youtube-nocookie.com/embed/{id}?start=0&autoplay=1&autohide=1" type="video/mp4">
+			<iframe id="falsified-media-player"
+				src="https://www.youtube-nocookie.com/embed/{id}?start=0&autoplay=1&autohide=1"
+				title="Media Viewer" allowfullscreen frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+			</iframe>
 			<div id="media-bottom" class="media-information">
 				<span id="video-id">VideoID: $(storedVideoID)</span>
 				<span>-</span>
@@ -184,7 +188,6 @@
 			</form>
 		</section>
 	</dialog>
-
 </body>
 
 </html>
