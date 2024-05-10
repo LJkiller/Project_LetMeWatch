@@ -102,8 +102,27 @@ function siteLibraryCorrection(){
 /**
  * Method responsible of correcting settings applications.
  */
-function siteSettingsCorrection(){
+function siteSettingsCorrection() {
     let settings = JSON.parse(localStorage.getItem('settings')) || [];
-    createSettingsList(['red', 'green', 'blue', 'yellow'], 'colors', document.getElementById('primary-color-options-area'));
+    let filteredInputs = settings.map(setting => setting.formInput);
+
+    let colorSettings = getSettingsCaseValue(filteredInputs, settingsCase.colorCase.string);
+    colorSettings = colorSettings ? colorSettings.split('primary-color-')[1] : 'blue';
+    let themeSettings = getSettingsCaseValue(filteredInputs, settingsCase.themeCase.string);
+    themeSettings = themeSettings ? themeSettings.split('-theme')[0] : 'dark';
+
+    createSettingsList(settingsCase.colorCase.options, settingsCase.colorCase.string, colorSettings, document.getElementById('primary-color-options-area'));
+    createSettingsList(settingsCase.themeCase.options, settingsCase.themeCase.string, themeSettings, document.getElementById('theme-options-area'));
     handleSettingsForm(settings);
+}
+
+/**
+ * Method responsible of getting 
+ * 
+ * @param {Array} inputs - Array of settings to analyze.
+ * @param {string} stringCase - Which string type to match.
+ * @returns 
+ */
+function getSettingsCaseValue(inputs, stringCase){
+    return inputs.find(input => input.includes(stringCase));
 }

@@ -1,4 +1,6 @@
 
+// #region General Methods
+
 /**
  * Method responsible of checking all locally stored information.
  */
@@ -132,17 +134,6 @@ function limitText(input, charLimit){
 }
 
 /**
- * Method responsible of getting videoLinks array.
- * 
- * @returns {array} - Array containing videoLinks and latestVideo.
- */
-function getVideoLinksArray(){
-    let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [{id: 'NOT FOUND', src: 'NOT FOUND', url: 'NOT FOUND'}];
-    let latestVideo = videoLinksArray[videoLinksArray.length - 1];
-    return [videoLinksArray, latestVideo];
-}
-
-/**
  * Method responsible of repeating continous task.
  * 
  * @param {number} interval - Time interval between command executions: ms.
@@ -161,6 +152,18 @@ function executeAtInterval(interval, limit, command) {
         }
     }, interval);
 }
+
+/**
+ * Method responsible of getting a random value out of an array.
+ * 
+ * @param {Array} array - Array of elements. 
+ * @returns {any} - A random example.
+ */
+function getRandomValue(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+// #endregion
 
 
 /**
@@ -219,6 +222,19 @@ function getWebsiteNames(domains) {
     });
 }
 
+
+
+/**
+ * Method responsible of getting videoLinks array.
+ * 
+ * @returns {array} - Array containing videoLinks and latestVideo.
+ */
+function getVideoLinksArray(){
+    let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [{id: 'NOT FOUND', src: 'NOT FOUND', url: 'NOT FOUND'}];
+    let latestVideo = videoLinksArray[videoLinksArray.length - 1];
+    return [videoLinksArray, latestVideo];
+}
+
 /**
  * Method responsible if a command is a function.
  * 
@@ -252,14 +268,4 @@ function getAllDomainExamples() {
         allExamples.push(...(domain.examples || []));
     }
     return allExamples;
-}
-
-/**
- * Method responsible of getting a random value out of an array.
- * 
- * @param {Array} array - Array of elements. 
- * @returns {any} - A random example.
- */
-function getRandomValue(array) {
-    return array[Math.floor(Math.random() * array.length)];
 }

@@ -1,5 +1,5 @@
 
-// #region Media Result Applications
+// #region Media Player Size
 
 /**
  * Method responsible of updating video size.
@@ -52,7 +52,6 @@ function updatePlayerDimensions(width, height) {
 }
 
 // #endregion
-
 
 
 
@@ -147,8 +146,7 @@ function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeS
 
 
 
-
-// #region Iframe Input
+// #region Media Link Input
 
 /**
  * Method responsible of routing different logics together.
@@ -172,9 +170,7 @@ function handleLinkInput(linkInput) {
     let commandCheck = isCommand(inputChecking);
     switch(true){
         case commandCheck[1] === commands.cmdList:
-            for (let command in commands){
-                console.log(command, ':', commands[command]);
-            }
+            commandDisplayCMDS();
             break;
         case commandCheck[1] === commands.example:
             handleLinkInput(example);
@@ -200,18 +196,13 @@ function handleLinkInput(linkInput) {
             checkLocalStorage();
             break;
         case commandCheck[1] === commands.localTest:
-            functionIteration++;
-            frequentDomainsAnalysis(commandCheck, Object.keys(publicDomains), Object.keys(moreDomains));
-            mediaInfo = mediaResult(example);
-            
-            if (functionIteration >= maxLoopFunctionIteration || maxLoopFunctionIteration === 0) {
-                console.log(['Local Storage Manipulated.', `Video Example Applied: ${example}.`]);
-                functionIteration = 0;
-                maxLoopFunctionIteration = 0;
-                mediaPlayer.src = mediaInfo[1];
-                videoIdValueSpan.textContent = `VideoID: ${limitText(mediaInfo[0], textListLimit)}`;
-            }
-            playlistApply(example);
+            commandTestMediaInput(commandCheck, example, publicDomains, moreDomains);
+            break;
+        case commandCheck[1] === commands.videoReset:
+            localStorage.removeItem('videoLinks');
+            siteSavedCorrection(localStorage.getItem('videoWidth'));
+            console.log('Video Links Reset');
+            console.log('=> Video Reset.');
             break;
         default:
             mediaInfo = mediaResult(input);
@@ -308,8 +299,41 @@ function mediaInformation(domainResult, linkInput, domainName) {
 
 
 
-
 // #region Commands 
+
+/**
+ * Command responsible of displaying all available commands.
+ */
+function commandDisplayCMDS(){
+    let commandsDisplay = [];
+    for (let key in commands) {
+        commandsDisplay.push({[key]: commands[key]});
+    }
+    console.log('Existing Commands:', commandsDisplay);
+}
+
+/**
+ * Command responsible of testing media input functions.
+ * 
+ * @param {Array} commandCheck - Information of the checked command.
+ * @param {Object} publicDomains - Objects of domains.
+ * @param {Object} moreDomains - More objects of domains.
+ * @param {string} example - Examle video that should apply.
+ */
+function commandTestMediaInput(commandCheck, example, publicDomains, moreDomains){
+    functionIteration++;
+    frequentDomainsAnalysis(commandCheck, Object.keys(publicDomains), Object.keys(moreDomains));
+    let mediaInfo = mediaResult(example);
+    
+    if (functionIteration >= maxLoopFunctionIteration || maxLoopFunctionIteration === 0) {
+        console.log(['Local Storage Manipulated.', `Video Example Applied: ${example}.`]);
+        functionIteration = 0;
+        maxLoopFunctionIteration = 0;
+        mediaPlayer.src = mediaInfo[1];
+        videoIdValueSpan.textContent = `VideoID: ${limitText(mediaInfo[0], textListLimit)}`;
+    }
+    playlistApply(example);
+}
 
 /**
  * Command method responsible of applying playlists methods.
@@ -325,10 +349,8 @@ function playlistApply(link){
     let playlistArea = document.querySelector(`#playlist > .videos`);
     starArea.innerHTML = '';
     playlistArea.innerHTML = '';
-    if (!link.includes('NOT%20FOUND')) {
-        createLibraryList(starLibrary, starArea);
-        createLibraryList(playlistLibrary, playlistArea);
-    }
+    createLibraryList(starLibrary, starArea);
+    createLibraryList(playlistLibrary, playlistArea);
 }
 
 // #endregion

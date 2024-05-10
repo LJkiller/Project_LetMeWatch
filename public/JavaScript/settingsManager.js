@@ -39,8 +39,6 @@ function closePopupOutside(event){
     }
 }
 
-// #endregion
-
 /**
  * Method responsible of disabling other checkboxes in the same area.
  * 
@@ -58,17 +56,28 @@ function disableOtherCheckboxes(checkedCheckbox, checkboxes) {
     }
 }
 
+// #endregion
+
+
+
+// #region HTML Manipulation
+
 /**
  * Method responsible of creating settings list.
  * 
  * @param {Array} options - Array of options.
  * @param {string} type - String to which html should be generated
+ * @param {string} settingsValue - Setting that is applied.
  * @param {HTMLElement} location - HTML location to add the settings list to.
  */
-function createSettingsList(options, type, location){
+function createSettingsList(options, type, settingsValue, location){
     switch (type){
-        case 'colors':
-            location.innerHTML = createHTMLSettingsList(options, type);
+        case settingsCase.themeCase.string:
+            location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
+            multipleBoxCheck(location.querySelectorAll('.option'));
+            break;
+        case settingsCase.colorCase.string:
+            location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
             multipleBoxCheck(location.querySelectorAll('.option'));
             break;
         default:
@@ -81,16 +90,27 @@ function createSettingsList(options, type, location){
  * 
  * @param {Array} options - Array of options.
  * @param {string} type - String to which html should be generated
+ * @param {string} settingsValue - Setting that is applied.
  * @returns {HTMLElement} - HTML element of the list.
  */
-function createHTMLSettingsList(options, type) {
+function createHTMLSettingsList(options, type, settingsValue) {
     let html = '';
+    let defaultValue = '';
+    let text = '';
     for (let i = 0; i < options.length; i++) {
         let option = options[i];
+        let checkedOrDisabled = option.includes(settingsValue) ? 'checked': 'disabled';
+        let isCurrent = checkedOrDisabled === 'checked' ? '<i>(Current)</i>' : '';
         switch (type) {
-            case 'colors':
-                let text = option === 'blue' ? 'blue default' : option;
-                html += `<label><input type="checkbox" name="primary-color-${option}" id="${option}-option" class="option" style="--checkbox-color: var(--${option});">${capitalizeFirstLetter(text)}</label>`;
+            case settingsCase.themeCase.string:
+                defaultValue = 'dark';
+                text = option === defaultValue ? 'dark' : option;
+                html += `<label><input type="checkbox" ${checkedOrDisabled} name="${text}-theme" id="${text}-theme-option" class="option" style="--checkbox-color: var(--${text}-theme);">${capitalizeFirstLetter(text)} Mode ${isCurrent}</label>`;
+                break;
+            case settingsCase.colorCase.string:
+                defaultValue = 'blue';
+                text = option === defaultValue ? 'blue' : option;
+                html += `<label><input type="checkbox" ${checkedOrDisabled} name="primary-color-${option}" id="${option}-option" class="option" style="--checkbox-color: var(--${option});">${capitalizeFirstLetter(text)} ${isCurrent}</label>`;
                 break;
             default:
                 break;
@@ -99,7 +119,11 @@ function createHTMLSettingsList(options, type) {
     return html;
 }
 
+// #endregion
 
+
+
+// #region Apply
 
 /**
  * Method responsible of handling settings.
@@ -108,14 +132,16 @@ function createHTMLSettingsList(options, type) {
  */
 function handleSettingsForm(dataArray) {
     root.style.setProperty('--primary-color', 'var(--blue)');
-    document.body.className = '';
     for (let i = 0; i < dataArray.length; i++) {
         let key = dataArray[i].formInput;
-        if (key.includes('theme')) {
-            handleSetting('theme', key, key.includes('theme'));
+        if (key.includes(settingsCase.themeCase.string)) {
+            document.body.classList.contains('dark-theme') 
+                ? document.body.removeAttribute('class') 
+                : handleSetting(settingsCase.themeCase.string, key, key.includes(settingsCase.themeCase.string))
+            ;
         }
-        if (key.includes('color')) {
-            handleSetting('color', key, key.includes('color'));
+        if (key.includes(settingsCase.colorCase.string)) {
+            handleSetting('color', key, key.includes(settingsCase.colorCase.string));
         }
     }
     localStorage.setItem('settings', JSON.stringify(dataArray));
@@ -130,10 +156,10 @@ function handleSettingsForm(dataArray) {
  */
 function handleSetting(settingType, settingValue, setAsNewValue = false) {
     switch (settingType) {
-        case 'theme':
+        case settingsCase.themeCase.string:
             document.body.className = setAsNewValue === true ? settingValue : '';
             break;
-        case 'color':
+        case settingsCase.colorCase.string:
             let color = settingValue.split('primary-color-')[1];
             if (document.body.classList.contains('light-theme')){
                 color = `dark-${settingValue.split('primary-color-')[1]}`;
@@ -144,3 +170,5 @@ function handleSetting(settingType, settingValue, setAsNewValue = false) {
             break;
     }
 }
+
+// #endregion

@@ -25,7 +25,6 @@
 	<script src="./public/JavaScript/methods.js" defer></script>
 	<script src="./public/JavaScript/onload.js" defer></script>
 
-	<script src="./public/JavaScript/playlistManager.js" defer></script>
 	<script src="./public/JavaScript/svgManager.js" defer></script>
 	<script src="./public/JavaScript/settingsManager.js" defer></script>
 	<script src="./public/JavaScript/userLibraryManager.js" defer></script>
@@ -80,9 +79,10 @@
 					</section>
 				</form>
 			</div>
-			<iframe id="falsified-media-player"
+			<iframe id="falsified-media-player" referrerpolicy="no-referrer"
+				title="Media Viewer: Area where the videos are displayed" aria-label="Video Player"
 				src="https://www.youtube-nocookie.com/embed/{id}?start=0&autoplay=1&autohide=1"
-				title="Media Viewer" allowfullscreen frameborder="0"
+				allowfullscreen controls frameborder="0"
 				allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
 			</iframe>
 			<div id="media-bottom" class="media-information">
@@ -99,7 +99,6 @@
 			</div>
 		</section>
 	</main>
-
 
 	<footer>
 		<section id="user-library">
@@ -172,9 +171,7 @@
 					<h3>Website color themes</h3>
 					<section id="web-theme">
 						<span>Web theme</span>
-						<div class="option-area">
-							<label><input type="checkbox" name="light-theme" id="light-theme-option" class="option" style="--checkbox-color: var(--yellow);">Light Mode</label>
-						</div>
+						<div id="theme-options-area" class="option-area"></div>
 					</section>
 					<section id="primary-color">
 						<span>Primary Color</span>

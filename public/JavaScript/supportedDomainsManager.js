@@ -1,17 +1,5 @@
 
-/**
- * Method responsible of updating metric list.
- */
-function updateMetricLists(){
-    let videoLinksArray = getVideoLinksArray()[0] || [];
-    let frequentDomainData = JSON.parse(localStorage.getItem('frequentDomainData')) || {};
-    let lastVideoSection = document.querySelector(`${metricSelectors.lastVideoId} > .metrics`);
-    let mostFrequentSecton = document.querySelector(`${metricSelectors.mostFrequentId} > .metrics`);
-    lastVideoSection.innerHTML = '';
-    mostFrequentSecton.innerHTML = '';
-    createMetricsList(videoLinksArray, lastVideoSection);
-    createMetricsList(frequentDomainData, mostFrequentSecton);
-}
+// #region HTML Manipulation
 
 /**
  * Method responsible of primarily handling supported websites.
@@ -121,6 +109,24 @@ function createMetricsList(items, location) {
     }
     location.innerHTML = html;
 }
+
+/**
+ * Method responsible of updating metric list.
+ */
+function updateMetricLists(){
+    let videoLinksArray = getVideoLinksArray()[0] || [];
+    let frequentDomainData = JSON.parse(localStorage.getItem('frequentDomainData')) || {};
+    let lastVideoSection = document.querySelector(`${metricSelectors.lastVideoId} > .metrics`);
+    let mostFrequentSecton = document.querySelector(`${metricSelectors.mostFrequentId} > .metrics`);
+    lastVideoSection.innerHTML = '';
+    mostFrequentSecton.innerHTML = '';
+    createMetricsList(videoLinksArray, lastVideoSection);
+    createMetricsList(frequentDomainData, mostFrequentSecton);
+}
+
+// #endregion
+
+
 
 /**
  * Method responsible of saving frequent domain.

@@ -100,8 +100,20 @@ let commands = {
     cmdList: ['commands', 'command', 'cmds', 'cmd'],
     example: ['videoexample', "videoex", "example", 'ex'],
     loop: ['looptest', 'forloop', 'loops', 'loop'],
-    localClear: ['localclear', 'localreset', 'clear', 'reset', 'clr'],
+    localClear: ['localclear', 'localreset', 'clear', 'clr'],
     localStorage: ['localstorage', 'localstore', 'storage', 'store', 'check', 'str'],
     localFill: ['localfill', 'fill', 'fl'],
-    localTest: ['localtest', 'test']
+    localTest: ['localtest', 'test'],
+    videoReset: ['videoreset', 'video', 'reset']
+}
+
+let settingsCase = {
+    colorCase: {
+        options: ['red', 'green', 'blue', 'yellow'],
+        string: 'color'
+    },
+    themeCase: {
+        options: ['light', 'dark'],
+        string: 'theme'
+    }
 }

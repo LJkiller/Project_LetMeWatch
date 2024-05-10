@@ -1,5 +1,5 @@
 
-// #region Iframe Events
+// #region Events
 
 /**
  * Event for initiating media link input management.
@@ -41,7 +41,7 @@ function resetVideoSize(displayAsLastVideo) {
 
 
 
-// #region Iframe Playlist Events
+// #region Playlist Events
 
 /**
  * Event for starting playlist.
@@ -181,6 +181,7 @@ document.getElementById('preference-area').addEventListener('submit', function (
     });
     handleSettingsForm(formDataArray);
     closePopup(event);
+    siteSettingsCorrection();
 });
 
 /**
@@ -195,7 +196,5 @@ function multipleBoxCheck(checkboxes){
         });
     }
 }
-
-
 
 // #endregion
