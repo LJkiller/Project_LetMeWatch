@@ -26,7 +26,7 @@ function handleHoverEvent(event, buttonConfig) {
 function handleClickQAddEvent(event, buttonConfig){
     event.preventDefault();
     let videoLinks = getVideoLinksArray();
-    if (!videoLinks[1].url === 'NOT FOUND') {
+    if (videoLinks[1]) {
         if (!buttonConfig.active) {
             addToLibrary(buttonConfig.libraryType, videoLinks[1].url);
             buttonConfig.spanElement.innerHTML = buttonConfig.activeText;
@@ -46,6 +46,8 @@ function handleClickQAddEvent(event, buttonConfig){
         setInterval(() => {
             buttonConfig.spanElement.innerHTML = buttonConfig.defaultText;
             buttonConfig.active = false;
+            resetButtonIcon(buttonConfig.buttonLocation);
+            checkLibrary();
         }, buttonConfig.errorDisplayDuration);
     }
 }
@@ -76,7 +78,7 @@ function handleClickAddEvent(event, buttonConfig) {
             resetButtonIcon(buttonConfig.buttonLocation);
         }, 500);
     }
-    checkLibrary(buttonConfig);
+    checkLibrary();
 }
 
 // #endregion

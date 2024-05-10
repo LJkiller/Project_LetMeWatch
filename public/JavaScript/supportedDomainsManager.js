@@ -105,7 +105,7 @@ function createMetricsList(items, location) {
             let text = getWebsiteNames(item.key);
 
             let isHighestValue = item.value === objectArray[0].value;
-            textColor = isHighestValue ? 'var(--black)' : originalTextColor;
+            textColor = isHighestValue ? 'rgba(0,0,0,1)' : originalTextColor;
             outlineColor = isHighestValue ? 'var(--yellow)' : originalTextColor;
             topColor = isHighestValue ? 'var(--yellow)' : originalColor;
             bottomColor = isHighestValue ? 'var(--red)' : originalColor;
