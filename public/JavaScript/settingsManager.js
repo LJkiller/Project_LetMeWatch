@@ -89,7 +89,7 @@ function createHTMLSettingsList(options, type) {
         let option = options[i];
         switch (type) {
             case 'colors':
-                let text = option === 'blue' ? 'blue (Default)' : option;
+                let text = option === 'blue' ? 'blue default' : option;
                 html += `<label><input type="checkbox" name="primary-color-${option}" id="${option}-option" class="option" style="--checkbox-color: var(--${option});">${capitalizeFirstLetter(text)}</label>`;
                 break;
             default:
@@ -135,6 +135,9 @@ function handleSetting(settingType, settingValue, setAsNewValue = false) {
             break;
         case 'color':
             let color = settingValue.split('primary-color-')[1];
+            if (document.body.classList.contains('light-theme')){
+                color = `dark-${settingValue.split('primary-color-')[1]}`;
+            }
             root.style.setProperty('--primary-color', setAsNewValue === true ? `var(--${color})` : 'var(--blue)');
             break;
         default:

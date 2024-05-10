@@ -8,6 +8,11 @@
     --blue: rgba(0,128,255,1);
     --yellow: rgba(255,255,100,1);
 
+    --dark-red: rgba(195,68,68,1);
+    --dark-green: rgba(0,195,68,1);
+    --dark-blue: rgba(0,98,205,1);
+    --dark-yellow: rgba(225,225,40,1);
+
     --primary-color: var(--blue);
     
     --scroll-track-color: var(--pitch-black);
