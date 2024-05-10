@@ -8,7 +8,7 @@
     --blue: rgba(0,128,255,1);
     --yellow: rgba(255,255,100,1);
     --light-theme: var(--yellow);
-    --dark-theme: rgba(50,50,150,1);
+    --dark-theme: rgba(60,60,185,1);
 
     --dark-red: rgba(185,68,78,1);
     --dark-green: rgba(0,185,78,1);
@@ -164,7 +164,7 @@ label {
 /*#region Scrollbar*/
 
 ::-webkit-scrollbar{
-	width: .75vw;
+	width: .8vw;
 }
 ::-webkit-scrollbar-track{
   	background: var(--scroll-track-color);
