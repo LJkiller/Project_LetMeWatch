@@ -58,6 +58,29 @@ function disableOtherCheckboxes(checkedCheckbox, checkboxes) {
     }
 }
 
+/**
+ * Method responsible of creating settings list.
+ * 
+ * @param {Array} options - Array of options.
+ * @param {string} type - String to which html should be generated
+ * @param {HTMLElement} location - HTML location to add the html to.
+ */
+function createSettingsList(options, type, location){
+    let html = '';
+    for (let i = 0; i < options.length; i++) {
+        let option = options[i];
+        if (type === 'colors'){
+            let text = option;
+            if (text === 'blue'){
+                text = 'blue (Default)';
+            }
+            html += `<label><input type="checkbox" name="primary-color-${option}" id="${option}-option" class="option" style="--checkbox-color: var(--${option});">${capitalizeFirstLetter(text)}</label>`;
+        }
+    }
+    location.innerHTML = html;
+    multipleBoxCheck(location.querySelectorAll('.option'));
+}
+
 
 
 

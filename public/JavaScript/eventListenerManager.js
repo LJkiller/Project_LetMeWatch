@@ -183,7 +183,11 @@ document.getElementById('preference-area').addEventListener('submit', function (
     closePopup(event);
 });
 
-multipleBoxCheck(document.querySelectorAll('#primary-color-options-area .option'));
+/**
+ * Method responsible of checking if multiple boxes are checked.
+ * 
+ * @param {NodeList} checkboxes - All checkboxes in the same area.
+ */
 function multipleBoxCheck(checkboxes){
     for (let i = 0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener('change', function(event) {

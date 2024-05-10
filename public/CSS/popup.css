@@ -99,26 +99,12 @@ div.option-area label {
     border-radius: 0.15rem;
 }
 .option-area input[type="checkbox"]:checked {
-    background-color: var(--blue);
-}
-.option-area input[type="checkbox"]#light-theme-option:checked {
-    background-color: var(--yellow);
-}
-.option-area input[type="checkbox"]#red-option:checked {
-    background-color: var(--red);
-}
-.option-area input[type="checkbox"]#green-option:checked {
-    background-color: var(--green);
-}
-.option-area input[type="checkbox"]#blue-option:checked {
-    background-color: var(--blue);
-}
-.option-area input[type="checkbox"]#yellow-option:checked {
-    background-color: var(--yellow);
+    background-color: var(--checkbox-color);
+    box-shadow: 0 0 10px 1px var(--checkbox-color);
 }
 
 .option-area input[type="checkbox"][disabled]{
-    background-color: var(--disabled-color);
+    background-color: var(--disabled-color) !important;
     cursor: not-allowed;
 }
 

@@ -104,5 +104,6 @@ function siteLibraryCorrection(){
  */
 function siteSettingsCorrection(){
     let settings = JSON.parse(localStorage.getItem('settings')) || [];
+    createSettingsList(['red', 'green', 'blue', 'yellow'], 'colors', document.getElementById('primary-color-options-area'));
     handleSettingsForm(settings);
 }
