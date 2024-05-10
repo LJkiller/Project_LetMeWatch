@@ -2,7 +2,6 @@
 /**
  * Method responsible of creating the SVG number for a metrics list.
  * 
- * @param {HTMLElement} root - The root element to append the SVG to.
  * @param {string} bottomColor - Color of the bottom part.
  * @param {string} topColor - Color of the top part.
  * @param {string} textColor - Color of the text.
@@ -11,7 +10,7 @@
  * @param {string} elementCase - Additional parameter for special SVG creation.
  * @returns {string} - The SVG markup as a string.
  */
-function createSVGNumber(root, bottomColor, topColor, textColor, outlineColor, iteration, elementCase) {
+function createSVGNumber(bottomColor, topColor, textColor, outlineColor, iteration, elementCase) {
     let areaSize = parseFloat(getComputedStyle(root).getPropertyValue('--svg-dot-size'));
     let svg = createSvgElement('svg', {
         'width': areaSize,

@@ -116,8 +116,8 @@ function activateButtonIcon(buttonConfig) {
  * @param {HTMLUListElement} location - Location to append list.
  */
 function createLibraryList(library, location) {
-    let originalColor = getComputedStyle(root).getPropertyValue('--blue');
-    let originalTextColor = getComputedStyle(root).getPropertyValue('--white');
+    let originalColor = 'var(--primary-color)';
+    let originalTextColor = 'var(--white)';
     let textColor = originalTextColor, bottomColor = originalColor, topColor = originalColor;
 
     let maxIteration = 8, iterations = 0;
@@ -129,7 +129,7 @@ function createLibraryList(library, location) {
         let urlElement = `<a href="${item.url}" target="_blank">${limitText(item.id, textListLimit)}</a>`;
         html += `
             <li>
-                ${createSVGNumber(root, bottomColor, topColor, textColor, textColor, i + 1, 'circle')}
+                ${createSVGNumber(bottomColor, topColor, textColor, textColor, i + 1, 'circle')}
                 <span>${domainName}:</span>
                 ${urlElement}
             </li>`
