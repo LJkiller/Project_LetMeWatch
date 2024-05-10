@@ -132,13 +132,11 @@ function createHTMLSettingsList(options, type, settingsValue) {
  */
 function handleSettingsForm(dataArray) {
     root.style.setProperty('--primary-color', 'var(--blue)');
+    document.body.removeAttribute('class');
     for (let i = 0; i < dataArray.length; i++) {
         let key = dataArray[i].formInput;
         if (key.includes(settingsCase.themeCase.string)) {
-            document.body.classList.contains('dark-theme') 
-                ? document.body.removeAttribute('class') 
-                : handleSetting(settingsCase.themeCase.string, key, key.includes(settingsCase.themeCase.string))
-            ;
+            handleSetting(settingsCase.themeCase.string, key, key.includes(settingsCase.themeCase.string));
         }
         if (key.includes(settingsCase.colorCase.string)) {
             handleSetting('color', key, key.includes(settingsCase.colorCase.string));
