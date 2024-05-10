@@ -10,6 +10,7 @@
 
     --primary-color: var(--blue);
     
+    --scroll-track-color: var(--pitch-black);
     --primary-scroll-color: var(--primary-color);
     --secondary-scroll-color: var(--white);
 
@@ -129,13 +130,15 @@ i.fa-fire {
     color: transparent;
 }
 
+
+
 /*#region Scrollbar*/
 
 ::-webkit-scrollbar{
 	width: .8vw;
 }
 ::-webkit-scrollbar-track{
-  	background: var(--pitch-black);
+  	background: var(--scroll-track-color);
 }
 ::-webkit-scrollbar-thumb{
 	background: var(--primary-scroll-color);
@@ -174,31 +177,33 @@ i.fa-fire {
 
 /*#endregion*/
 
-
-
 .light-theme {
     --primary-bg-color: rgba(245,245,245,1);
     --secondary-bg-color: rgba(205,205,205,1);
 
-    --bigger-text-color: var(--white);
-    --big-text-color: var(--pitch-black);
-    --normal-text-color: var(--almost-black);
-    --small-text-color: var(--lighter-black);
-    --smaller-text-color: var(--lightest-gray);
-    --smallest-text-color: var(--lighter-gray);
+    --scroll-track-color: var(--pitch-black);
+    --secondary-scroll-color: var(--white);
 
-    --black: rgba(255,255,255,1);
-    --darkest-gray: rgba(225,225,225,1);
-    --darker-gray: rgba(200,200,200,1);
-    --dark-gray: rgba(175,175,175,1);
-    --gray: rgba(150, 150,150,1);
-    --light-gray: rgba(125,125,125,1);
-    --lighter-gray: rgba(100,100,100,1);
-    --lightest-gray: rgba(75,75,75,1);
-    --lighter-black: rgba(50,50,50,1);
-    --almost-black: rgba(25,25,25,1);
-    --pitch-black: rgba(10,10,10,1);
+    --bigger-text-color: var(--white);
+    --big-text-color: var(--lightest-gray);
+    --normal-text-color: var(--lighter-gray);
+    --small-text-color: var(--light-gray);
+    --smaller-text-color: var(--gray);
+    --smallest-text-color: var(--dark-gray);
+    --disabled-color: var(--darker-gray);
+    
     --white: rgba(0,0,0,1);
+    --lightest-gray: rgba(10,10,10,1);
+    --lighter-gray: rgba(25,25,25,1);
+    --light-gray: rgba(50,50,50,1);
+    --gray: rgba(75,75,75,1);
+    --dark-gray: rgba(100,100,100,1);
+    --darker-gray: rgba(125,125,125,1);
+    --darkest-gray: rgba(150, 150,150,1);
+    --lighter-black: rgba(175,175,175,1);
+    --almost-black: rgba(200,200,200,1);
+    --pitch-black: rgba(225,225,225,1);
+    --black: rgba(255,255,255,1);
 }
 
 
