@@ -444,11 +444,18 @@ footer>section:not(#site-information, #site-insight, #user-library) ul li a {
         display: flex;
         justify-content: space-between;
     }
-    
+
+    #popup>section {
+        min-height: var(--popup-min-height);
+        max-height: 65%;
+    } 
+    #preference-area div#settings-container {
+        max-height: 25rem;
+    }
 }
 
 @media screen and (min-width: 964px) {
-    /* a-elemnt & Header adjustment*/
+    /* a-elemnt & Header & Scrollbar adjustment*/
 
     :root {
         --header-height: 4rem;
@@ -468,6 +475,33 @@ footer>section:not(#site-information, #site-insight, #user-library) ul li a {
         flex-direction: row;
         gap: var(--standard-spacing);
         z-index: var(--header-z-index);
+    }
+
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: var(--standard-border-radius);
+        height: 10%;
+        width: 100%;
+        border: 0px;
+        background-image:
+            linear-gradient(var(--primary-scroll-color),
+                var(--black));
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        border: 0.25rem solid var(--primary-scroll-color);
+        background-image:
+            linear-gradient(var(--primary-scroll-color),
+                var(--black));
+    }
+    ::-webkit-scrollbar-thumb:active {
+        border-color: var(--primary-scroll-color);
+        border-image:
+            linear-gradient(var(--primary-scroll-color),
+                var(--secondary-scroll-color));
+        border-image-slice: 1;
+        background-image:
+            linear-gradient(var(--primary-scroll-color),
+                var(--secondary-scroll-color));
     }
 
 }

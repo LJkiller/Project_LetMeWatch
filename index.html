@@ -12,11 +12,11 @@
 
 	<!-- #region CSS -->
 	<link rel="stylesheet" href="./public/CSS/style.css">
-	<link rel="stylesheet" href="./public/CSS/responsive.css">
 	<link rel="stylesheet" href="./public/CSS/user-interface.css">
 	<link rel="stylesheet" href="./public/CSS/popup.css">
 
 	<link rel="stylesheet" href="./public/CSS/index.css">
+	<link rel="stylesheet" href="./public/CSS/responsive.css">
 	<!-- #endregion -->
 
 	<!-- #region Scripts -->
@@ -164,23 +164,27 @@
 	
 	<dialog id="popup">
 		<section id="settings">
-			<h2><span>Settings</span><button id="close-settings-button" class="form-button single-icon-button"><i class="fa-solid fa-xmark"></i></button></h2>
-			<p>Select your preferences for the website's behaviour!</p>
+			<div>
+				<h2><span>Settings</span><button id="close-settings-button" class="form-button single-icon-button"><i class="fa-solid fa-xmark"></i></button></h2>
+				<p>Select your preferences for the website's behaviour!</p>
+			</div>
 			<form id="preference-area">
-				<section id="website-theme">
-					<h3>Website color themes</h3>
-					<section id="web-theme">
-						<span>Web theme</span>
-						<div id="theme-options-area" class="option-area"></div>
+				<div id="settings-container">
+					<section id="website-theme">
+						<h3>Website color themes</h3>
+						<section id="web-theme">
+							<span>Web theme</span>
+							<div id="theme-options-area" class="option-area"></div>
+						</section>
+						<section id="primary-color">
+							<span>Primary Color</span>
+							<div id="primary-color-options-area" class="option-area"></div>
+						</section>
 					</section>
-					<section id="primary-color">
-						<span>Primary Color</span>
-						<div id="primary-color-options-area" class="option-area"></div>
+					<section id="website-behaviour">
+						<h3>Website behaviours</h3>
 					</section>
-				</section>
-				<section id="website-behaviour">
-					<h3>Website behaviours</h3>
-				</section>
+				</div>
 				<button id="apply-button" class="form-button"><i class="fa-solid fa-floppy-disk"></i> Apply</button>
 			</form>
 		</section>

@@ -106,6 +106,10 @@
 
 /*#endregion*/
 
+
+
+/*#region General Changes*/
+
 * {
     margin: 0;
     padding: 0;
@@ -137,12 +141,30 @@ i.fa-fire {
     color: transparent;
 }
 
+h2, h2 span {
+    color: var(--bigger-text-color);
+}
+h3 {
+    color: var(--big-text-color);
+}
+p {
+    color: var(--normal-text-color);
+}
+span {
+    color: var(--smaller-text-color);
+}
+label {
+    color: var(--smallest-text-color);
+}
+
+/*#endregion*/
+
 
 
 /*#region Scrollbar*/
 
 ::-webkit-scrollbar{
-	width: .8vw;
+	width: .75vw;
 }
 ::-webkit-scrollbar-track{
   	background: var(--scroll-track-color);
@@ -153,25 +175,12 @@ i.fa-fire {
 	height: 10%;
 	width: 100%;
 	border: 0px;
-	background-image: 
-		linear-gradient(
-			var(--primary-scroll-color), 
-			var(--black));
 }
 ::-webkit-scrollbar-thumb:hover{
-	background: var(--primary-scroll-color);
-	border: 0.25rem solid var(--primary-scroll-color);
-	background-image: 
-		linear-gradient(
-			var(--primary-scroll-color), 
-			var(--black));
+	background: var(--secondary-scroll-color);
 }
 ::-webkit-scrollbar-thumb:active{
 	border-color: var(--primary-scroll-color);
-	border-image:
-		linear-gradient(
-			var(--primary-scroll-color), 
-			var(--secondary-scroll-color));
 	border-image-slice: 1;
 	background-image: 
 		linear-gradient(
@@ -183,6 +192,8 @@ i.fa-fire {
 }
 
 /*#endregion*/
+
+
 
 .light-theme {
     --primary-bg-color: rgba(245,245,245,1);
@@ -211,21 +222,4 @@ i.fa-fire {
     --almost-black: rgba(200,200,200,1);
     --pitch-black: rgba(225,225,225,1);
     --black: rgba(255,255,255,1);
-}
-
-
-h2, h2 span {
-    color: var(--bigger-text-color);
-}
-h3 {
-    color: var(--big-text-color);
-}
-p {
-    color: var(--normal-text-color);
-}
-span {
-    color: var(--smaller-text-color);
-}
-label {
-    color: var(--smallest-text-color);
 }
