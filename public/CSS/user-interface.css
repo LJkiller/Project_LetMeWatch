@@ -18,7 +18,6 @@ button.single-icon-button{
 .form-input{
     height: var(--input-height);
     width: var(--input-small-width);
-    color: var(--white);
 }
 .form-input:focus{
     width: var(--input-width);
@@ -27,17 +26,14 @@ button.single-icon-button{
 .form-input::placeholder{
     transition: var(--standard-eio-transition);
     font-weight: bold;
-    color: var(--primary-color);
 }
 
 .form-button{
     height: var(--button-height);
     min-width: var(--min-button-width);
-    color: var(--primary-color);
 }
 .quick-button{
     transition: var(--fast-eio-transition);
-    color: var(--primary-color);
     padding: calc(var(--standard-spacing) / 3) var(--standard-spacing);
     display: flex;
     justify-content: center;
@@ -46,22 +42,15 @@ button.single-icon-button{
 
 .form-button:hover, 
 .quick-button:hover {
-    color: var(--big-text-color);
     background-color: var(--primary-color);
     cursor: pointer;
 }
-
 .form-input:hover{
     width: var(--input-width);
     background-color: var(--primary-color);
 }
-.form-input:hover::placeholder{
-    color: var(--white);
-}
-
 .form label{
     font-weight: bold;
-    color: var(--smallest-text-color);
 }  
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -74,6 +63,22 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .form-input#width-input:focus{
     width: var(--input-special-width);
+}
+
+.form-input {
+    color: var(--white);
+}
+.form-input::placeholder, .form-button, .quick-button,
+.quick-button span{
+    color: var(--primary-color);
+}
+.form-input:hover::placeholder{
+    color: var(--big-text-color);
+}
+.form-button:hover, 
+.quick-button:hover,
+.quick-button:hover span {
+    color: var(--big-text-color);
 }
 
 

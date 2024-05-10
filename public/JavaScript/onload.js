@@ -8,6 +8,7 @@ window.onload = function () {
     siteStyleCorrection();
     siteMetricsCorrection();
     siteLibraryCorrection();
+    siteSettingsCorrection();
 };
 
 /**
@@ -23,7 +24,7 @@ function siteSavedCorrection(width){
         restoreIframeSize(mediaPlayer, width);
     }
 
-    document.getElementById('video-id').innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${displayId}`;
+    document.getElementById('video-id').innerHTML = `<span style="color: var(--smaller-text-color);">LastVideoID:</span> ${displayId}`;
     document.getElementById('video-link').href = latestLink.url;
     document.getElementById('falsified-media-player').src = latestLink.src;
 }
@@ -96,4 +97,12 @@ function siteLibraryCorrection(){
     let playlistLibrary = JSON.parse(localStorage.getItem('playlistLibrary')) || [];
     createLibraryList(starLibrary, document.querySelector(`#starred-videos > .videos`));
     createLibraryList(playlistLibrary, document.querySelector(`#playlist > .videos`));
+}
+
+/**
+ * Method responsible of correcting settings applications.
+ */
+function siteSettingsCorrection(){
+    let settings = JSON.parse(localStorage.getItem('settings')) || [];
+    handleSettingsForm(settings);
 }

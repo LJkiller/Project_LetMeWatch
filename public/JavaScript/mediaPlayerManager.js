@@ -70,7 +70,7 @@ function displayVideoId(displayAsLastVideo = false) {
     if (displayAsLastVideo) {
         videoIdValueSpan.textContent = `VideoID: ${displayId}`;
     } else {
-        videoIdValueSpan.innerHTML = `<span style="color: var(--darker-gray);">LastVideoID:</span> ${displayId}`;
+        videoIdValueSpan.innerHTML = `<span style="color: var(--smaller-text-color);">LastVideoID:</span> ${displayId}`;
     }
 }
 

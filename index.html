@@ -12,9 +12,9 @@
 
 	<!-- #region CSS -->
 	<link rel="stylesheet" href="./public/CSS/style.css">
-	<link rel="stylesheet" href="./public/CSS/popup.css">
 	<link rel="stylesheet" href="./public/CSS/responsive.css">
 	<link rel="stylesheet" href="./public/CSS/user-interface.css">
+	<link rel="stylesheet" href="./public/CSS/popup.css">
 
 	<link rel="stylesheet" href="./public/CSS/index.css">
 	<!-- #endregion -->
@@ -49,7 +49,6 @@
 			<img loading="lazy" src="./public/assets/Icons/LetMeWatchIcon.png" alt="LetMeWatch logo, a bright colored playbutton.">
 			<span id="let-me-watch-title">LetMeWatch <span>DAMMIT</span></span>
 		</a>
-
 		<div id="media-form" class="form">
 			<label>Enter Link |</label>
 			<div id="media-form-buttons">
@@ -64,7 +63,6 @@
 
 	<main>
 		<section id="content">
-
 			<div id="media-top">
 				<div class="media-information">
 					<span id="width-value">Width : $(storedWidth)px</span>
@@ -82,9 +80,7 @@
 					</section>
 				</form>
 			</div>
-
 			<embed id="falsified-media-player" src="https://www.youtube-nocookie.com/embed/{id}?start=0&autoplay=1&autohide=1" type="video/mp4">
-
 			<div id="media-bottom" class="media-information">
 				<span id="video-id">VideoID: $(storedVideoID)</span>
 				<span>-</span>
@@ -92,13 +88,11 @@
 				<button id="q-add-playlist-button" class="quick-button"><i class="fa-regular fa-bookmark"></i><span>Add To Playlist</span></button>
 				<button id="q-star-button" class="quick-button"><i class="fa-regular fa-star"></i><span>Star</span></button>
 			</div>
-
 			<div id="iframe-controls">
 				<button id="prev-playlist-button" class="quick-button"><i class="fa-solid fa-backward"></i><span>Prev</span></button>
 				<button id="exit-playlist-button" class="quick-button"><i class="fa-solid fa-circle-xmark"></i><span>Exit Playlist</span></button>
 				<button id="next-playlist-button" class="quick-button"><span>Next</span><i class="fa-solid fa-forward"></i></button>
 			</div>
-
 		</section>
 	</main>
 
@@ -169,16 +163,33 @@
 		<section id="settings">
 			<h2><span>Settings</span><button id="close-settings-button" class="form-button single-icon-button"><i class="fa-solid fa-xmark"></i></button></h2>
 			<p>Select your preferences for the website's behaviour!</p>
-			<section id="preference-area">
+			<form id="preference-area">
 				<section id="website-theme">
-					<h3>Wesite Theme</h3>
+					<h3>Website color themes</h3>
+					<section id="web-theme">
+						<span>Web theme</span>
+						<div class="option-area">
+							<label><input type="checkbox" name="light-theme" id="light-theme-option" class="option">Light Mode</label>
+						</div>
+					</section>
+					<section id="primary-color">
+						<span>Primary Color</span>
+						<div id="primary-color-options-area" class="option-area">
+							<label><input type="checkbox" name="primary-color-red" id="red-option" class="option">Red</label>
+							<label><input type="checkbox" name="primary-color-green" id="green-option" class="option">Green</label>
+							<label><input type="checkbox" name="primary-color-blue" id="blue-option" class="option">Blue (Default)</label>
+							<label><input type="checkbox" name="primary-color-yellow" id="yellow-option" class="option">Yellow</label>
+						</div>
+					</section>
 				</section>
 				<section id="website-behaviour">
-					<h3>Website behaviour</h3>
+					<h3>Website behaviours</h3>
 				</section>
-			</section>
+				<button id="apply-button" class="form-button"><i class="fa-solid fa-floppy-disk"></i> Apply</button>
+			</form>
 		</section>
 	</dialog>
+
 </body>
 
 </html>

@@ -94,6 +94,7 @@ exitPlaylistButton.addEventListener('click', function(event){
 
 
 // #region Library Buttons Events
+
 let starButton = document.getElementById('star-button'), addButton = document.getElementById('add-playlist-button');
 let qStarButton = document.getElementById('q-star-button'), qAddButton = document.getElementById('q-add-playlist-button');
 let starUl = document.querySelector('#starred-videos > ul'), playlistUl = document.querySelector('#playlist > ul');
@@ -105,6 +106,8 @@ let buttonConfigs = [
         ulElement: starUl,
         active: false,
         activeText: 'Starred',
+        errorText: 'Error',
+        errorDisplayDuration: 500,
         libraryType: starLibraryType
     },
     {
@@ -112,6 +115,8 @@ let buttonConfigs = [
         ulElement: playlistUl,
         active: false,
         activeText: 'Added',
+        errorText: 'Error',
+        errorDisplayDuration: 500,
         libraryType: playlistLibraryType
     }
 ]
@@ -123,6 +128,8 @@ let qButtonConfigs = [
         active: false,
         defaultText: 'Star',
         activeText: 'Starred',
+        errorText: 'Error',
+        errorDisplayDuration: 500,
         libraryType: starLibraryType
     },
     {
@@ -132,6 +139,8 @@ let qButtonConfigs = [
         active: false,
         defaultText: 'Add To Playlist',
         activeText: 'Added',
+        errorText: 'Error',
+        errorDisplayDuration: 500,
         libraryType: playlistLibraryType
     }
 ];
@@ -163,5 +172,26 @@ let closePopupButton = document.getElementById('close-settings-button');
 settingsButton.addEventListener('click', (event) => { openPopup(event, 'settings')});
 closePopupButton.addEventListener('click', closePopup);
 popup.addEventListener('click', closePopupOutside);
+document.getElementById('preference-area').addEventListener('submit', function (event) {
+    event.preventDefault();
+    let formData = new FormData(event.target);
+    let formDataArray = [];
+    formData.forEach((value, key) => {
+        formDataArray.push({ formInput: key, value: value });
+    });
+    handleSettingsForm(formDataArray);
+    closePopup(event);
+});
+
+multipleBoxCheck(document.querySelectorAll('#primary-color-options-area .option'));
+function multipleBoxCheck(checkboxes){
+    for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].addEventListener('change', function(event) {
+            disableOtherCheckboxes(checkboxes[i], checkboxes);
+        });
+    }
+}
+
+
 
 // #endregion

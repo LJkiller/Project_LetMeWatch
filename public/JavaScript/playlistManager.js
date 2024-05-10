@@ -26,19 +26,27 @@ function handleHoverEvent(event, buttonConfig) {
 function handleClickQAddEvent(event, buttonConfig){
     event.preventDefault();
     let videoLinks = getVideoLinksArray();
-    if (!buttonConfig.active) {
-        addToLibrary(buttonConfig.libraryType, videoLinks[1].url);
-        buttonConfig.spanElement.innerHTML = buttonConfig.activeText;
-        buttonConfig.active = true;
+    if (!videoLinks[1].url === 'NOT FOUND') {
+        if (!buttonConfig.active) {
+            addToLibrary(buttonConfig.libraryType, videoLinks[1].url);
+            buttonConfig.spanElement.innerHTML = buttonConfig.activeText;
+            buttonConfig.active = true;
+        } else {
+            removeFromLibrary(buttonConfig.libraryType, videoLinks[1]);
+            buttonConfig.spanElement.innerHTML = buttonConfig.defaultText;
+            buttonConfig.active = false;
+        }
+        let library = JSON.parse(localStorage.getItem(buttonConfig.libraryType)) || [];
+        buttonConfig.ulElement.innerHTML = '';
+        if (linkRegex.test(videoLinks[1].url)) {
+            createLibraryList(library, buttonConfig.ulElement);
+        }
     } else {
-        removeFromLibrary(buttonConfig.libraryType, videoLinks[1]);
-        buttonConfig.spanElement.innerHTML = buttonConfig.defaultText;
-        buttonConfig.active = false;
-    }
-    let library = JSON.parse(localStorage.getItem(buttonConfig.libraryType)) || [];
-    buttonConfig.ulElement.innerHTML = '';
-    if (linkRegex.test(videoLinks[1].url)) {
-        createLibraryList(library, buttonConfig.ulElement);
+        buttonConfig.spanElement.innerHTML = buttonConfig.errorText;
+        setInterval(() => {
+            buttonConfig.spanElement.innerHTML = buttonConfig.defaultText;
+            buttonConfig.active = false;
+        }, buttonConfig.errorDisplayDuration);
     }
 }
 
@@ -55,7 +63,7 @@ function handleClickAddEvent(event, buttonConfig) {
     let linkInput = linkElement.value;
     linkElement.value = '';
     
-    if (isGibberish(linkInput)){
+    if (!linkRegex.test(linkInput)){
         return;
     }
 
@@ -72,6 +80,9 @@ function handleClickAddEvent(event, buttonConfig) {
 }
 
 // #endregion
+
+
+
 
 let playlist;
 let currentVideoNumber = 0;
