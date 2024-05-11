@@ -104,25 +104,14 @@ function siteLibraryCorrection(){
  */
 function siteSettingsCorrection() {
     let settings = JSON.parse(localStorage.getItem('settings')) || [];
-    let filteredInputs = settings.map(setting => setting.formInput);
+    let items = getAllItemsSorted(settings);
 
-    let colorSettings = getSettingsCaseValue(filteredInputs, settingsCase.colorCase.string);
-    colorSettings = colorSettings ? colorSettings.split('primary-color-')[1] : 'blue';
-    let themeSettings = getSettingsCaseValue(filteredInputs, settingsCase.themeCase.string);
-    themeSettings = themeSettings ? themeSettings.split('-theme')[0] : 'dark';
+    let activeThemes = getActiveValues(items[0]);
+    let themeValue = activeThemes[0] ? activeThemes[0].split('-theme')[0] : themeCase.defaultValue;
+    let activeColors = getActiveValues(items[1]);
+    let colorValue = activeColors[0] ? activeColors[0].split('primary-color-')[1] : colorCase.defaultValue;
 
-    createSettingsList(settingsCase.colorCase.options, settingsCase.colorCase.string, colorSettings, document.getElementById('primary-color-options-area'));
-    createSettingsList(settingsCase.themeCase.options, settingsCase.themeCase.string, themeSettings, document.getElementById('theme-options-area'));
+    createSettingsList(themeCase.options, themeCase.string, themeValue, document.getElementById('theme-options-area'));
+    createSettingsList(colorCase.options, colorCase.string, colorValue, document.getElementById('primary-color-options-area'));
     handleSettingsForm(settings);
-}
-
-/**
- * Method responsible of getting 
- * 
- * @param {Array} inputs - Array of settings to analyze.
- * @param {string} stringCase - Which string type to match.
- * @returns 
- */
-function getSettingsCaseValue(inputs, stringCase){
-    return inputs.find(input => input.includes(stringCase));
 }

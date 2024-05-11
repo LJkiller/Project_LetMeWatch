@@ -33,7 +33,7 @@ button.single-icon-button{
     min-width: var(--min-button-width);
 }
 .quick-button{
-    transition: var(--fast-eio-transition);
+    transition: var(--sharp-eio-transition);
     padding: calc(var(--standard-spacing) / 3) var(--standard-spacing);
     display: flex;
     justify-content: center;

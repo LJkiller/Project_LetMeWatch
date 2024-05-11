@@ -95,22 +95,31 @@ function createSettingsList(options, type, settingsValue, location){
  */
 function createHTMLSettingsList(options, type, settingsValue) {
     let html = '';
-    let defaultValue = '';
     let text = '';
     for (let i = 0; i < options.length; i++) {
         let option = options[i];
         let checkedOrDisabled = option.includes(settingsValue) ? 'checked': 'disabled';
-        let isCurrent = checkedOrDisabled === 'checked' ? '<i>(Current)</i>' : '';
+        let isCurrent = checkedOrDisabled === 'checked' ? '<i>(Active)</i>' : '';
         switch (type) {
-            case settingsCase.themeCase.string:
-                defaultValue = 'dark';
-                text = option === defaultValue ? 'dark' : option;
-                html += `<label><input type="checkbox" ${checkedOrDisabled} name="${text}-theme" id="${text}-theme-option" class="option" style="--checkbox-color: var(--${text}-theme);">${capitalizeFirstLetter(text)} Mode ${isCurrent}</label>`;
+            case themeCase.string:
+                text = option === themeCase.defaultValue ? themeCase.defaultValue : option;
+                html += `
+                    <label>
+                        <input type="checkbox" ${checkedOrDisabled} name="${text}-theme" id="${text}-theme-option" class="option" style="--checkbox-color: var(--${text}-theme);">
+                        ${capitalizeFirstLetter(text)} Mode ${isCurrent}
+                        ${checkedOrDisabled === 'disabled' ? `<input type="hidden" name="${text}-theme" value=""}>`: ''}
+                    </label>`
+                ;
                 break;
-            case settingsCase.colorCase.string:
-                defaultValue = 'blue';
-                text = option === defaultValue ? 'blue' : option;
-                html += `<label><input type="checkbox" ${checkedOrDisabled} name="primary-color-${option}" id="${option}-option" class="option" style="--checkbox-color: var(--${option});">${capitalizeFirstLetter(text)} ${isCurrent}</label>`;
+            case colorCase.string:
+                text = option === colorCase.defaultValue ? colorCase.defaultValue : option;
+                html += `
+                    <label>
+                        <input type="checkbox" ${checkedOrDisabled} name="primary-color-${option}" id="${option}-option" class="option" style="--checkbox-color: var(--${option});">
+                        ${capitalizeFirstLetter(text)} ${isCurrent}
+                        ${checkedOrDisabled === 'disabled' ? `<input type="hidden" name="primary-color-${option}" value=""'}>`: ''}
+                    </label>`
+                ;
                 break;
             default:
                 break;
@@ -133,40 +142,84 @@ function createHTMLSettingsList(options, type, settingsValue) {
 function handleSettingsForm(dataArray) {
     root.style.setProperty('--primary-color', 'var(--blue)');
     document.body.removeAttribute('class');
-    for (let i = 0; i < dataArray.length; i++) {
-        let key = dataArray[i].formInput;
-        if (key.includes(settingsCase.themeCase.string)) {
-            handleSetting(settingsCase.themeCase.string, key, key.includes(settingsCase.themeCase.string));
-        }
-        if (key.includes(settingsCase.colorCase.string)) {
-            handleSetting('color', key, key.includes(settingsCase.colorCase.string));
-        }
-    }
+
+    let items = getAllItemsSorted(dataArray);
+    handleSetting(getActiveValues(items[0]), themeCase.string);
+    handleSetting(getActiveValues(items[1]), colorCase.string);
+    handleSetting(getActiveValues(items[2]), behaviourCase.string);
+
     localStorage.setItem('settings', JSON.stringify(dataArray));
 }
 
 /**
- * Method responsible for changing the website's theme or primary color.
+ * Method responsible of applying settings.
  * 
- * @param {string} settingType - Type of setting to handle ('theme' or 'color').
- * @param {string} settingValue - Value of the setting.
- * @param {boolean} [setAsNewValue=false] - Boolean to check if it is to be added as a new value.
+ * @param {string[]} activeCase - What is currently active.
+ * @param {string} settingType - String of what case should be applied.
  */
-function handleSetting(settingType, settingValue, setAsNewValue = false) {
-    switch (settingType) {
-        case settingsCase.themeCase.string:
-            document.body.className = setAsNewValue === true ? settingValue : '';
-            break;
-        case settingsCase.colorCase.string:
-            let color = settingValue.split('primary-color-')[1];
-            if (document.body.classList.contains('light-theme')){
-                color = `dark-${settingValue.split('primary-color-')[1]}`;
-            }
-            root.style.setProperty('--primary-color', setAsNewValue === true ? `var(--${color})` : 'var(--blue)');
-            break;
-        default:
-            break;
+function handleSetting(activeCases, settingType){
+    let singleCase = activeCases.length === 1 ? true : false;
+    let items = activeCases.length === 1 ? activeCases[0]: activeCases;
+
+    if (singleCase === true) {
+        switch (settingType) {
+            case settingsCase.themeCase.string:
+                document.body.className = items === 'dark-theme' ? '': items;
+                break;
+            case settingsCase.colorCase.string:
+                let color = items.split('primary-color-')[1];
+                if (document.body.classList.contains('light-theme')) {
+                    color = `dark-${items.split('primary-color-')[1]}`;
+                }
+                root.style.setProperty('--primary-color', `var(--${color})`);
+                break;
+            default:
+                break;
+        }
+    } else {
+
     }
+}
+
+/**
+ * Method responsible of getting all data sorted into correct sections.
+ * 
+ * @param {Array} dataArray - Array containing all different form data. 
+ * @returns {Array} - Array of themeItems, colorItems and behaviourItems.
+ */
+function getAllItemsSorted(dataArray){
+    let themeItems = [];
+    let colorItems = [];
+    let behaviourItems = [];
+    for (let i = 0; i < dataArray.length; i++){
+        let item = dataArray[i];
+        if (item.formInput.includes(themeCase.string)){
+            themeItems.push(item);
+        } else if (item.formInput.includes(colorCase.string)) {
+            colorItems.push(item);
+        } else if (item.formInput.includes(behaviourCase.string)) {
+            behaviourItems.push(item);
+        }
+    }
+    return [themeItems, colorItems, behaviourItems];
+}
+
+/**
+ * Method responsible of getting active values.
+ * 
+ * @param {Array} items - Array of objects to get filtered out.
+ * @returns {Array} - Array of active settings.
+ */
+function getActiveValues(items){
+    let activeElement = [];
+    for (let i = 0; i < items.length; i++){
+        let item = items[i];
+        if (item.value === 'on'){
+            activeElement.push(item.formInput);
+            break;
+        }
+    }
+    return activeElement;
 }
 
 // #endregion

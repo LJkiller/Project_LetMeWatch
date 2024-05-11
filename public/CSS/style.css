@@ -99,7 +99,7 @@
 
 /*Animation*/
 :root{
-    --fast-eio-transition: .1s ease-in-out;
+    --sharp-eio-transition: .1s ease-in-out;
     --standard-eio-transition: .2s ease-in-out;
     --slow-eio-transition: .4s ease-in-out;
 }

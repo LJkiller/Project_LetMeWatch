@@ -109,11 +109,21 @@ let commands = {
 
 let settingsCase = {
     colorCase: {
-        options: ['red', 'green', 'blue', 'yellow'],
-        string: 'color'
+        string: 'color',
+        defaultValue: 'blue',
+        options: ['red', 'green', 'blue', 'yellow']
     },
     themeCase: {
-        options: ['light', 'dark'],
-        string: 'theme'
+        string: 'theme',
+        defaultValue: 'dark',
+        options: ['light', 'dark']
+    },
+    behaviourCase: {
+        string: 'behaviour',
+        playlistCase: {
+            options: [''],
+            string: ''
+        }
     }
 }
+let { themeCase, colorCase, behaviourCase } = settingsCase;
