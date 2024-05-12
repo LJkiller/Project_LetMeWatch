@@ -110,8 +110,12 @@ function siteSettingsCorrection() {
     let themeValue = activeThemes[0] ? activeThemes[0].split('-theme')[0] : themeCase.defaultValue;
     let activeColors = getActiveValues(items[1]);
     let colorValue = activeColors[0] ? activeColors[0].split('primary-color-')[1] : colorCase.defaultValue;
+    let activePlaylistBehvaiours = getActiveValues(items[2]);
+    let playlistValues = activePlaylistBehvaiours[0] ? activePlaylistBehvaiours[0] : null;
 
     createSettingsList(themeCase.options, themeCase.string, themeValue, document.getElementById('theme-options-area'));
     createSettingsList(colorCase.options, colorCase.string, colorValue, document.getElementById('primary-color-options-area'));
+    createSettingsList(playlistCase.options, playlistCase.string, playlistValues, document.getElementById('playlist-behaviour-options-area'));
+
     handleSettingsForm(settings);
 }

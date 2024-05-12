@@ -121,9 +121,11 @@ let settingsCase = {
     behaviourCase: {
         string: 'behaviour',
         playlistCase: {
-            options: [''],
-            string: ''
+            string: 'playlist',
+            defaultValue: '',
+            options: ['remove-entries-behaviour']
         }
     }
 }
 let { themeCase, colorCase, behaviourCase } = settingsCase;
+let { playlistCase } = behaviourCase;

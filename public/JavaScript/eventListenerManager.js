@@ -71,7 +71,9 @@ exitPlaylistButton.addEventListener('click', function(event){
     iframeControls.classList.remove('active');
     startPlaylistButton.classList.add('active');
 
-    if (!event.shiftKey) {
+    let settings = JSON.parse(localStorage.getItem('settings'));
+    let removePlaylistEntriesSettings = settings.find(item => item.formInput === playlistCase.options[0]);
+    if (removePlaylistEntriesSettings && (event.shiftKey || removePlaylistEntriesSettings.value === 'on')) {
         let playlistDetails = JSON.parse(localStorage.getItem('playlistDetails'));
         for (let i = 0; i < playlistDetails.length; i++) {
             removeFromLibrary('playlistLibrary', playlistDetails[i]);

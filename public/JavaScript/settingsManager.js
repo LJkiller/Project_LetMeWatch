@@ -72,13 +72,16 @@ function disableOtherCheckboxes(checkedCheckbox, checkboxes) {
  */
 function createSettingsList(options, type, settingsValue, location){
     switch (type){
-        case settingsCase.themeCase.string:
+        case themeCase.string:
             location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
             multipleBoxCheck(location.querySelectorAll('.option'));
             break;
-        case settingsCase.colorCase.string:
+        case colorCase.string:
             location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
             multipleBoxCheck(location.querySelectorAll('.option'));
+            break;
+        case playlistCase.string:
+            location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
             break;
         default:
             break;
@@ -98,8 +101,13 @@ function createHTMLSettingsList(options, type, settingsValue) {
     let text = '';
     for (let i = 0; i < options.length; i++) {
         let option = options[i];
-        let checkedOrDisabled = option.includes(settingsValue) ? 'checked': 'disabled';
+        let checkedOrDisabled = '';
+        if (settingsValue !== null){
+            checkedOrDisabled = option.includes(settingsValue) ? 'checked': 'disabled';
+        }
         let isCurrent = checkedOrDisabled === 'checked' ? '<i>(Active)</i>' : '';
+
+        let displayText = '';
         switch (type) {
             case themeCase.string:
                 text = option === themeCase.defaultValue ? themeCase.defaultValue : option;
@@ -120,6 +128,19 @@ function createHTMLSettingsList(options, type, settingsValue) {
                         ${checkedOrDisabled === 'disabled' ? `<input type="hidden" name="primary-color-${option}" value=""'}>`: ''}
                     </label>`
                 ;
+                break;
+            case playlistCase.string:
+                text = option;
+                if (text === playlistCase.options[0]){
+                    displayText = 'Remove watched entries upon closing.';
+                }
+                html += `
+                    <label>
+                        <input type="checkbox" ${checkedOrDisabled} name="${text}" id="playlist-option-${i}" class="option">
+                        ${displayText}
+                        
+                    </label>
+                `;
                 break;
             default:
                 break;
@@ -157,16 +178,16 @@ function handleSettingsForm(dataArray) {
  * @param {string[]} activeCase - What is currently active.
  * @param {string} settingType - String of what case should be applied.
  */
-function handleSetting(activeCases, settingType){
+function handleSetting(activeCases, settingType) {
     let singleCase = activeCases.length === 1 ? true : false;
-    let items = activeCases.length === 1 ? activeCases[0]: activeCases;
+    let items = activeCases.length === 1 ? activeCases[0] : activeCases;
 
     if (singleCase === true) {
         switch (settingType) {
-            case settingsCase.themeCase.string:
-                document.body.className = items === 'dark-theme' ? '': items;
+            case themeCase.string:
+                document.body.className = items === 'dark-theme' ? '' : items;
                 break;
-            case settingsCase.colorCase.string:
+            case colorCase.string:
                 let color = items.split('primary-color-')[1];
                 if (document.body.classList.contains('light-theme')) {
                     color = `dark-${items.split('primary-color-')[1]}`;
@@ -177,7 +198,15 @@ function handleSetting(activeCases, settingType){
                 break;
         }
     } else {
+        switch (settingType) {
+            case behaviourCase.string:
 
+                break;
+            case '':
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -216,7 +245,6 @@ function getActiveValues(items){
         let item = items[i];
         if (item.value === 'on'){
             activeElement.push(item.formInput);
-            break;
         }
     }
     return activeElement;
