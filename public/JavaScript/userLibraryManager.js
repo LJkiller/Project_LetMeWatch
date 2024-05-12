@@ -2,6 +2,52 @@
 // #region Events
 
 /**
+ * Method responsible of handling start sequence for playlist.
+ */
+function handleStartPlaylist(){
+    iframeControls.classList.add('active');
+    startPlaylistButton.classList.remove('active');
+    document.getElementById("media-top").scrollIntoView();
+    playlist = JSON.parse(localStorage.getItem('playlistLibrary'));
+    
+    saveVideoPositions(currentVideoNumber);
+    changeMediaPlayerSrc();
+    if (playlist) {
+        document.getElementById('prev-playlist-button').addEventListener('click', playPreviousVideo);
+        document.getElementById('next-playlist-button').addEventListener('click', playNextVideo);
+    } else {
+        console.error('Playlist not found');
+    }
+}
+
+/**
+ * Method responsible of handling exit sequence for playlist.
+ */
+function handleExitPlaylist(event){
+    iframeControls.classList.remove('active');
+    startPlaylistButton.classList.add('active');
+
+    let settings = JSON.parse(localStorage.getItem('settings'));
+    let removePlaylistEntriesSettings = settings.find(item => item.formInput === playlistCase.options[0]);
+    if (removePlaylistEntriesSettings || event.shiftKey) {
+        let playlistDetails = JSON.parse(localStorage.getItem('playlistDetails'));
+        for (let i = 0; i < playlistDetails.length; i++) {
+            removeFromLibrary('playlistLibrary', playlistDetails[i]);
+        }
+    }
+    localStorage.removeItem('playlistDetails');
+
+    let videoLinksArray = getVideoLinksArray();
+    mediaPlayer.src = videoLinksArray[1].src;
+    videoIdValueSpan.textContent = `VideoID: ${limitText(videoLinksArray[1].id, textListLimit)}`;
+    updateMetricLists();
+    resetMainButtons();
+    checkLibrary();
+    siteLibraryCorrection();
+    playlist = [];
+}
+
+/**
  * Method responsible of handling hover events.
  * 
  * @param {Event} event - Event. 
@@ -23,7 +69,7 @@ function handleHoverEvent(event, buttonConfig) {
  * @param {Event} event - Event.
  * @param {Object} button - Button configs. 
  */
-function handleClickQAddEvent(event, buttonConfig){
+function handleClickAddEvent(event, buttonConfig){
     event.preventDefault();
     let videoLinks = getVideoLinksArray();
     if ((videoLinks[1].id === 'NOT FOUND') === false) {
@@ -61,7 +107,7 @@ function handleClickQAddEvent(event, buttonConfig){
  * @param {Object} buttonConfig - Button object.
  * @returns 
  */
-function handleClickAddEvent(event, buttonConfig) {
+function handleClickQAddEvent(event, buttonConfig) {
     event.preventDefault();
     let linkElement = document.getElementById('link-input');
     let linkInput = linkElement.value;
@@ -93,10 +139,10 @@ function handleClickAddEvent(event, buttonConfig) {
  * Method responsible of resetting main buttons.
  */
 function resetMainButtons() {
-    for (let i = 0; i < qButtonConfigs.length; i++){
-        qButtonConfigs[i].spanElement.innerHTML = qButtonConfigs[i].defaultText;
-        qButtonConfigs[i].active = false;
-        resetButtonIcon(qButtonConfigs[i].buttonLocation);
+    for (let i = 0; i < buttonConfigs.length; i++){
+        buttonConfigs[i].spanElement.innerHTML = buttonConfigs[i].defaultText;
+        buttonConfigs[i].active = false;
+        resetButtonIcon(buttonConfigs[i].buttonLocation);
     }
 }
 
@@ -199,8 +245,8 @@ function itemExistsInList(list, item) {
  */
 function checkLibrary() {
     let videoLinksArray = getVideoLinksArray();
-    for (let i = 0; i < qButtonConfigs.length; i++){
-        let button = qButtonConfigs[i];
+    for (let i = 0; i < buttonConfigs.length; i++){
+        let button = buttonConfigs[i];
         let library = JSON.parse(localStorage.getItem(button.libraryType)) || [];
         if (itemExistsInList(library, videoLinksArray[1])) {
             activateButtonIcon(button);
@@ -260,52 +306,6 @@ function removeFromLibrary(libraryType, item) {
 
 let playlist;
 let currentVideoNumber = 0;
-
-/**
- * Method responsible of handling start sequence for playlist.
- */
-function handleStartPlaylist(){
-    iframeControls.classList.add('active');
-    startPlaylistButton.classList.remove('active');
-    document.getElementById("media-top").scrollIntoView();
-    playlist = JSON.parse(localStorage.getItem('playlistLibrary'));
-    
-    saveVideoPositions(currentVideoNumber);
-    changeMediaPlayerSrc();
-    if (playlist) {
-        document.getElementById('prev-playlist-button').addEventListener('click', playPreviousVideo);
-        document.getElementById('next-playlist-button').addEventListener('click', playNextVideo);
-    } else {
-        console.error('Playlist not found');
-    }
-}
-
-/**
- * Method responsible of handling exit sequence for playlist.
- */
-function handleExitPlaylist(){
-    iframeControls.classList.remove('active');
-    startPlaylistButton.classList.add('active');
-
-    let settings = JSON.parse(localStorage.getItem('settings'));
-    let removePlaylistEntriesSettings = settings.find(item => item.formInput === playlistCase.options[0]);
-    if (removePlaylistEntriesSettings && (event.shiftKey || removePlaylistEntriesSettings.value === 'on')) {
-        let playlistDetails = JSON.parse(localStorage.getItem('playlistDetails'));
-        for (let i = 0; i < playlistDetails.length; i++) {
-            removeFromLibrary('playlistLibrary', playlistDetails[i]);
-        }
-    }
-    localStorage.removeItem('playlistDetails');
-
-    let videoLinksArray = getVideoLinksArray();
-    mediaPlayer.src = videoLinksArray[1].src;
-    videoIdValueSpan.textContent = `VideoID: ${limitText(videoLinksArray[1].id, textListLimit)}`;
-    updateMetricLists();
-    resetMainButtons();
-    checkLibrary();
-    siteLibraryCorrection();
-    playlist = [];
-}
 
 /**
  * Method responsible of playing previous video.

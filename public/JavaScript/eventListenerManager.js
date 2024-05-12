@@ -56,7 +56,7 @@ startPlaylistButton.addEventListener('click', function (event) {
  */
 exitPlaylistButton.addEventListener('click', function(event){
     event.preventDefault();
-    handleExitPlaylist();
+    handleExitPlaylist(event);
 });
 
 // #endregion
@@ -65,68 +65,19 @@ exitPlaylistButton.addEventListener('click', function(event){
 
 // #region Library Buttons Events
 
-let starButton = document.getElementById('star-button'), addButton = document.getElementById('add-playlist-button');
-let qStarButton = document.getElementById('q-star-button'), qAddButton = document.getElementById('q-add-playlist-button');
-let starUl = document.querySelector('#starred-videos > ul'), playlistUl = document.querySelector('#playlist > ul');
-let starLibraryType = 'starLibrary', playlistLibraryType = 'playlistLibrary';
-
-let buttonConfigs = [
-    {
-        buttonLocation: starButton,
-        ulElement: starUl,
-        active: false,
-        activeText: 'Starred',
-        errorText: 'Error',
-        errorDisplayDuration: 500,
-        libraryType: starLibraryType
-    },
-    {
-        buttonLocation: addButton,
-        ulElement: playlistUl,
-        active: false,
-        activeText: 'Added',
-        errorText: 'Error',
-        errorDisplayDuration: 500,
-        libraryType: playlistLibraryType
-    }
-]
-let qButtonConfigs = [
-    {
-        buttonLocation: qStarButton,
-        spanElement: qStarButton.querySelector('span'),
-        ulElement: starUl,
-        active: false,
-        defaultText: 'Star',
-        activeText: 'Starred',
-        errorText: 'Error',
-        errorDisplayDuration: 500,
-        libraryType: starLibraryType
-    },
-    {
-        buttonLocation: qAddButton,
-        spanElement: qAddButton.querySelector('span'),
-        ulElement: playlistUl,
-        active: false,
-        defaultText: 'Add To Playlist',
-        activeText: 'Added',
-        errorText: 'Error',
-        errorDisplayDuration: 500,
-        libraryType: playlistLibraryType
-    }
-];
 
 // Area for attaching events.
-for (let i = 0; i < buttonConfigs.length; i++){
-    let button = buttonConfigs[i];
-    button.buttonLocation.addEventListener('mouseenter', (event) => handleHoverEvent(event, button));
-    button.buttonLocation.addEventListener('mouseleave', (event) => handleHoverEvent(event, button));
-    button.buttonLocation.addEventListener('click', (event) => handleClickAddEvent(event, button));
-}
 for (let i = 0; i < qButtonConfigs.length; i++){
     let button = qButtonConfigs[i];
     button.buttonLocation.addEventListener('mouseenter', (event) => handleHoverEvent(event, button));
     button.buttonLocation.addEventListener('mouseleave', (event) => handleHoverEvent(event, button));
     button.buttonLocation.addEventListener('click', (event) => handleClickQAddEvent(event, button));
+}
+for (let i = 0; i < buttonConfigs.length; i++){
+    let button = buttonConfigs[i];
+    button.buttonLocation.addEventListener('mouseenter', (event) => handleHoverEvent(event, button));
+    button.buttonLocation.addEventListener('mouseleave', (event) => handleHoverEvent(event, button));
+    button.buttonLocation.addEventListener('click', (event) => handleClickAddEvent(event, button));
 }
 
 // #endregion

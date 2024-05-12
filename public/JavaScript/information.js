@@ -107,6 +107,57 @@ let commands = {
     videoReset: ['videoreset', 'video', 'reset']
 }
 
+
+let starButton = document.getElementById('star-button'), addButton = document.getElementById('add-playlist-button');
+let qStarButton = document.getElementById('q-star-button'), qAddButton = document.getElementById('q-add-playlist-button');
+let starUl = document.querySelector('#starred-videos > ul'), playlistUl = document.querySelector('#playlist > ul');
+let starLibraryType = 'starLibrary', playlistLibraryType = 'playlistLibrary';
+
+let qButtonConfigs = [
+    {
+        buttonLocation: qStarButton,
+        ulElement: starUl,
+        active: false,
+        activeText: 'Starred',
+        errorText: 'Error',
+        errorDisplayDuration: 500,
+        libraryType: starLibraryType
+    },
+    {
+        buttonLocation: qAddButton,
+        ulElement: playlistUl,
+        active: false,
+        activeText: 'Added',
+        errorText: 'Error',
+        errorDisplayDuration: 500,
+        libraryType: playlistLibraryType
+    }
+]
+let buttonConfigs = [
+    {
+        buttonLocation: starButton,
+        spanElement: starButton.querySelector('span'),
+        ulElement: starUl,
+        active: false,
+        defaultText: 'Star',
+        activeText: 'Starred',
+        errorText: 'Error',
+        errorDisplayDuration: 500,
+        libraryType: starLibraryType
+    },
+    {
+        buttonLocation: addButton,
+        spanElement: addButton.querySelector('span'),
+        ulElement: playlistUl,
+        active: false,
+        defaultText: 'Add To Playlist',
+        activeText: 'Added',
+        errorText: 'Error',
+        errorDisplayDuration: 500,
+        libraryType: playlistLibraryType
+    }
+];
+
 let settingsCase = {
     colorCase: {
         string: 'color',
