@@ -105,7 +105,7 @@ function createHTMLSettingsList(options, type, settingsValue) {
         if (settingsValue !== null){
             checkedOrDisabled = option.includes(settingsValue) ? 'checked': 'disabled';
         }
-        let isCurrent = checkedOrDisabled === 'checked' ? '<i>(Active)</i>' : '';
+        let isActive = checkedOrDisabled === 'checked' ? '<i>(Active)</i>' : '';
 
         let displayText = '';
         switch (type) {
@@ -114,7 +114,7 @@ function createHTMLSettingsList(options, type, settingsValue) {
                 html += `
                     <label>
                         <input type="checkbox" ${checkedOrDisabled} name="${text}-theme" id="${text}-theme-option" class="option" style="--checkbox-color: var(--${text}-theme);">
-                        ${capitalizeFirstLetter(text)} Mode ${isCurrent}
+                        ${capitalizeFirstLetter(text)} Mode ${isActive}
                         ${checkedOrDisabled === 'disabled' ? `<input type="hidden" name="${text}-theme" value=""}>`: ''}
                     </label>`
                 ;
@@ -124,7 +124,7 @@ function createHTMLSettingsList(options, type, settingsValue) {
                 html += `
                     <label>
                         <input type="checkbox" ${checkedOrDisabled} name="primary-color-${option}" id="${option}-option" class="option" style="--checkbox-color: var(--${option});">
-                        ${capitalizeFirstLetter(text)} ${isCurrent}
+                        ${capitalizeFirstLetter(text)} ${isActive}
                         ${checkedOrDisabled === 'disabled' ? `<input type="hidden" name="primary-color-${option}" value=""'}>`: ''}
                     </label>`
                 ;
@@ -137,8 +137,7 @@ function createHTMLSettingsList(options, type, settingsValue) {
                 html += `
                     <label>
                         <input type="checkbox" ${checkedOrDisabled} name="${text}" id="playlist-option-${i}" class="option">
-                        ${displayText}
-                        
+                        ${displayText} ${isActive}
                     </label>
                 `;
                 break;
