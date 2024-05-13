@@ -40,7 +40,6 @@ function handleExitPlaylist(event){
     let videoLinksArray = getVideoLinksArray();
     mediaPlayer.src = videoLinksArray[1].src;
     videoIdValueSpan.textContent = `VideoID: ${limitText(videoLinksArray[1].id, textListLimit)}`;
-    updateMetricLists();
     resetMainButtons();
     checkLibrary();
     siteLibraryCorrection();
@@ -129,6 +128,67 @@ function handleClickQAddEvent(event, buttonConfig) {
     checkLibrary();
 }
 
+/**
+ * Method responsible of handling playlist details.
+ * 
+ * @param {string} libraryType - Which library to remove from.
+ * @param {string} encodedItem - Encoded playlist item data in JSON.
+ * @param {string} id - The id of the where the function is called from.
+ * @param {string} [removeCondition=''] - The condition to remove the item.
+ */
+function handlePlaylistDetails(libraryType, encodedItem, id) {
+    let item = JSON.parse(decodeURIComponent(encodedItem));
+
+    let calledFromElement = document.getElementById(id);
+    let parentElement = calledFromElement.parentElement;
+    calledFromElement.style.color = 'transparent';
+
+    let detailsId = `details-${id}`;
+    let details = document.createElement('div');
+    details.id = detailsId;
+    details.classList.add('details');
+    details.innerHTML = `
+        <p class="detail-domain-display">${limitText(item.id, textListLimit)}</p>
+        <button onclick="handleLinkInput('${item.url}')" class="detail-play-video hidden-button">Play Video</button>
+        <a target="_blank" class="detail-open-video" href="${item.url}">Open Video</a>
+        <button onclick="removeFromPlaylist('${libraryType}','${encodedItem}')" class="detail-remove-item hidden-button">Remove Item</button>
+        <button onclick="closeContainer('${detailsId}')" class="detail-close-button hidden-button">Close</button>
+    `;
+    parentElement.appendChild(details);
+
+    requestAnimationFrame(() => {
+        details.style.opacity = 1;
+        details.addEventListener('mouseleave', function() {
+            closeContainer(detailsId);
+        });
+    });
+}
+
+/**
+ * Method responsible of removing container.
+ * 
+ * @param {string} containerId - The container to remove.
+ */
+function closeContainer(containerId) {
+    let container = document.getElementById(containerId);
+    if (container) {
+        setTimeout(() => {
+            container.style.opacity = 0;
+            container.style.border = 0;
+            container.style.width = 0;
+            container.style.height = 0;
+            let parentElement = container.parentElement;
+            if (containerId.includes('details-')) {
+                let button = parentElement.querySelector('button');
+                button.style.color = `var(--primary-color)`;
+            }
+            setTimeout(() => {
+                parentElement.removeChild(container);
+            }, 200);
+        }, 100);
+    }
+}
+
 // #endregion
 
 
@@ -185,18 +245,23 @@ function createLibraryList(library, location) {
     let originalTextColor = 'var(--white)';
     let textColor = originalTextColor, bottomColor = originalColor, topColor = originalColor;
 
+    let parentLocation = location.parentElement;
+    let parentId = parentLocation.getAttribute('id');
+    let locationId = parentId === 'playlist' ? 'playlist': 'starred-videos';
+    let libraryType = parentId === 'playlist' ? playlistLibraryType: starLibraryType;
     let maxIteration = 8, iterations = 0;
     let html = '';
     for (let i = 0; i < library.length && i < maxIteration; i++) {
         iterations++;
+        let id = locationId === 'playlist' ? `playlist-button${iterations}`: `star-button${iterations}`;
         let item = library[i];
         let domainName = capitalizeFirstLetter(item.domainName);
-        let urlElement = `<a href="${item.url}" target="_blank">${limitText(item.id, textListLimit)}</a>`;
+        let buttonElement = `<button id="${id}" class="details hidden-button" onclick="handlePlaylistDetails('${libraryType}', '${encodeURIComponent(JSON.stringify(item))}', '${id}')">${limitText(item.id, textListLimit)}</button>`;
         html += `
             <li>
                 ${createSVGNumber(bottomColor, topColor, textColor, textColor, i + 1, 'circle')}
                 <span>${domainName}:</span>
-                ${urlElement}
+                ${buttonElement}
             </li>`
         ;
     }
@@ -265,7 +330,8 @@ function checkLibrary() {
  */
 function addToLibrary(libraryType, newItem){
     let library = JSON.parse(localStorage.getItem(libraryType)) || [];
-    let [_, id, url] = extractMediaInfo(newItem);
+    let extractedInfo = extractMediaInfo(newItem);
+    typeof extractedInfo === 'object' ? [_, id, url] = extractedInfo: '';
     let publicDomains = typeof domains !== 'undefined' ? domains : {};
     let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
     let compiledDomains = [];
@@ -288,6 +354,7 @@ function addToLibrary(libraryType, newItem){
  * @param {string} newItem - Item to remove.
  */
 function removeFromLibrary(libraryType, item) {
+    item = typeof item === 'string' ? JSON.parse(decodeURIComponent(item)): item;
     let library = JSON.parse(localStorage.getItem(libraryType)) || [];
     let indexToRemove = library.findIndex(libraryItem => 
         libraryItem.domainName === item.domainName && libraryItem.id === item.id
@@ -296,6 +363,19 @@ function removeFromLibrary(libraryType, item) {
         library.splice(indexToRemove, 1);
         localStorage.setItem(libraryType, JSON.stringify(library));
     }
+}
+
+/**
+ * Method responsible of handling the case from playlist item removal.
+ * 
+ * @param {string} libraryType - Which library to remove from.
+ * @param {string} encodedItem - Encoded playlist item data in JSON.
+ */
+function removeFromPlaylist(libraryType, encodedItem) {
+    removeFromLibrary(libraryType, encodedItem);
+    resetMainButtons();
+    checkLibrary();
+    siteLibraryCorrection();
 }
 
 // #endregion

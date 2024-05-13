@@ -132,7 +132,7 @@ function createHTMLSettingsList(options, type, settingsValue) {
             case playlistCase.string:
                 text = option;
                 if (text === playlistCase.options[0]){
-                    displayText = 'Remove watched entries upon closing.';
+                    displayText = 'Remove watched entries upon exiting playlist.';
                 }
                 html += `
                     <label>

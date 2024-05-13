@@ -104,6 +104,11 @@
     --slow-eio-transition: .4s ease-in-out;
 }
 
+/*Misc*/
+:root {
+    --standard-border: solid var(--primary-color);
+}
+
 /*#endregion*/
 
 
@@ -131,6 +136,20 @@ a{
     color: var(--primary-color);
 }
 a:hover{
+    color: var(--white);
+}
+
+.hidden-button {
+    transition: var(--standard-eio-transition);
+    text-align: left;
+    color: var(--primary-color);
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+    text-decoration: underline;
+}
+.hidden-button:hover{
+    cursor: pointer;
     color: var(--white);
 }
 

@@ -16,7 +16,7 @@ noscript section {
     min-height: var(--popup-min-height);
     border-radius: var(--standard-size);
     background-color: var(--primary-bg-color);
-    border: 5px solid var(--primary-color);
+    border: 5px var(--standard-border);
 }
 noscript section span {
     font-style: italic;
@@ -49,7 +49,7 @@ noscript section span {
     min-height: calc(var(--popup-min-height) * 2.1);
     max-height: 75%;
     border-radius: var(--standard-border-radius);
-    outline: 5px solid var(--primary-color);
+    outline: 5px var(--standard-border);
     display: none;
 }
 #popup>section.active {

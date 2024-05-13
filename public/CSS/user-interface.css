@@ -4,7 +4,7 @@
     text-align: center;
     font-weight: bold;
     font-size: var(--input-fontsize);
-    border: 2px solid var(--primary-color);
+    border: 3px solid var(--primary-color);
     border-radius: var(--standard-border-radius);
     background-color: var(--black);
 }

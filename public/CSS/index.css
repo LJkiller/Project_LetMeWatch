@@ -54,7 +54,7 @@ main #content #falsified-media-player{
     transition: var(--standard-eio-transition);
     max-width: var(--max-media-width);
     max-height: var(--max-media-height);
-    border: 4px solid var(--primary-color);
+    border: 4px var(--standard-border);
     box-shadow: 0 0 0px 0px var(--primary-color);
     border-radius: var(--standard-border-radius);
 }
@@ -100,6 +100,20 @@ footer>section:not(#site-information, #site-insight, #user-library) #add-custom-
 footer>#user-library div ul li.display-more {
     margin: 0 auto;
     width: 85%;
+}
+
+footer>#user-library>div section ul li div.details{
+    max-height: 1000px;
+    padding: calc(var(--standard-spacing) / 2);
+    background-color: var(--primary-bg-color);
+    border-radius: var(--standard-border-radius);
+    border: 2px var(--standard-border);
+    opacity: 0;
+    transition: opacity 0.3s ease, max-height 0.3s ease, width 0.3s ease;
+    overflow: hidden;
+}
+footer>#user-library>div section ul li div.details .detail-domain-display {
+    color: var(--bigger-text-color);
 }
 
 
