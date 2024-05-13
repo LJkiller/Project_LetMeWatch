@@ -139,19 +139,6 @@ a:hover{
     color: var(--white);
 }
 
-.hidden-button {
-    transition: var(--standard-eio-transition);
-    text-align: left;
-    color: var(--primary-color);
-    background-color: transparent;
-    border: none;
-    font-size: 1rem;
-    text-decoration: underline;
-}
-.hidden-button:hover{
-    cursor: pointer;
-    color: var(--white);
-}
 
 i.fa-fire {
     background-image: linear-gradient(to top, var(--yellow), var(--red));
