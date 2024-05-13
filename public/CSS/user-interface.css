@@ -72,13 +72,14 @@ input[type="number"]::-webkit-outer-spin-button {
 .quick-button span{
     color: var(--primary-color);
 }
-.form-input:hover::placeholder{
-    color: var(--big-text-color);
-}
+
+.form-input:hover,
+.form-input:hover::placeholder,
 .form-button:hover, 
 .quick-button:hover,
-.quick-button:hover span {
-    color: var(--big-text-color);
+.quick-button:hover span,
+.hidden-button:hover {
+    color: var(--white);
 }
 
 
@@ -93,7 +94,6 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .hidden-button:hover{
     cursor: pointer;
-    color: var(--white);
 }
 
 
