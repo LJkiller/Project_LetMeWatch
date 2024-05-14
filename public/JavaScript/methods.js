@@ -269,3 +269,48 @@ function getAllDomainExamples() {
     }
     return allExamples;
 }
+
+
+
+/**
+ * Method responsible of displaying error messages.
+ * 
+ * @param {string} causeOfError - Error message to be displayed.
+ * @param {HTMLElement} [location=undefined] - Error location of where it occured.
+ */
+function displayError(causeOfError, location = undefined){
+    let locationInformationArea = errorPopup.querySelector('div>span');
+    locationInformationArea.textContent = '';
+
+    toggleElements([popup, errorPopup]);
+    errorPopup.querySelector('div>p').textContent = causeOfError;
+    if (location !== undefined){
+        let locationInformation = `<br>${capitalizeFirstLetter(location.tagName.toLowerCase())}:<br> ${location.textContent}`;
+        locationInformationArea.innerHTML = locationInformation;
+    }
+}
+
+/**
+ * Method responsible of toggling elements.
+ * 
+ * @param {Array} elementsToToggle - Elements to toggle.
+ */
+function toggleElements(elementsToToggle){
+    for (let i = 0; i < elementsToToggle.length; i++){
+        if (elementsToToggle[i].classList.contains('active')){
+            elementsToToggle[i].classList.remove('active');
+        } else {
+            elementsToToggle[i].classList.add('active');
+        }
+    }
+}
+
+/**
+ * Method responsible of getting appropriate color dependent on theme.
+ * 
+ * @param {string} color - The color.
+ * @returns {string} - Themed color.
+ */
+function getColor(color){
+    return document.body.classList.contains('light-theme') ? `dark-${color}` : color;
+}

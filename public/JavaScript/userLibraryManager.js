@@ -5,18 +5,17 @@
  * Method responsible of handling start sequence for playlist.
  */
 function handleStartPlaylist(){
-    iframeControls.classList.add('active');
-    startPlaylistButton.classList.remove('active');
-    document.getElementById("media-top").scrollIntoView();
-    playlist = JSON.parse(localStorage.getItem('playlistLibrary'));
-    
-    saveVideoPositions(currentVideoNumber);
-    changeMediaPlayerSrc();
-    if (playlist) {
+    playlist = JSON.parse(localStorage.getItem('playlistLibrary')) || [];
+    if (playlist.length > 0) {
+        toggleElements([iframeControls, startPlaylistButton]);
+        document.getElementById("media-top").scrollIntoView();
+        
+        saveVideoPositions(currentPlaylistPosition);
+        changeMediaPlayerSrc();
         document.getElementById('prev-playlist-button').addEventListener('click', playPreviousVideo);
         document.getElementById('next-playlist-button').addEventListener('click', playNextVideo);
     } else {
-        console.error('Playlist not found');
+        displayError('Playlist not found.');
     }
 }
 
@@ -24,16 +23,26 @@ function handleStartPlaylist(){
  * Method responsible of handling exit sequence for playlist.
  */
 function handleExitPlaylist(event){
-    iframeControls.classList.remove('active');
-    startPlaylistButton.classList.add('active');
+    toggleElements([iframeControls, startPlaylistButton]);
 
     let settings = JSON.parse(localStorage.getItem('settings'));
-    let removePlaylistEntriesSettings = settings.find(item => item.formInput === playlistCase.options[0]);
+    let removePlaylistEntriesSettings, resetCurrentVideoPositionSettings;
+    for (let i = 0; i < settings.length; i++){
+        let item = settings[i];
+        if (item.formInput === playlistCase.options[0]) {
+            removePlaylistEntriesSettings = item;
+        } else if (item.formInput === playlistCase.options[1]) {
+            resetCurrentVideoPositionSettings = item;
+        }
+    }
+
     if (removePlaylistEntriesSettings || event.shiftKey) {
         let playlistDetails = JSON.parse(localStorage.getItem('playlistDetails'));
         for (let i = 0; i < playlistDetails.length; i++) {
             removeFromLibrary('playlistLibrary', playlistDetails[i]);
         }
+    } else if (resetCurrentVideoPositionSettings){
+        currentPlaylistPosition = 0;
     }
     localStorage.removeItem('playlistDetails');
 
@@ -280,7 +289,7 @@ function createLibraryList(library, location) {
  * Method responsible of changing the video content.
  */
 function changeMediaPlayerSrc() {
-    let mediaInfo = extractMediaInfo(playlist[currentVideoNumber].url) 
+    let mediaInfo = extractMediaInfo(playlist[currentPlaylistPosition].url) 
         || [{domainName: 'NOT FOUND', url: 'NOT FOUND', id: 'NOT FOUND', id: 'NOT FOUND'}]
     ;
     mediaPlayer.src = mediaInfo[3];
@@ -384,9 +393,6 @@ function removeFromPlaylist(libraryType, encodedItem) {
 
 // #region Playlist
 
-let playlist;
-let currentVideoNumber = 0;
-
 /**
  * Method responsible of playing previous video.
  * 
@@ -394,9 +400,9 @@ let currentVideoNumber = 0;
  */
 function playPreviousVideo(event) {
     event.preventDefault();
-    if (currentVideoNumber > 0) {
-        currentVideoNumber--;
-        saveVideoPositions(currentVideoNumber);
+    if (currentPlaylistPosition > 0) {
+        currentPlaylistPosition--;
+        saveVideoPositions(currentPlaylistPosition);
         changeMediaPlayerSrc();
     }
 }
@@ -408,9 +414,9 @@ function playPreviousVideo(event) {
  */
 function playNextVideo(event) {
     event.preventDefault();
-    if (currentVideoNumber < playlist.length - 1) {
-        currentVideoNumber++;
-        saveVideoPositions(currentVideoNumber);
+    if (currentPlaylistPosition < playlist.length - 1) {
+        currentPlaylistPosition++;
+        saveVideoPositions(currentPlaylistPosition);
         changeMediaPlayerSrc();
     }
 }
@@ -418,9 +424,9 @@ function playNextVideo(event) {
 /**
  * Method responsible of saving: current- & iterated positions.
  */
-function saveVideoPositions(currentVideoNumber) {
+function saveVideoPositions(currentPlaylistPosition) {
     let positions = JSON.parse(localStorage.getItem('playlistDetails')) || [];
-    positions.push(playlist[currentVideoNumber]);
+    positions.push(playlist[currentPlaylistPosition]);
     localStorage.setItem('playlistDetails', JSON.stringify(positions));
 }
 

@@ -67,7 +67,7 @@ function disableOtherCheckboxes(checkedCheckbox, checkboxes) {
  * 
  * @param {Array} options - Array of options.
  * @param {string} type - String to which html should be generated
- * @param {string} settingsValue - Setting that is applied.
+ * @param {(string|Array)} settingsValue - Setting(s) that are applied. Can be either a string or an array.
  * @param {HTMLElement} location - HTML location to add the settings list to.
  */
 function createSettingsList(options, type, settingsValue, location) {
@@ -93,7 +93,7 @@ function createSettingsList(options, type, settingsValue, location) {
  * 
  * @param {Array} options - Array of options.
  * @param {string} type - String to which html should be generated
- * @param {string} settingsValue - Setting that is applied.
+ * @param {(string|Array)} settingsValue - Setting(s) that are applied. Can be either a string or an array.
  * @returns {HTMLElement} - HTML element of the list.
  */
 function createHTMLSettingsList(options, type, settingsValue) {
@@ -103,7 +103,15 @@ function createHTMLSettingsList(options, type, settingsValue) {
         let option = options[i];
         let checkedOrDisabled = '';
         if (settingsValue !== null) {
-            checkedOrDisabled = option.includes(settingsValue) ? 'checked' : 'disabled';
+            if (Array.isArray(settingsValue)) {
+                if (settingsValue.length === 0) {
+                    checkedOrDisabled = '';
+                } else {
+                    checkedOrDisabled = settingsValue.includes(option) ? 'checked' : '';
+                }
+            } else {
+                checkedOrDisabled = option.includes(settingsValue) ? 'checked' : 'disabled';
+            }
         }
         let isActive = checkedOrDisabled === 'checked' ? '<i>(Active)</i>' : '';
 
@@ -136,7 +144,9 @@ function createHTMLSettingsList(options, type, settingsValue) {
             case playlistCase.string:
                 text = option;
                 if (text === playlistCase.options[0]) {
-                    displayText = 'Remove watched entries upon exiting playlist.';
+                    displayText = 'Remove watched entries when exiting.';
+                } else if (text === playlistCase.options[1]){
+                    displayText = 'Reset video position when exiting.';
                 }
                 html += `
                     <label>
@@ -166,17 +176,12 @@ function createHTMLSettingsList(options, type, settingsValue) {
 function handleSettingsForm(dataArray) {
     let prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     prefersDarkMode ? document.body.removeAttribute('class') : document.body.className = 'light-theme';
-    let color = 'blue';
-    if (document.body.className.includes('light-theme')) {
-        color = '--dark-blue';
-    }
-    root.style.setProperty('--primary-color', `var(--${color})`);
+    root.style.setProperty('--primary-color', `var(--${getColor('blue')})`);
 
     let items = getAllItemsSorted(dataArray);
-    handleSetting(getActiveValues(items[0]), themeCase.string);
-    handleSetting(getActiveValues(items[1]), colorCase.string);
-    handleSetting(getActiveValues(items[2]), behaviourCase.string);
-
+    applySetting(getActiveValues(items[0]), themeCase.string);
+    applySetting(getActiveValues(items[1]), colorCase.string);
+    
     localStorage.setItem('settings', JSON.stringify(dataArray));
 }
 
@@ -186,20 +191,21 @@ function handleSettingsForm(dataArray) {
  * @param {string[]} activeCase - What is currently active.
  * @param {string} settingType - String of what case should be applied.
  */
-function handleSetting(activeCases, settingType) {
+function applySetting(activeCases, settingType) {
     let singleCase = activeCases.length === 1 ? true : false;
     let items = activeCases.length === 1 ? activeCases[0] : activeCases;
 
     if (singleCase === true) {
         switch (settingType) {
             case themeCase.string:
-                items === 'dark-theme' ? document.body.removeAttribute('class') : document.body.className = items;
+                if (items === `${themeCase.defaultValue}-theme`){
+                    return;
+                } else {
+                    items === 'dark-theme' ? document.body.removeAttribute('class') : document.body.className = items;
+                }
                 break;
             case colorCase.string:
-                let color = items.split('primary-color-')[1];
-                if (document.body.classList.contains('light-theme')) {
-                    color = `dark-${color}`;
-                }
+                let color = getColor(items.split('primary-color-')[1]);
                 root.style.setProperty('--primary-color', `var(--${color})`);
                 break;
             default:

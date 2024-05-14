@@ -86,9 +86,10 @@ for (let i = 0; i < buttonConfigs.length; i++){
 
 // #region Settings Events
 
-let popup = document.getElementById('popup');
 let settingsButton = document.getElementById('settings-button');
 let closePopupButton = document.getElementById('close-settings-button');
+
+addCustomButton.addEventListener('click', () => {displayError('Not a working function', addCustomButton)});
 
 settingsButton.addEventListener('click', (event) => { openPopup(event, 'settings')});
 closePopupButton.addEventListener('click', closePopup);

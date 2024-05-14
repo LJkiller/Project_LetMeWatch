@@ -4,11 +4,20 @@ let root = document.documentElement;
 
 let mediaPlayer = document.getElementById('falsified-media-player');
 
+let addCustomButton = document.getElementById('add-custom-button');
 let startPlaylistButton = document.getElementById('start-playlist-button');
 let exitPlaylistButton = document.getElementById('exit-playlist-button');
-let iframeControls = document.getElementById('iframe-controls');
 
+let iframeControls = document.getElementById('iframe-controls');
 let videoIdValueSpan = document.getElementById('video-id');
+
+let popup = document.getElementById('popup');
+let errorPopup = document.getElementById('error');
+
+let starButton = document.getElementById('star-button'), addButton = document.getElementById('add-playlist-button');
+let qStarButton = document.getElementById('q-star-button'), qAddButton = document.getElementById('q-add-playlist-button');
+let starUl = document.querySelector('#starred-videos > ul'), playlistUl = document.querySelector('#playlist > ul');
+let starLibraryType = 'starLibrary', playlistLibraryType = 'playlistLibrary';
 
 let baseWidth = 560;
 let baseHeight = 315;
@@ -24,6 +33,9 @@ let maxLoopFunctionIteration = 0;
 let functionIteration = 0;
 
 let textListLimit = 9;
+
+let playlist;
+let currentPlaylistPosition = 0;
 
 let linkRegex = /^(http|https|ftp|ssh|telnet|smtp|imap|dns|snmp|ntp|ldap|sftp|ftps|smtps|webdav|rtsp|bittorrent):\/\/[^\s/$.?#].[^\s]*$/i;
 // #endregion
@@ -107,12 +119,6 @@ let commands = {
     videoReset: ['videoreset', 'video', 'reset']
 }
 
-
-let starButton = document.getElementById('star-button'), addButton = document.getElementById('add-playlist-button');
-let qStarButton = document.getElementById('q-star-button'), qAddButton = document.getElementById('q-add-playlist-button');
-let starUl = document.querySelector('#starred-videos > ul'), playlistUl = document.querySelector('#playlist > ul');
-let starLibraryType = 'starLibrary', playlistLibraryType = 'playlistLibrary';
-
 let qButtonConfigs = [
     {
         buttonLocation: qStarButton,
@@ -174,7 +180,7 @@ let settingsCase = {
         playlistCase: {
             string: 'playlist',
             defaultValue: '',
-            options: ['remove-entries-behaviour']
+            options: ['remove-entries-behaviour', 'reset-video-position-behaviour']
         }
     }
 }
