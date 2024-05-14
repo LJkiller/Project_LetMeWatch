@@ -9,6 +9,7 @@
     --yellow: rgba(255,255,100,1);
     --light-theme: var(--yellow);
     --dark-theme: rgba(60,60,185,1);
+    --system-default-theme: var(--white);
 
     --dark-red: rgba(185,68,78,1);
     --dark-green: rgba(0,185,78,1);

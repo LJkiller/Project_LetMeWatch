@@ -6,10 +6,10 @@
  * 
  * @param {Event} event - Event.
  */
-function closePopup(event){
+function closePopup(event) {
     event.preventDefault();
     let activeSections = popup.querySelectorAll('section.active');
-    for (let i = 0; i < activeSections.length; i++){
+    for (let i = 0; i < activeSections.length; i++) {
         activeSections[i].classList.remove('active');
     }
     popup.classList.remove('active');
@@ -21,7 +21,7 @@ function closePopup(event){
  * @param {Event} event - Event.
  * @param {string} sectionId - Section id to be displayed.
  */
-function openPopup(event, sectionId){
+function openPopup(event, sectionId) {
     event.preventDefault();
     let section = popup.querySelector(`section#${sectionId}`);
     popup.classList.add('active');
@@ -33,7 +33,7 @@ function openPopup(event, sectionId){
  * 
  * @param {Event} event - Event.
  */
-function closePopupOutside(event){
+function closePopupOutside(event) {
     if (!event.target.closest('section')) {
         closePopup(event);
     }
@@ -70,8 +70,8 @@ function disableOtherCheckboxes(checkedCheckbox, checkboxes) {
  * @param {string} settingsValue - Setting that is applied.
  * @param {HTMLElement} location - HTML location to add the settings list to.
  */
-function createSettingsList(options, type, settingsValue, location){
-    switch (type){
+function createSettingsList(options, type, settingsValue, location) {
+    switch (type) {
         case themeCase.string:
             location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
             multipleBoxCheck(location.querySelectorAll('.option'));
@@ -102,8 +102,8 @@ function createHTMLSettingsList(options, type, settingsValue) {
     for (let i = 0; i < options.length; i++) {
         let option = options[i];
         let checkedOrDisabled = '';
-        if (settingsValue !== null){
-            checkedOrDisabled = option.includes(settingsValue) ? 'checked': 'disabled';
+        if (settingsValue !== null) {
+            checkedOrDisabled = option.includes(settingsValue) ? 'checked' : 'disabled';
         }
         let isActive = checkedOrDisabled === 'checked' ? '<i>(Active)</i>' : '';
 
@@ -111,27 +111,31 @@ function createHTMLSettingsList(options, type, settingsValue) {
         switch (type) {
             case themeCase.string:
                 text = option === themeCase.defaultValue ? themeCase.defaultValue : option;
+                displayText = text;
+                if (option === 'system-default') {
+                    displayText = 'system default';
+                }
                 html += `
                     <label>
                         <input type="checkbox" ${checkedOrDisabled} name="${text}-theme" id="${text}-theme-option" class="option" style="--checkbox-color: var(--${text}-theme);">
-                        ${capitalizeFirstLetter(text)} Mode ${isActive}
-                        ${checkedOrDisabled === 'disabled' ? `<input type="hidden" name="${text}-theme" value=""}>`: ''}
+                        ${capitalizeFirstLetter(displayText)} Mode ${isActive}
+                        ${checkedOrDisabled === 'disabled' ? `<input type="hidden" name="${text}-theme" value=""}>` : ''}
                     </label>`
-                ;
+                    ;
                 break;
             case colorCase.string:
                 text = option === colorCase.defaultValue ? colorCase.defaultValue : option;
                 html += `
                     <label>
-                        <input type="checkbox" ${checkedOrDisabled} name="primary-color-${option}" id="${option}-option" class="option" style="--checkbox-color: var(--${option});">
+                        <input type="checkbox" ${checkedOrDisabled} name="primary-color-${text}" id="${text}-option" class="option" style="--checkbox-color: var(--${text});">
                         ${capitalizeFirstLetter(text)} ${isActive}
-                        ${checkedOrDisabled === 'disabled' ? `<input type="hidden" name="primary-color-${option}" value=""'}>`: ''}
+                        ${checkedOrDisabled === 'disabled' ? `<input type="hidden" name="primary-color-${option}" value=""'}>` : ''}
                     </label>`
-                ;
+                    ;
                 break;
             case playlistCase.string:
                 text = option;
-                if (text === playlistCase.options[0]){
+                if (text === playlistCase.options[0]) {
                     displayText = 'Remove watched entries upon exiting playlist.';
                 }
                 html += `
@@ -160,8 +164,13 @@ function createHTMLSettingsList(options, type, settingsValue) {
  * @param {Array} dataArray - Array of data containing objects.
  */
 function handleSettingsForm(dataArray) {
-    root.style.setProperty('--primary-color', 'var(--blue)');
-    document.body.removeAttribute('class');
+    let prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    prefersDarkMode ? document.body.removeAttribute('class') : document.body.className = 'light-theme';
+    let color = 'blue';
+    if (document.body.className.includes('light-theme')) {
+        color = '--dark-blue';
+    }
+    root.style.setProperty('--primary-color', `var(--${color})`);
 
     let items = getAllItemsSorted(dataArray);
     handleSetting(getActiveValues(items[0]), themeCase.string);
@@ -184,12 +193,12 @@ function handleSetting(activeCases, settingType) {
     if (singleCase === true) {
         switch (settingType) {
             case themeCase.string:
-                document.body.className = items === 'dark-theme' ? '' : items;
+                items === 'dark-theme' ? document.body.removeAttribute('class') : document.body.className = items;
                 break;
             case colorCase.string:
                 let color = items.split('primary-color-')[1];
                 if (document.body.classList.contains('light-theme')) {
-                    color = `dark-${items.split('primary-color-')[1]}`;
+                    color = `dark-${color}`;
                 }
                 root.style.setProperty('--primary-color', `var(--${color})`);
                 break;
@@ -215,13 +224,13 @@ function handleSetting(activeCases, settingType) {
  * @param {Array} dataArray - Array containing all different form data. 
  * @returns {Array} - Array of themeItems, colorItems and behaviourItems.
  */
-function getAllItemsSorted(dataArray){
+function getAllItemsSorted(dataArray) {
     let themeItems = [];
     let colorItems = [];
     let behaviourItems = [];
-    for (let i = 0; i < dataArray.length; i++){
+    for (let i = 0; i < dataArray.length; i++) {
         let item = dataArray[i];
-        if (item.formInput.includes(themeCase.string)){
+        if (item.formInput.includes(themeCase.string)) {
             themeItems.push(item);
         } else if (item.formInput.includes(colorCase.string)) {
             colorItems.push(item);
@@ -238,11 +247,11 @@ function getAllItemsSorted(dataArray){
  * @param {Array} items - Array of objects to get filtered out.
  * @returns {Array} - Array of active settings.
  */
-function getActiveValues(items){
+function getActiveValues(items) {
     let activeElement = [];
-    for (let i = 0; i < items.length; i++){
+    for (let i = 0; i < items.length; i++) {
         let item = items[i];
-        if (item.value === 'on'){
+        if (item.value === 'on') {
             activeElement.push(item.formInput);
         }
     }

@@ -166,8 +166,8 @@ let settingsCase = {
     },
     themeCase: {
         string: 'theme',
-        defaultValue: 'dark',
-        options: ['light', 'dark']
+        defaultValue: 'system-default',
+        options: ['light', 'dark', 'system-default']
     },
     behaviourCase: {
         string: 'behaviour',
