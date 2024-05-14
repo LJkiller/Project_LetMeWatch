@@ -118,7 +118,7 @@ function createHTMLSettingsList(options, type, settingsValue) {
                 html += `
                     <label>
                         <input type="checkbox" ${checkedOrDisabled} name="${text}-theme" id="${text}-theme-option" class="option" style="--checkbox-color: var(--${text}-theme);">
-                        ${capitalizeFirstLetter(displayText)} Mode ${isActive}
+                        ${capitalizeFirstLetter(displayText)} Theme ${isActive}
                         ${checkedOrDisabled === 'disabled' ? `<input type="hidden" name="${text}-theme" value=""}>` : ''}
                     </label>`
                     ;
