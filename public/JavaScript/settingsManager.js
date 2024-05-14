@@ -121,7 +121,7 @@ function createHTMLSettingsList(options, type, settingsValue) {
                         ${capitalizeFirstLetter(displayText)} Theme ${isActive}
                         ${checkedOrDisabled === 'disabled' ? `<input type="hidden" name="${text}-theme" value=""}>` : ''}
                     </label>`
-                    ;
+                ;
                 break;
             case colorCase.string:
                 text = option === colorCase.defaultValue ? colorCase.defaultValue : option;
@@ -131,7 +131,7 @@ function createHTMLSettingsList(options, type, settingsValue) {
                         ${capitalizeFirstLetter(text)} ${isActive}
                         ${checkedOrDisabled === 'disabled' ? `<input type="hidden" name="primary-color-${option}" value=""'}>` : ''}
                     </label>`
-                    ;
+                ;
                 break;
             case playlistCase.string:
                 text = option;
