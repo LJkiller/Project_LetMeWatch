@@ -276,7 +276,7 @@ function createLibraryList(library, location) {
     let html = '';
     for (let i = 0; i < library.length && i < maxPlaylistIteration; i++) {
         if (videoPlaylistPosition){
-            setPositionClass = iterations === videoPlaylistPosition.position
+            setPositionClass = iterations === videoPlaylistPosition.position;
         } else {
             setPositionClass = iterations === 0;
         }
@@ -341,9 +341,7 @@ function displayLessPlaylist(libraryType){
  * Method responsible of changing the video content.
  */
 function changeMediaPlayerSrc() {
-    let mediaInfo = extractMediaInfo(playlist[currentPlaylistPosition].url) 
-        || [{domainName: 'NOT FOUND', url: 'NOT FOUND', id: 'NOT FOUND', id: 'NOT FOUND'}]
-    ;
+    let mediaInfo = extractMediaInfo(playlist[currentPlaylistPosition].url) || [{domainName: 'NOT FOUND', url: 'NOT FOUND', id: 'NOT FOUND', id: 'NOT FOUND'}];
     mediaPlayer.src = mediaInfo[3];
     videoIdValueSpan.textContent = `VideoID: ${limitText(mediaInfo[1], textListLimit)}`;
     checkLibrary();

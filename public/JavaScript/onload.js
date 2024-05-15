@@ -11,11 +11,6 @@ window.onload = function () {
     siteSettingsCorrection();
 };
 
-let browserWidth;
-window.addEventListener('resize', function() {
-    let browserWidth = window.innerWidth;
-});
-
 /**
  * Method responsible of correcting HTML on the site by provided information.
  * 
