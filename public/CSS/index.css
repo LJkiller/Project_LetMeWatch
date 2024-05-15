@@ -115,7 +115,10 @@ footer>#user-library>div section ul li div.details{
 footer>#user-library>div section ul li div.details .detail-domain-display {
     color: var(--bigger-text-color);
 }
-
+footer>#user-library>div section ul li button.current-video-position{
+    font-weight: bold;
+    color: var(--white);
+}
 
 footer>#site-information span#site-info-content {
     color: var(--normal-text-color);

@@ -182,6 +182,7 @@ function handleSettingsForm(dataArray) {
     applySetting(getActiveValues(items[0]), themeCase.string);
     applySetting(getActiveValues(items[1]), colorCase.string);
     
+    updatePlaylist();
     localStorage.setItem('settings', JSON.stringify(dataArray));
 }
 

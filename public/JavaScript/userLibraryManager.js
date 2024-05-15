@@ -10,6 +10,7 @@ function handleStartPlaylist(){
         toggleElements([iframeControls, startPlaylistButton]);
         document.getElementById("media-top").scrollIntoView();
         
+        localStorage.setItem('videoPlaylistPosition', JSON.stringify({ position: currentPlaylistPosition}));
         saveVideoPositions(currentPlaylistPosition);
         changeMediaPlayerSrc();
         document.getElementById('prev-playlist-button').addEventListener('click', playPreviousVideo);
@@ -41,8 +42,9 @@ function handleExitPlaylist(event){
         for (let i = 0; i < playlistDetails.length; i++) {
             removeFromLibrary('playlistLibrary', playlistDetails[i]);
         }
+        resetVideoPlaylistPosition();
     } else if (resetCurrentVideoPositionSettings){
-        currentPlaylistPosition = 0;
+        resetVideoPlaylistPosition();
     }
     localStorage.removeItem('playlistDetails');
 
@@ -189,7 +191,11 @@ function closeContainer(containerId) {
             let parentElement = container.parentElement;
             if (containerId.includes('details-')) {
                 let button = parentElement.querySelector('button');
-                button.style.color = `var(--primary-color)`;
+                let color = 'primary-color';
+                if (button.classList.contains('current-video-position')){
+                    color = 'white';
+                }
+                button.style.color = `var(--${color})`;
             }
             setTimeout(() => {
                 parentElement.removeChild(container);
@@ -258,14 +264,26 @@ function createLibraryList(library, location) {
     let parentId = parentLocation.getAttribute('id');
     let locationId = parentId === 'playlist' ? 'playlist': 'starred-videos';
     let libraryType = parentId === 'playlist' ? playlistLibraryType: starLibraryType;
+
+    let positionClass;
+    let setPositionClass;
+    let videoPlaylistPosition = JSON.parse(localStorage.getItem('videoPlaylistPosition'));
+    if (parentId === 'playlist') {
+        positionClass = 'current-video-position';
+    }
+
     let maxIteration = 8, iterations = 0;
     let html = '';
     for (let i = 0; i < library.length && i < maxIteration; i++) {
-        iterations++;
+        if (videoPlaylistPosition){
+            setPositionClass = iterations === videoPlaylistPosition.position
+        } else {
+            setPositionClass = iterations === 0;
+        }
         let id = locationId === 'playlist' ? `playlist-button${iterations}`: `star-button${iterations}`;
         let item = library[i];
         let domainName = capitalizeFirstLetter(item.domainName);
-        let buttonElement = `<button id="${id}" class="details hidden-button" onclick="handlePlaylistDetails('${libraryType}', '${encodeURIComponent(JSON.stringify(item))}', '${id}')">${limitText(item.id, textListLimit)}</button>`;
+        let buttonElement = `<button id="${id}" class="details hidden-button ${setPositionClass === true ? positionClass: ''}" onclick="handlePlaylistDetails('${libraryType}', '${encodeURIComponent(JSON.stringify(item))}', '${id}')">${limitText(item.id, textListLimit)}</button>`;
         html += `
             <li>
                 ${createSVGNumber(bottomColor, topColor, textColor, textColor, i + 1, 'circle')}
@@ -273,6 +291,7 @@ function createLibraryList(library, location) {
                 ${buttonElement}
             </li>`
         ;
+        iterations++;
     }
     if (library.length > iterations){
         html += `
@@ -404,6 +423,7 @@ function playPreviousVideo(event) {
         currentPlaylistPosition--;
         saveVideoPositions(currentPlaylistPosition);
         changeMediaPlayerSrc();
+        updatePlaylist();
     }
 }
 
@@ -418,6 +438,7 @@ function playNextVideo(event) {
         currentPlaylistPosition++;
         saveVideoPositions(currentPlaylistPosition);
         changeMediaPlayerSrc();
+        updatePlaylist();
     }
 }
 
@@ -428,6 +449,23 @@ function saveVideoPositions(currentPlaylistPosition) {
     let positions = JSON.parse(localStorage.getItem('playlistDetails')) || [];
     positions.push(playlist[currentPlaylistPosition]);
     localStorage.setItem('playlistDetails', JSON.stringify(positions));
+    localStorage.setItem('videoPlaylistPosition', JSON.stringify({ position: currentPlaylistPosition}));
+}
+
+/**
+ * Method responsible of specifically updating playlist.
+ */
+function updatePlaylist(){
+    playlistUl.innerHTML = '';
+    createLibraryList(JSON.parse(localStorage.getItem(playlistLibraryType)) || [], playlistUl);
+}
+
+/**
+ * Method responsible of reseting video playlist position.
+ */
+function resetVideoPlaylistPosition(){
+    currentPlaylistPosition = 0;
+    localStorage.removeItem('videoPlaylistPosition');
 }
 
 // #endregion
