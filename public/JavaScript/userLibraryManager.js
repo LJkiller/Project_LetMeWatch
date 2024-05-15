@@ -272,9 +272,9 @@ function createLibraryList(library, location) {
         positionClass = 'current-video-position';
     }
 
-    let maxIteration = 8, iterations = 0;
+    let iterations = 0;
     let html = '';
-    for (let i = 0; i < library.length && i < maxIteration; i++) {
+    for (let i = 0; i < library.length && i < maxPlaylistIteration; i++) {
         if (videoPlaylistPosition){
             setPositionClass = iterations === videoPlaylistPosition.position
         } else {
@@ -297,11 +297,34 @@ function createLibraryList(library, location) {
         html += `
             <li class="display-more">
                 <span>${library.length - iterations} More Items...</span>
-                <button class="quick-button">Display More</button>
+                <button onclick="displayMorePlaylist('${libraryType}')" class="quick-button">Display More</button>
+            </li>`
+        ;
+    }
+    if (iterations !== defaultMaxPlaylistIteration){
+        html += `
+            <li class="display-more">
+                <span>Display Less..</span>
+                <button onclick="displayLessPlaylist('${libraryType}')" class="quick-button">Display Less</button>
             </li>`
         ;
     }
     location.innerHTML = html;
+}
+
+function displayMorePlaylist(libraryType){
+    let playlistUlArea = libraryType === playlistLibraryType ? playlistUl : starUl;
+    playlistUlArea.innerHTML = '';
+    let library = JSON.parse(localStorage.getItem(libraryType));
+    maxPlaylistIteration = library.length;
+    createLibraryList(JSON.parse(localStorage.getItem(libraryType)) || [], playlistUlArea);
+}
+
+function displayLessPlaylist(libraryType){
+    let playlistUlArea = libraryType === playlistLibraryType ? playlistUl : starUl;
+    playlistUlArea.innerHTML = '';
+    maxPlaylistIteration = defaultMaxPlaylistIteration;
+    createLibraryList(JSON.parse(localStorage.getItem(libraryType)) || [], playlistUlArea);
 }
 
 /**

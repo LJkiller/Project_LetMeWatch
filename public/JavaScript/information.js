@@ -33,6 +33,8 @@ let maxLoopFunctionIteration = 0;
 let functionIteration = 0;
 
 let textListLimit = 9;
+let defaultMaxPlaylistIteration = 8;
+let maxPlaylistIteration = defaultMaxPlaylistIteration;
 
 let playlist;
 let currentPlaylistPosition = 0;
