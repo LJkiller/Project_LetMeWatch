@@ -304,7 +304,7 @@ function createLibraryList(library, location) {
     if (iterations !== defaultMaxPlaylistIteration){
         html += `
             <li class="display-more">
-                <span>Display Less..</span>
+                <span></span>
                 <button onclick="displayLessPlaylist('${libraryType}')" class="quick-button">Display Less</button>
             </li>`
         ;
