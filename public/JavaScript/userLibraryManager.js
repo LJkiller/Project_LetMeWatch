@@ -312,6 +312,11 @@ function createLibraryList(library, location) {
     location.innerHTML = html;
 }
 
+/**
+ * Method responsible of displaying more items in playlists.
+ * 
+ * @param {string} libraryType - Library type to compare for further logic.
+ */
 function displayMorePlaylist(libraryType){
     let playlistUlArea = libraryType === playlistLibraryType ? playlistUl : starUl;
     playlistUlArea.innerHTML = '';
@@ -320,6 +325,11 @@ function displayMorePlaylist(libraryType){
     createLibraryList(JSON.parse(localStorage.getItem(libraryType)) || [], playlistUlArea);
 }
 
+/**
+ * Method responsible of displaying less items in playlists.
+ * 
+ * @param {string} libraryType - Library type to compare for further logic.
+ */
 function displayLessPlaylist(libraryType){
     let playlistUlArea = libraryType === playlistLibraryType ? playlistUl : starUl;
     playlistUlArea.innerHTML = '';
