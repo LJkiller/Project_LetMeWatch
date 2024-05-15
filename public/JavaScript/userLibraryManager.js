@@ -8,7 +8,7 @@ function handleStartPlaylist(){
     playlist = JSON.parse(localStorage.getItem('playlistLibrary')) || [];
     if (playlist.length > 0) {
         toggleElements([iframeControls, startPlaylistButton]);
-        document.getElementById("media-top").scrollIntoView();
+        scrollToArea('media-top');
         
         localStorage.setItem('videoPlaylistPosition', JSON.stringify({ position: currentPlaylistPosition}));
         saveVideoPositions(currentPlaylistPosition);
@@ -301,7 +301,7 @@ function createLibraryList(library, location) {
             </li>`
         ;
     }
-    if (iterations !== defaultMaxPlaylistIteration){
+    if (iterations > defaultMaxPlaylistIteration){
         html += `
             <li class="display-more">
                 <span></span>

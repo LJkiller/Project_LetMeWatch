@@ -33,7 +33,7 @@ header #media-form {
     margin-right: calc(var(--standard-spacing) * 1.6);
     gap: var(--standard-spacing);
 }
-header #media-form #media-form-buttons{
+header #media-form #media-form-buttons, header #media-form #link-form{
     display: flex;
     flex-wrap: nowrap;
     justify-content: start;

@@ -111,6 +111,13 @@ function siteSettingsCorrection() {
     let activeColors = getActiveValues(items[1]);
     let colorValue = activeColors[0] ? activeColors[0].split('primary-color-')[1] : colorCase.defaultValue;
     let activePlaylistBehvaiours = getActiveValues(items[2]);
+    
+    if (activePlaylistBehvaiours[1] !== playlistCase.options[1]){
+        let initialVideoPlaylistPosition = JSON.parse(localStorage.getItem('videoPlaylistPosition'));
+        if (initialVideoPlaylistPosition){
+            currentPlaylistPosition = initialVideoPlaylistPosition.position
+        }
+    }
 
     createSettingsList(themeCase.options, themeCase.string, themeValue, document.getElementById('theme-options-area'));
     createSettingsList(colorCase.options, colorCase.string, colorValue, document.getElementById('primary-color-options-area'));

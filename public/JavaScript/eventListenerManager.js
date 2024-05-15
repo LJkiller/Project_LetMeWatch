@@ -1,13 +1,18 @@
 
-// #region Events
+// #region Media Events
 
 /**
- * Event for initiating media link input management.
+ * Method responsible of handling link event.
+ * 
+ * @param {Event} event - Event. 
  */
-document.getElementById('media-link-button').addEventListener('click', function (event) {
+function handleLinkEvent(event) {
     event.preventDefault();
     handleLinkInput(document.getElementById('link-input').value);
-});
+}
+
+document.getElementById('media-link-button').addEventListener('click', handleLinkEvent);
+document.getElementById('link-form').addEventListener('submit', handleLinkEvent);
 
 /**
  * Event for checking how many times reset button has been pressed and operates accordingly.

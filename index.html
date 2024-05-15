@@ -54,8 +54,10 @@
 				<button id="q-add-playlist-button" class="form-button"><i class="fa-solid fa-plus"></i> <i class="fa-regular fa-bookmark"></i></button>
 				<button id="q-star-button" class="form-button"><i class="fa-solid fa-plus"></i> <i class="fa-regular fa-star"></i></button>
 			</div>
-			<input id="link-input" class="form-input" type="text" placeholder="Link" autocomplete="off">
-			<button id="media-link-button" class="form-button">Update Video</button>
+			<form id="link-form">
+				<input id="link-input" class="form-input" type="text" placeholder="Link" autocomplete="off">
+				<button id="media-link-button" class="form-button">Update Video</button>
+			</form>
 			<button id="settings-button" class="form-button single-icon-button"><i class="fa-solid fa-gear"></i></button>
 		</div>
 	</header>
@@ -146,7 +148,7 @@
 			<p id="site-info-content">
 				This website is developed purely out of spite for YouTube's crackdown on ads.<br>
 				This website has since been further developed branching out to more platforms, not limited by YouTube.<br><br>
-				To use this platform, simply insert a video link (from any <a href="#supported-domains">supported domain</a>) into the <a href="#link-input">link input field</a>.<br>
+				To use this platform, simply insert a video link (from any <button onclick="scrollToArea('supported-domains')" class="hidden-button">supported domain</button>) into the <button onclick="scrollToArea('link-input')" class="hidden-button">link input field</button>.<br>
 				Please note that certain videos may be unavailable due to uploader restrictions or regional blocks.
 			</p>
 			<span id="site-info-copy">&copy; LJkiller 2024. All rights reserved. </span>

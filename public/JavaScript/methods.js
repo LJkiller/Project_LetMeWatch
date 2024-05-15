@@ -163,6 +163,29 @@ function getRandomValue(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
+/**
+ * Method responsible of getting appropriate color dependent on theme.
+ * 
+ * @param {string} color - The color.
+ * @returns {string} - Themed color.
+ */
+function getColor(color){
+    return document.body.classList.contains('light-theme') ? `dark-${color}` : color;
+}
+
+/**
+ * Method responsible of scrolling into an area.
+ * 
+ * @param {string} areaId - Area to scroll to. 
+ */
+function scrollToArea(areaId){
+    let area = document.getElementById(areaId);
+    area.scrollIntoView();
+    if (area.tagName.toLowerCase() === 'input'){
+        area.focus();
+    }
+}
+
 // #endregion
 
 
@@ -303,14 +326,4 @@ function toggleElements(elementsToToggle){
             elementsToToggle[i].classList.add('active');
         }
     }
-}
-
-/**
- * Method responsible of getting appropriate color dependent on theme.
- * 
- * @param {string} color - The color.
- * @returns {string} - Themed color.
- */
-function getColor(color){
-    return document.body.classList.contains('light-theme') ? `dark-${color}` : color;
 }
