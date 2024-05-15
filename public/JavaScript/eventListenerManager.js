@@ -1,6 +1,9 @@
 
 // #region Media Events
 
+document.getElementById('media-link-button').addEventListener('click', handleLinkEvent);
+document.getElementById('link-form').addEventListener('submit', handleLinkEvent);
+
 /**
  * Method responsible of handling link event.
  * 
@@ -10,9 +13,6 @@ function handleLinkEvent(event) {
     event.preventDefault();
     handleLinkInput(document.getElementById('link-input').value);
 }
-
-document.getElementById('media-link-button').addEventListener('click', handleLinkEvent);
-document.getElementById('link-form').addEventListener('submit', handleLinkEvent);
 
 /**
  * Event for checking how many times reset button has been pressed and operates accordingly.
