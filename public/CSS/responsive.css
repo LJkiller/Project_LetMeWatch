@@ -210,6 +210,7 @@ footer>#user-library>div section ul li.display-more{
     ;
     align-items: center;
     gap: calc(var(--standard-spacing) / 5);
+    margin-bottom: var(--standard-spacing);
 }
 
 footer>#user-library>div section ul li svg {

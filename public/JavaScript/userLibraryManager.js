@@ -293,19 +293,13 @@ function createLibraryList(library, location) {
         ;
         iterations++;
     }
-    if (library.length > iterations){
+    if (library.length > iterations || iterations > defaultMaxPlaylistIteration) {
         html += `
             <li class="display-more">
-                <span>${library.length - iterations} More Items...</span>
-                <button onclick="displayMorePlaylist('${libraryType}')" class="quick-button">Display More</button>
-            </li>`
-        ;
-    }
-    if (iterations > defaultMaxPlaylistIteration){
-        html += `
-            <li class="display-more">
-                <span></span>
-                <button onclick="displayLessPlaylist('${libraryType}')" class="quick-button">Display Less</button>
+                ${library.length > iterations ? `<span>${library.length - iterations} More Items...</span>` : '<span></span>'}
+                <button class="quick-button" onclick="${library.length > iterations ? `displayMorePlaylist('${libraryType}')` : `displayLessPlaylist('${libraryType}')`}">
+                    ${library.length > iterations ? `Display More` : `Display Less`}
+                </button>
             </li>`
         ;
     }
