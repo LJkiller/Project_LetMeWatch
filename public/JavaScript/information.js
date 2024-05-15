@@ -41,7 +41,6 @@ let initialVideoPlaylistPosition = JSON.parse(localStorage.getItem('videoPlaylis
 let currentPlaylistPosition = 0;
 if (initialVideoPlaylistPosition){
     currentPlaylistPosition = initialVideoPlaylistPosition.position;
-    console.log(initialVideoPlaylistPosition.position);
 }
 
 let linkRegex = /^(http|https|ftp|ssh|telnet|smtp|imap|dns|snmp|ntp|ldap|sftp|ftps|smtps|webdav|rtsp|bittorrent):\/\/[^\s/$.?#].[^\s]*$/i;
