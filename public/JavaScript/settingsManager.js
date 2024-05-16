@@ -47,8 +47,8 @@ function closePopupOutside(event) {
  */
 function uncheckOtherBoxes(checkedCheckbox, checkboxes) {
     for (let i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i] !== checkedCheckbox) {
-            checkboxes[i].checked = !checkedCheckbox.checked;
+        if (checkboxes[i] !== checkedCheckbox && checkedCheckbox.checked) {
+            checkboxes[i].checked = false;
         }
     }
 }
