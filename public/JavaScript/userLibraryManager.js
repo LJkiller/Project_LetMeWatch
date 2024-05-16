@@ -364,8 +364,8 @@ function defaultPlaylistLayout() {
  * @param {string} flexDirection - Flex case of direction.
  */
 function updateLayout(leftArea, rightArea, flexDirection) {
-    starArea.style.gridArea = leftArea;
-    playlistArea.style.gridArea = rightArea;
+    playlistArea.style.gridArea = leftArea;
+    starArea.style.gridArea = rightArea;
     let parentArea = starArea.parentElement;
     let parentStyle = window.getComputedStyle(parentArea);
     if (parentStyle.getPropertyValue('display') === 'flex') {
