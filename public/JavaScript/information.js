@@ -14,9 +14,10 @@ let videoIdValueSpan = document.getElementById('video-id');
 let popup = document.getElementById('popup');
 let errorPopup = document.getElementById('error');
 
+let starArea = document.getElementById('starred-videos'), playlistArea = document.getElementById('playlist');
 let starButton = document.getElementById('star-button'), addButton = document.getElementById('add-playlist-button');
 let qStarButton = document.getElementById('q-star-button'), qAddButton = document.getElementById('q-add-playlist-button');
-let starUl = document.querySelector('#starred-videos > ul'), playlistUl = document.querySelector('#playlist > ul');
+let starUl = starArea.querySelector('ul'), playlistUl = playlistArea.querySelector('ul');
 let starLibraryType = 'starLibrary', playlistLibraryType = 'playlistLibrary';
 
 let baseWidth = 560;
@@ -170,21 +171,39 @@ let settingsCase = {
     colorCase: {
         string: 'color',
         defaultValue: 'blue',
-        options: ['red', 'green', 'blue', 'yellow']
+        options: [
+            'red', 
+            'green', 
+            'blue', 
+            'yellow'
+        ]
     },
     themeCase: {
         string: 'theme',
         defaultValue: 'system-default',
-        options: ['light', 'dark', 'system-default']
+        options: [
+            'light', 
+            'dark', 
+            'system-default'
+        ]
     },
     behaviourCase: {
         string: 'behaviour',
         playlistCase: {
             string: 'playlist',
             defaultValue: '',
-            options: ['remove-entries-behaviour', 'reset-video-position-behaviour']
+            options: [
+                'remove-entries-behaviour', 
+                'reset-video-position-behaviour'
+            ]
         }
+    },
+    layoutCase: {
+        string: 'layout',
+        options: [
+            'switch-playlist-positions-layout'
+        ]
     }
 }
-let { themeCase, colorCase, behaviourCase } = settingsCase;
+let { themeCase, colorCase, behaviourCase, layoutCase } = settingsCase;
 let { playlistCase } = behaviourCase;

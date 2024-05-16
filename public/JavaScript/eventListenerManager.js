@@ -119,7 +119,7 @@ document.getElementById('preference-area').addEventListener('submit', function (
 function multipleBoxCheck(checkboxes){
     for (let i = 0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener('change', function(event) {
-            disableOtherCheckboxes(checkboxes[i], checkboxes);
+            uncheckOtherBoxes(checkboxes[i], checkboxes);
         });
     }
 }

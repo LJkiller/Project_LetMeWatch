@@ -110,18 +110,31 @@ function siteSettingsCorrection() {
     let themeValue = activeThemes[0] ? activeThemes[0].split('-theme')[0] : themeCase.defaultValue;
     let activeColors = getActiveValues(items[1]);
     let colorValue = activeColors[0] ? activeColors[0].split('primary-color-')[1] : colorCase.defaultValue;
-    let activePlaylistBehvaiours = getActiveValues(items[2]);
     
-    if (activePlaylistBehvaiours[1] !== playlistCase.options[1]){
+    let activePlaylistBehvaiours = getActiveValues(items[2]);
+    let activeLayouts = getActiveValues(items[3]);
+    handleInitialSettings(activePlaylistBehvaiours, activeLayouts);
+
+    createSettingsList(themeCase.options, themeCase.string, themeValue, document.getElementById('theme-options-area'));
+    createSettingsList(colorCase.options, colorCase.string, colorValue, document.getElementById('primary-color-options-area'));
+    createSettingsList(playlistCase.options, playlistCase.string, activePlaylistBehvaiours, document.getElementById('playlist-behaviour-options-area'));
+    createSettingsList(layoutCase.options, layoutCase.string, activeLayouts, document.getElementById('switch-layout-options-area'));
+
+    handleSettingsForm(settings);
+}
+
+function handleInitialSettings(activePlaylistBehvaiours, activeLayouts){
+    if (activePlaylistBehvaiours.includes(playlistCase.options[1])){
         let initialVideoPlaylistPosition = JSON.parse(localStorage.getItem('videoPlaylistPosition'));
         if (initialVideoPlaylistPosition){
             currentPlaylistPosition = initialVideoPlaylistPosition.position
         }
     }
-
-    createSettingsList(themeCase.options, themeCase.string, themeValue, document.getElementById('theme-options-area'));
-    createSettingsList(colorCase.options, colorCase.string, colorValue, document.getElementById('primary-color-options-area'));
-    createSettingsList(playlistCase.options, playlistCase.string, activePlaylistBehvaiours, document.getElementById('playlist-behaviour-options-area'));
-
-    handleSettingsForm(settings);
+    if (activeLayouts.includes(layoutCase.options[0])) {
+        switchPlaylistLayout();
+        window.addEventListener('resize', switchPlaylistLayout);
+    } else {
+        defaultPlaylistLayout();
+        window.removeEventListener('resize', switchPlaylistLayout);
+    }
 }

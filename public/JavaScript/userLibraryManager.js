@@ -341,6 +341,38 @@ function changeMediaPlayerSrc() {
     checkLibrary();
 }
 
+
+/**
+ * Method responsible of applying switched layout for playlist.
+ */
+function switchPlaylistLayout() {
+    updateLayout('user-stars', 'user-playlist', 'row-reverse');
+}
+
+/**
+ * Method responsible of applying default layout for playlist.
+ */
+function defaultPlaylistLayout() {
+    updateLayout('user-playlist', 'user-stars', 'row');
+}
+
+/**
+ * Method responsible of updating playlist layout.
+ * 
+ * @param {string} leftArea - Area to be left.
+ * @param {string} rightArea - Area to be right.
+ * @param {string} flexDirection - Flex case of direction.
+ */
+function updateLayout(leftArea, rightArea, flexDirection) {
+    starArea.style.gridArea = leftArea;
+    playlistArea.style.gridArea = rightArea;
+    let parentArea = starArea.parentElement;
+    let parentStyle = window.getComputedStyle(parentArea);
+    if (parentStyle.getPropertyValue('display') === 'flex') {
+        parentArea.style.flexDirection = flexDirection;
+    }
+}
+
 // #endregion
 
 
@@ -448,7 +480,7 @@ function playPreviousVideo(event) {
         currentPlaylistPosition--;
         saveVideoPositions(currentPlaylistPosition);
         changeMediaPlayerSrc();
-        updatePlaylist();
+        updatePlaylistContent();
     }
 }
 
@@ -463,7 +495,7 @@ function playNextVideo(event) {
         currentPlaylistPosition++;
         saveVideoPositions(currentPlaylistPosition);
         changeMediaPlayerSrc();
-        updatePlaylist();
+        updatePlaylistContent();
     }
 }
 
@@ -480,7 +512,7 @@ function saveVideoPositions(currentPlaylistPosition) {
 /**
  * Method responsible of specifically updating playlist.
  */
-function updatePlaylist(){
+function updatePlaylistContent(){
     playlistUl.innerHTML = '';
     createLibraryList(JSON.parse(localStorage.getItem(playlistLibraryType)) || [], playlistUl);
 }

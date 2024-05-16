@@ -72,7 +72,7 @@ noscript section span {
     margin-bottom: calc(var(--standard-spacing) * 1.5);
 }
 
-#popup>section>#preference-area section {
+#popup>section>#preference-area div>section>section {
     margin-top: var(--standard-spacing);
     display: flex;
     flex-wrap: wrap;
@@ -92,7 +92,23 @@ div.option-area label {
     gap: calc(var(--standard-spacing) / 2);
 }
 
+#popup>section>#preference-area>div>section:not(:nth-of-type(1)) {
+    margin-top: calc(var(--standard-spacing) * 2);
+}
+#popup>section>#preference-area section>h3::before {
+    content: "";
+    display: block;
+    margin-bottom: var(--standard-spacing);
+    width: 95%;
+    height: 2px;
+    background-color: var(--primary-color);
+    border-radius: var(--standard-border-radius);
+}
 
+.option-area label:hover,
+.option-area input[type="checkbox"]:hover {
+    cursor: pointer;
+}
 .option-area input[type="checkbox"] {
     transition: var(--sharp-eio-transition);
     appearance: none;
@@ -108,10 +124,6 @@ div.option-area label {
     --checkbox-color: var(--blue);
     background-color: var(--checkbox-color);
     box-shadow: 0 0 10px 1px var(--checkbox-color);
-}
-.option-area input[type="checkbox"][disabled]{
-    background-color: var(--disabled-color) !important;
-    cursor: not-allowed;
 }
 
 /*#endregion*/

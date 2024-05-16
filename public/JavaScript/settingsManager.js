@@ -40,18 +40,15 @@ function closePopupOutside(event) {
 }
 
 /**
- * Method responsible of disabling other checkboxes in the same area.
+ * Method responsible of unchecking other boxes to only allow one checked.
  * 
  * @param {HTMLInputElement} checkedCheckbox - Checkbox that was checked.
  * @param {NodeList} checkboxes - All checkboxes in the same area.
  */
-function disableOtherCheckboxes(checkedCheckbox, checkboxes) {
+function uncheckOtherBoxes(checkedCheckbox, checkboxes) {
     for (let i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i] !== checkedCheckbox) {
-            checkboxes[i].disabled = checkedCheckbox.checked;
-            if (!checkedCheckbox.checked) {
-                checkboxes[i].disabled = false;
-            }
+            checkboxes[i].checked = !checkedCheckbox.checked;
         }
     }
 }
@@ -83,6 +80,9 @@ function createSettingsList(options, type, settingsValue, location) {
         case playlistCase.string:
             location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
             break;
+        case layoutCase.string:
+            location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
+            break;
         default:
             break;
     }
@@ -101,19 +101,19 @@ function createHTMLSettingsList(options, type, settingsValue) {
     let text = '';
     for (let i = 0; i < options.length; i++) {
         let option = options[i];
-        let checkedOrDisabled = '';
+        let checkedOrDefault = '';
         if (settingsValue !== null) {
             if (Array.isArray(settingsValue)) {
                 if (settingsValue.length === 0) {
-                    checkedOrDisabled = '';
+                    checkedOrDefault = '';
                 } else {
-                    checkedOrDisabled = settingsValue.includes(option) ? 'checked' : '';
+                    checkedOrDefault = settingsValue.includes(option) ? 'checked' : '';
                 }
             } else {
-                checkedOrDisabled = option.includes(settingsValue) ? 'checked' : 'disabled';
+                checkedOrDefault = option.includes(settingsValue) ? 'checked' : '';
             }
         }
-        let isActive = checkedOrDisabled === 'checked' ? '<i>(Active)</i>' : '';
+        let isActive = checkedOrDefault === 'checked' ? '<i>(Active)</i>' : '';
 
         let displayText = '';
         switch (type) {
@@ -125,32 +125,46 @@ function createHTMLSettingsList(options, type, settingsValue) {
                 }
                 html += `
                     <label>
-                        <input type="checkbox" ${checkedOrDisabled} name="${text}-theme" id="${text}-theme-option" class="option" style="--checkbox-color: var(--${text}-theme);">
+                        <input type="checkbox" ${checkedOrDefault} name="${text}-theme" id="${text}-theme-option" class="option" style="--checkbox-color: var(--${text}-theme);">
                         ${capitalizeFirstLetter(displayText)} Theme ${isActive}
-                        ${checkedOrDisabled === 'disabled' ? `<input type="hidden" name="${text}-theme" value=""}>` : ''}
+                        ${checkedOrDefault === 'disabled' ? `<input type="hidden" name="${text}-theme" value=""}>` : ''}
                     </label>`
-                ;
+                    ;
                 break;
             case colorCase.string:
                 text = option === colorCase.defaultValue ? colorCase.defaultValue : option;
                 html += `
                     <label>
-                        <input type="checkbox" ${checkedOrDisabled} name="primary-color-${text}" id="${text}-option" class="option" style="--checkbox-color: var(--${text});">
+                        <input type="checkbox" ${checkedOrDefault} name="primary-color-${text}" id="${text}-option" class="option" style="--checkbox-color: var(--${text});">
                         ${capitalizeFirstLetter(text)} ${isActive}
-                        ${checkedOrDisabled === 'disabled' ? `<input type="hidden" name="primary-color-${option}" value=""'}>` : ''}
+                        ${checkedOrDefault === 'disabled' ? `<input type="hidden" name="primary-color-${option}" value=""'}>` : ''}
                     </label>`
-                ;
+                    ;
                 break;
             case playlistCase.string:
                 text = option;
                 if (text === playlistCase.options[0]) {
                     displayText = 'Remove watched entries when exiting.';
-                } else if (text === playlistCase.options[1]){
+                } else if (text === playlistCase.options[1]) {
                     displayText = 'Reset video position when exiting.';
+                } else if (text === playlistCase.options[2]) {
+                    displayText = 'Switch positions of playlist and starred videos.';
                 }
                 html += `
                     <label>
-                        <input type="checkbox" ${checkedOrDisabled} name="${text}" id="playlist-option-${i}" class="option">
+                        <input type="checkbox" ${checkedOrDefault} name="${text}" id="playlist-option-${i}" class="option">
+                        ${displayText} ${isActive}
+                    </label>
+                `;
+                break;
+            case layoutCase.string:
+                text = option;
+                if (text === layoutCase.options[0]) {
+                    displayText = 'Switch playlist positions.';
+                }
+                html += `
+                    <label>
+                        <input type="checkbox" ${checkedOrDefault} name="${text}" id="layout-option-${i}" class="option">
                         ${displayText} ${isActive}
                     </label>
                 `;
@@ -181,8 +195,8 @@ function handleSettingsForm(dataArray) {
     let items = getAllItemsSorted(dataArray);
     applySetting(getActiveValues(items[0]), themeCase.string);
     applySetting(getActiveValues(items[1]), colorCase.string);
-    
-    updatePlaylist();
+
+    updatePlaylistContent();
     localStorage.setItem('settings', JSON.stringify(dataArray));
 }
 
@@ -199,7 +213,7 @@ function applySetting(activeCases, settingType) {
     if (singleCase === true) {
         switch (settingType) {
             case themeCase.string:
-                if (items === `${themeCase.defaultValue}-theme`){
+                if (items === `${themeCase.defaultValue}-theme`) {
                     return;
                 } else {
                     items === 'dark-theme' ? document.body.removeAttribute('class') : document.body.className = items;
@@ -208,16 +222,6 @@ function applySetting(activeCases, settingType) {
             case colorCase.string:
                 let color = getColor(items.split('primary-color-')[1]);
                 root.style.setProperty('--primary-color', `var(--${color})`);
-                break;
-            default:
-                break;
-        }
-    } else {
-        switch (settingType) {
-            case behaviourCase.string:
-
-                break;
-            case '':
                 break;
             default:
                 break;
@@ -235,6 +239,7 @@ function getAllItemsSorted(dataArray) {
     let themeItems = [];
     let colorItems = [];
     let behaviourItems = [];
+    let layoutItems = [];
     for (let i = 0; i < dataArray.length; i++) {
         let item = dataArray[i];
         if (item.formInput.includes(themeCase.string)) {
@@ -243,9 +248,11 @@ function getAllItemsSorted(dataArray) {
             colorItems.push(item);
         } else if (item.formInput.includes(behaviourCase.string)) {
             behaviourItems.push(item);
+        } else if (item.formInput.includes(layoutCase.string)) {
+            layoutItems.push(item);
         }
     }
-    return [themeItems, colorItems, behaviourItems];
+    return [themeItems, colorItems, behaviourItems, layoutItems];
 }
 
 /**
