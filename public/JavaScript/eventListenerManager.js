@@ -112,14 +112,18 @@ document.getElementById('preference-area').addEventListener('submit', function (
 });
 
 /**
- * Method responsible of checking if multiple boxes are checked.
+ * Method responsible of handling checkbox logics.
  * 
  * @param {NodeList} checkboxes - All checkboxes in the same area.
+ * @param {boolean} [limit=false] - If it should limit the box checks.
  */
-function multipleBoxCheck(checkboxes){
-    for (let i = 0; i < checkboxes.length; i++) {
+function handleCheckbox(checkboxes, limit = false){
+    for (let i = 0; i < checkboxes.length; i++){
         checkboxes[i].addEventListener('change', function(event) {
-            uncheckOtherBoxes(checkboxes[i], checkboxes);
+            if (limit){
+                uncheckOtherBoxes(checkboxes[i], checkboxes);
+            } 
+            updateCheckBox(checkboxes[i]);
         });
     }
 }

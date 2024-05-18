@@ -74,28 +74,36 @@ noscript section span {
 
 #popup>section>#preference-area div>section>section {
     margin-top: var(--standard-spacing);
+    width: var(--setting-option-width);
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     align-items: start;
     gap: calc(var(--standard-spacing) / 2);
 }
+#popup>section>#preference-area div>section>section:nth-of-type(n + 2) {
+    margin-top: calc(var(--standard-spacing) * 2);
+}
 #popup form section div.option-area {
-    width: var(--setting-option-width);
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: start;
+    border-radius: calc(var(--standard-border-radius) / 2);
 }
 div.option-area label {
     display: flex;
     justify-content: start;
+    align-items: center;
     gap: calc(var(--standard-spacing) / 2);
 }
 
 div.option-area label:first-child {
+    border-top-left-radius: calc(var(--standard-border-radius) / 2);
     border-top-right-radius: calc(var(--standard-border-radius) / 2);
 }
 div.option-area label:last-child {
+    border-bottom-left-radius: calc(var(--standard-border-radius) / 2);
     border-bottom-right-radius: calc(var(--standard-border-radius) / 2);
 }
 
@@ -114,6 +122,7 @@ div.option-area label:last-child {
 
 .option-area label { 
     transition: var(--sharp-eio-transition);
+    padding: calc(var(--standard-spacing) / 2) var(--standard-spacing);
 }
 .option-area label:hover,
 .option-area input[type="checkbox"]:hover {

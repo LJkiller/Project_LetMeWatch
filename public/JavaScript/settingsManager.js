@@ -52,11 +52,18 @@ function uncheckOtherBoxes(checkedCheckbox, checkboxes) {
             checkboxes[i].parentElement.classList.remove('box-checked');
         }
     }
+}
 
-    if (checkedCheckbox.checked) {
-        checkedCheckbox.parentElement.classList.add('box-checked');
+/**
+ * Method responsible of updating the checkbox states.
+ * 
+ * @param {HTMLInputElement} checkbox - The checkbox.
+ */
+function updateCheckBox(checkbox){
+    if (checkbox.checked) {
+        checkbox.parentElement.classList.add('box-checked');
     } else {
-        checkedCheckbox.parentElement.classList.remove('box-checked');
+        checkbox.parentElement.classList.remove('box-checked');
     }
 }
 
@@ -78,16 +85,18 @@ function createSettingsList(options, type, settingsValue, location) {
     switch (type) {
         case themeCase.string:
             location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
-            multipleBoxCheck(location.querySelectorAll('.option'));
+            handleCheckbox(location.querySelectorAll('.option'), true);
         case colorCase.string:
             location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
-            multipleBoxCheck(location.querySelectorAll('.option'));
+            handleCheckbox(location.querySelectorAll('.option'), true);
             break;
         case playlistCase.string:
             location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
+            handleCheckbox(location.querySelectorAll('.option'));
             break;
         case layoutCase.string:
             location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
+            handleCheckbox(location.querySelectorAll('.option'));
             break;
         default:
             break;
