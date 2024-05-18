@@ -138,6 +138,7 @@ div.option-area label:last-child {
 }
 .option-area .box-checked:hover {
     cursor: default;
+    background-color: transparent;
 }
 
 /*#endregion*/
