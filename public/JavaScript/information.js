@@ -178,7 +178,7 @@ let settingsCase = {
             'green', 
             'cyan',
             'blue',
-            'purple'
+            'pink'
         ]
     },
     themeCase: {
