@@ -198,7 +198,11 @@ function closeContainer(containerId) {
                 button.style.color = `var(--${color})`;
             }
             setTimeout(() => {
-                parentElement.removeChild(container);
+                if (parentElement.contains(container)){
+                    parentElement.removeChild(container);
+                } else {
+                    console.error('If it works, it works.');
+                }
             }, 200);
         }, 100);
     }
@@ -317,6 +321,7 @@ function displayMorePlaylist(libraryType){
     let library = JSON.parse(localStorage.getItem(libraryType));
     maxPlaylistIteration = library.length;
     createLibraryList(JSON.parse(localStorage.getItem(libraryType)) || [], playlistUlArea);
+    applyContrast();
 }
 
 /**
@@ -329,6 +334,7 @@ function displayLessPlaylist(libraryType){
     playlistUlArea.innerHTML = '';
     maxPlaylistIteration = defaultMaxPlaylistIteration;
     createLibraryList(JSON.parse(localStorage.getItem(libraryType)) || [], playlistUlArea);
+    applyContrast();
 }
 
 /**

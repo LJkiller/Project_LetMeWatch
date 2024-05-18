@@ -81,15 +81,22 @@ noscript section span {
     gap: calc(var(--standard-spacing) / 2);
 }
 #popup form section div.option-area {
+    width: var(--setting-option-width);
     display: flex;
     flex-direction: column;
     justify-content: start;
-    gap: var(--standard-spacing);
 }
 div.option-area label {
     display: flex;
     justify-content: start;
     gap: calc(var(--standard-spacing) / 2);
+}
+
+div.option-area label:first-child {
+    border-top-right-radius: calc(var(--standard-border-radius) / 2);
+}
+div.option-area label:last-child {
+    border-bottom-right-radius: calc(var(--standard-border-radius) / 2);
 }
 
 #popup>section>#preference-area>div>section:not(:nth-of-type(1)) {
@@ -99,15 +106,19 @@ div.option-area label {
     content: "";
     display: block;
     margin-bottom: var(--standard-spacing);
-    width: 95%;
+    width: var(--setting-option-width);
     height: 2px;
     background-color: var(--primary-color);
     border-radius: var(--standard-border-radius);
 }
 
+.option-area label { 
+    transition: var(--sharp-eio-transition);
+}
 .option-area label:hover,
 .option-area input[type="checkbox"]:hover {
     cursor: pointer;
+    background-color: var(--primary-bg-color);
 }
 .option-area input[type="checkbox"] {
     transition: var(--sharp-eio-transition);
@@ -124,6 +135,9 @@ div.option-area label {
     --checkbox-color: var(--blue);
     background-color: var(--checkbox-color);
     box-shadow: 0 0 10px 1px var(--checkbox-color);
+}
+.option-area .box-checked:hover {
+    cursor: default;
 }
 
 /*#endregion*/

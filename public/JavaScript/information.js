@@ -207,3 +207,5 @@ let settingsCase = {
 }
 let { themeCase, colorCase, behaviourCase, layoutCase } = settingsCase;
 let { playlistCase } = behaviourCase;
+
+let lightColors = [colorCase.options[1], colorCase.options[3]];

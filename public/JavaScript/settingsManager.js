@@ -49,7 +49,14 @@ function uncheckOtherBoxes(checkedCheckbox, checkboxes) {
     for (let i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i] !== checkedCheckbox && checkedCheckbox.checked) {
             checkboxes[i].checked = false;
+            checkboxes[i].parentElement.classList.remove('box-checked');
         }
+    }
+
+    if (checkedCheckbox.checked) {
+        checkedCheckbox.parentElement.classList.add('box-checked');
+    } else {
+        checkedCheckbox.parentElement.classList.remove('box-checked');
     }
 }
 
@@ -72,7 +79,6 @@ function createSettingsList(options, type, settingsValue, location) {
         case themeCase.string:
             location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
             multipleBoxCheck(location.querySelectorAll('.option'));
-            break;
         case colorCase.string:
             location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
             multipleBoxCheck(location.querySelectorAll('.option'));
@@ -102,15 +108,18 @@ function createHTMLSettingsList(options, type, settingsValue) {
     for (let i = 0; i < options.length; i++) {
         let option = options[i];
         let checkedOrDefault = '';
+        let classCheck = '';
         if (settingsValue !== null) {
             if (Array.isArray(settingsValue)) {
                 if (settingsValue.length === 0) {
                     checkedOrDefault = '';
                 } else {
                     checkedOrDefault = settingsValue.includes(option) ? 'checked' : '';
+                    classCheck = settingsValue.includes(option) ? 'class="box-checked"' : '';
                 }
             } else {
                 checkedOrDefault = option.includes(settingsValue) ? 'checked' : '';
+                classCheck = option.includes(settingsValue) ? 'class="box-checked"' : '';
             }
         }
         let isActive = checkedOrDefault === 'checked' ? '<i>(Active)</i>' : '';
@@ -124,7 +133,7 @@ function createHTMLSettingsList(options, type, settingsValue) {
                     displayText = 'system default';
                 }
                 html += `
-                    <label>
+                    <label ${classCheck}>
                         <input type="checkbox" ${checkedOrDefault} name="${text}-theme" id="${text}-theme-option" class="option" style="--checkbox-color: var(--${text}-theme);">
                         ${capitalizeFirstLetter(displayText)} Theme ${isActive}
                         ${checkedOrDefault === 'disabled' ? `<input type="hidden" name="${text}-theme" value=""}>` : ''}
@@ -134,7 +143,7 @@ function createHTMLSettingsList(options, type, settingsValue) {
             case colorCase.string:
                 text = option === colorCase.defaultValue ? colorCase.defaultValue : option;
                 html += `
-                    <label>
+                    <label ${classCheck}>
                         <input type="checkbox" ${checkedOrDefault} name="primary-color-${text}" id="${text}-option" class="option" style="--checkbox-color: var(--${text});">
                         ${capitalizeFirstLetter(text)} ${isActive}
                         ${checkedOrDefault === 'disabled' ? `<input type="hidden" name="primary-color-${option}" value=""'}>` : ''}
@@ -151,7 +160,7 @@ function createHTMLSettingsList(options, type, settingsValue) {
                     displayText = 'Switch positions of playlist and starred videos.';
                 }
                 html += `
-                    <label>
+                    <label ${classCheck}>
                         <input type="checkbox" ${checkedOrDefault} name="${text}" id="playlist-option-${i}" class="option">
                         ${displayText} ${isActive}
                     </label>
@@ -163,7 +172,7 @@ function createHTMLSettingsList(options, type, settingsValue) {
                     displayText = 'Switch playlist positions.';
                 }
                 html += `
-                    <label>
+                    <label ${classCheck}>
                         <input type="checkbox" ${checkedOrDefault} name="${text}" id="layout-option-${i}" class="option">
                         ${displayText} ${isActive}
                     </label>
@@ -198,6 +207,7 @@ function handleSettingsForm(dataArray) {
 
     updatePlaylistContent();
     localStorage.setItem('settings', JSON.stringify(dataArray));
+    applyContrast();
 }
 
 /**

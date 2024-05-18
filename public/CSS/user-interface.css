@@ -81,6 +81,13 @@ input[type="number"]::-webkit-outer-spin-button {
 .hidden-button:hover {
     color: var(--white);
 }
+.form-input.apply-contrast:hover,
+.form-input.apply-contrast:hover::placeholder, 
+.form-button.apply-contrast:hover, 
+.quick-button.apply-contrast:hover, 
+.quick-button.apply-contrast:hover span {
+    color: var(--black);
+}
 
 
 .hidden-button {

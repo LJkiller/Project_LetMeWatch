@@ -96,6 +96,8 @@
     --header-z-index: 100;
     --popup-z-index: 101;
     --popup-min-height: 20rem;
+
+    --setting-option-width: 95%;
 }
 
 /*Animation*/

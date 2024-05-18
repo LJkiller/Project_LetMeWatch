@@ -327,3 +327,41 @@ function toggleElements(elementsToToggle){
         }
     }
 }
+
+/**
+ * Method responsible of adding color contrast.
+ */
+function applyContrast(){
+    let primaryColor = root.style.getPropertyValue('--primary-color').trim();
+    let isLightColor = false;
+    let isDarkThemed = true;
+
+    if (document.body.getAttribute('class')) {
+        isDarkThemed = false;
+    } 
+
+    let formButtons = document.querySelectorAll('button.form-button');
+    let quickButtons = document.querySelectorAll('button.quick-button');
+    let formInputs = document.querySelectorAll('input.form-input');
+
+    let elements = [...formButtons, ...quickButtons, ...formInputs];    
+    if (isDarkThemed === true){
+
+        for (let i = 0; i < lightColors.length; i++){
+            if (primaryColor.includes(lightColors[i])){
+                isLightColor = true;
+                break;
+            }
+        }
+
+        if (isLightColor){
+            for (let i = 0; i < elements.length; i++){
+                elements[i].classList.add('apply-contrast');
+            }
+        }
+    } else {
+        for (let i = 0; i < elements.length; i++){
+            elements[i].classList.remove('apply-contrast');
+        }
+    }
+}
