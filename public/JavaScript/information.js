@@ -173,9 +173,12 @@ let settingsCase = {
         defaultValue: 'blue',
         options: [
             'red', 
+            'orange',
+            'yellow',
             'green', 
-            'blue', 
-            'yellow'
+            'cyan',
+            'blue',
+            'purple'
         ]
     },
     themeCase: {
@@ -208,4 +211,9 @@ let settingsCase = {
 let { themeCase, colorCase, behaviourCase, layoutCase } = settingsCase;
 let { playlistCase } = behaviourCase;
 
-let lightColors = [colorCase.options[1], colorCase.options[3]];
+let lightColors = [
+    colorCase.options[1], 
+    colorCase.options[2], 
+    colorCase.options[3], 
+    colorCase.options[4]
+];
