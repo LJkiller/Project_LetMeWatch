@@ -152,12 +152,12 @@ function createHTMLSettingsList(options, type, settingsValue) {
             case colorCase.string:
                 text = option === colorCase.defaultValue ? colorCase.defaultValue : option;
                 html += `
-                    <label ${classCheck}>
-                        <input type="checkbox" ${checkedOrDefault} name="primary-color-${text}" id="${text}-option" class="option" style="--checkbox-color: var(--${text});">
-                        ${capitalizeFirstLetter(text)} ${isActive}
-                        ${checkedOrDefault === 'disabled' ? `<input type="hidden" name="primary-color-${option}" value=""'}>` : ''}
-                    </label>`
-                    ;
+                <label ${classCheck}>
+                    <input type="checkbox" ${checkedOrDefault} name="primary-color-${text}" id="${text}-option" class="option" style="--checkbox-color: var(--${text});">
+                    ${capitalizeFirstLetter(text)} ${isActive}
+                    ${checkedOrDefault === 'disabled' ? `<input type="hidden" name="primary-color-${option}" value=""'}>` : ''}
+                </label>`
+            ;
                 break;
             case playlistCase.string:
                 text = option;
