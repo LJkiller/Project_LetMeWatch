@@ -129,10 +129,11 @@ function siteSettingsCorrection() {
  * @param {string[]} activeLayouts - Array of active layout behvaiours to be applied.
  */
 function handleInitialSettings(activePlaylistBehvaiours, activeLayouts){
-    if (activePlaylistBehvaiours.includes(playlistCase.options[1])){
+    if (!activePlaylistBehvaiours.includes(playlistCase.options[1])){
         let initialVideoPlaylistPosition = JSON.parse(localStorage.getItem('videoPlaylistPosition'));
         if (initialVideoPlaylistPosition){
-            currentPlaylistPosition = initialVideoPlaylistPosition.position
+            currentPlaylistPosition = initialVideoPlaylistPosition.position;
+            console.log(currentPlaylistPosition, initialVideoPlaylistPosition.position);
         }
     }
     if (activeLayouts.includes(layoutCase.options[0])) {

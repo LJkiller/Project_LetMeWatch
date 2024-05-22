@@ -13,9 +13,9 @@ function handleStartPlaylist(){
         localStorage.setItem('videoPlaylistPosition', JSON.stringify({ position: currentPlaylistPosition}));
         saveVideoPositions(currentPlaylistPosition);
         changeMediaPlayerSrc();
+        updatePlaylistContent();
         document.getElementById('prev-playlist-button').addEventListener('click', playPreviousVideo);
         document.getElementById('next-playlist-button').addEventListener('click', playNextVideo);
-        siteLibraryCorrection();
     } else {
         displayError('Playlist not found.');
     }
@@ -38,13 +38,15 @@ function handleExitPlaylist(event){
             resetCurrentVideoPositionSettings = item;
         }
     }
+
     if (removePlaylistEntriesSettings || event.shiftKey) {
         let playlistDetails = JSON.parse(localStorage.getItem('playlistDetails'));
         for (let i = 0; i < playlistDetails.length; i++) {
             removeFromLibrary('playlistLibrary', playlistDetails[i]);
         }
         resetVideoPlaylistPosition();
-    } else if (resetCurrentVideoPositionSettings){
+    } 
+    if (resetCurrentVideoPositionSettings){
         resetVideoPlaylistPosition();
     }
     localStorage.removeItem('playlistDetails');
@@ -54,7 +56,7 @@ function handleExitPlaylist(event){
     videoIdValueSpan.textContent = `VideoID: ${limitText(videoLinksArray[1].id, textListLimit)}`;
     resetMainButtons();
     checkLibrary();
-    siteLibraryCorrection();
+    updatePlaylistContent();
     playlist = [];
 }
 
