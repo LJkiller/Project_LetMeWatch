@@ -133,7 +133,6 @@ function handleInitialSettings(activePlaylistBehvaiours, activeLayouts){
         let initialVideoPlaylistPosition = JSON.parse(localStorage.getItem('videoPlaylistPosition'));
         if (initialVideoPlaylistPosition){
             currentPlaylistPosition = initialVideoPlaylistPosition.position;
-            console.log(currentPlaylistPosition, initialVideoPlaylistPosition.position);
         }
     }
     if (activeLayouts.includes(layoutCase.options[0])) {
