@@ -5,6 +5,7 @@
  * Method responsible of handling start sequence for playlist.
  */
 function handleStartPlaylist(){
+    playlistActive = true;
     playlist = JSON.parse(localStorage.getItem('playlistLibrary')) || [];
     if (playlist.length > 0) {
         toggleElements([iframeControls, startPlaylistButton]);
@@ -14,6 +15,7 @@ function handleStartPlaylist(){
         changeMediaPlayerSrc();
         document.getElementById('prev-playlist-button').addEventListener('click', playPreviousVideo);
         document.getElementById('next-playlist-button').addEventListener('click', playNextVideo);
+        siteLibraryCorrection();
     } else {
         displayError('Playlist not found.');
     }
@@ -23,6 +25,7 @@ function handleStartPlaylist(){
  * Method responsible of handling exit sequence for playlist.
  */
 function handleExitPlaylist(event){
+    playlistActive = false;
     toggleElements([iframeControls, startPlaylistButton]);
 
     let settings = JSON.parse(localStorage.getItem('settings'));
@@ -196,11 +199,7 @@ function closeContainer(containerId) {
                 button.style.color = `var(--${color})`;
             }
             setTimeout(() => {
-                if (parentElement.contains(container)){
-                    parentElement.removeChild(container);
-                } else {
-                    console.error('If it works, it works.');
-                }
+                container.remove();
             }, 200);
         }, 100);
     }
@@ -270,7 +269,7 @@ function createLibraryList(library, location) {
     let positionClass;
     let setPositionClass;
     let videoPlaylistPosition = JSON.parse(localStorage.getItem('videoPlaylistPosition'));
-    if (parentId === 'playlist') {
+    if (parentId === 'playlist' && playlistActive === true) {
         positionClass = 'current-video-position';
     }
 
