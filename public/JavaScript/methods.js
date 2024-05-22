@@ -70,11 +70,9 @@ function isGibberish(input) {
     if (!input || input.length < 2) {
         return true;
     }
-
     if (linkRegex.test(input)) {
         return false;
     }
-
     let specialCharactersRatio = input.replace(/[a-z0-9]/gi, '').length / input.length;
     if (specialCharactersRatio > 0.5) {
         return true;
@@ -118,7 +116,6 @@ function isGibberish(input) {
             }
         }
     }
-
     return false;
 }
 
@@ -304,8 +301,8 @@ function getAllDomainExamples() {
 function displayError(causeOfError, location = undefined){
     let locationInformationArea = errorPopup.querySelector('div>span');
     locationInformationArea.textContent = '';
-
     toggleElements([popup, errorPopup]);
+    
     errorPopup.querySelector('div>p').textContent = causeOfError;
     if (location !== undefined){
         let locationInformation = `<br>${capitalizeFirstLetter(location.tagName.toLowerCase())}:<br> ${location.textContent}`;
@@ -335,7 +332,6 @@ function applyContrast(){
     let primaryColor = root.style.getPropertyValue('--primary-color').trim();
     let isLightColor = false;
     let isDarkThemed = true;
-
     if (document.body.getAttribute('class')) {
         isDarkThemed = false;
     } 
@@ -343,10 +339,8 @@ function applyContrast(){
     let formButtons = document.querySelectorAll('button.form-button');
     let quickButtons = document.querySelectorAll('button.quick-button');
     let formInputs = document.querySelectorAll('input.form-input');
-
     let elements = [...formButtons, ...quickButtons, ...formInputs];    
     if (isDarkThemed === true){
-
         for (let i = 0; i < lightColors.length; i++){
             if (primaryColor.includes(lightColors[i])){
                 isLightColor = true;
@@ -354,7 +348,6 @@ function applyContrast(){
             }
         }
 
-        
         for (let i = 0; i < elements.length; i++){
             if (isLightColor){
                 elements[i].classList.add('apply-contrast');

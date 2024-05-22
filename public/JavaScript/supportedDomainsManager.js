@@ -60,9 +60,8 @@ function createMetricsList(items, location) {
         for (let i = 0; i < items.length; i++){
             let item = items[i];
             if (item.url === 'NOT FOUND'){
-                break;
+                continue;
             }
-
             let urlDomain = `<span class="url-name">${capitalizeFirstLetter(item.domainName)}:</span>`;
             let urlElement = `<a href="${item.url}" target="_blank">${limitText(item.id, textListLimit)}</a>`;
 
@@ -155,6 +154,5 @@ function saveFrequentDomain(domainInput, allDomains, previousInfo) {
             dataToSave[domain]++;
         }
     }
-
     localStorage.setItem('frequentDomainData', JSON.stringify(dataToSave));
 }

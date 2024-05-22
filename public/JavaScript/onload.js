@@ -2,7 +2,6 @@
 window.onload = function () {
     displayVideoSize();
     displayVideoId();
-
     siteSavedCorrection(localStorage.getItem('videoWidth'));
     siteDomainsCorrection();
     siteStyleCorrection();
@@ -72,10 +71,10 @@ function siteDomainsCorrection(){
  */
 function siteStyleCorrection(){
     let siteCopy = document.getElementById('site-info-copy');
-    let website = document.createElement('a');
-    website.href = 'https://letmewatch-dammit.com';
-    website.textContent = 'LetMeWatch-DAMMIT';
-    siteCopy.append(website);
+    let webRedirect = document.createElement('a');
+    webRedirect.href = 'https://letmewatch-dammit.com';
+    webRedirect.textContent = 'LetMeWatch-DAMMIT';
+    siteCopy.append(webRedirect);
 }
 
 /**
@@ -131,10 +130,10 @@ function handleInitialSettings(activePlaylistBehvaiours, activeLayouts){
         }
     }
     if (activeLayouts.includes(layoutCase.options[0])) {
-        switchPlaylistLayout();
+        switchPlaylistLayout(true);
         window.addEventListener('resize', switchPlaylistLayout);
     } else {
-        defaultPlaylistLayout();
+        switchPlaylistLayout();
         window.removeEventListener('resize', switchPlaylistLayout);
     }
 }

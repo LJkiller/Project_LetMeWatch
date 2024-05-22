@@ -16,7 +16,6 @@ function updateVideoSize(widthInput) {
     saveVideoWidth(newWidth);
     updatePlayerDimensions(newWidth, newHeight);
     displayVideoSize();
-
     widthInput.value = '';
 }
 
@@ -65,7 +64,7 @@ function updatePlayerDimensions(width, height) {
 function displayVideoId(displayAsLastVideo = false) {
     let videoLinksArray = getVideoLinksArray();
     let displayId = limitText(videoLinksArray[1].id, textListLimit);
-
+    
     if (displayAsLastVideo) {
         videoIdValueSpan.textContent = `VideoID: ${displayId}`;
     } else {
@@ -110,10 +109,10 @@ function frequentDomainsAnalysis(videoInput, domains = [], additionalDomains = [
     if (Array.isArray(videoInput)){
         saveFrequentDomain(videoInput, allDomains, JSON.parse(localStorage.getItem('frequentDomainData')) || []);
     } else {
-        if (videoInput === 'NOT FOUND') {
+        let domainName = videoInput === 'NOT FOUND' ? undefined : videoInput.split('/')[2];
+        if (!domainName) {
             return;
         }
-        let domainName = videoInput.split('/')[2];
 
         for (let domain of allDomains) {
             let [domainIdentifier] = domain.split('|')[1];
@@ -136,7 +135,6 @@ function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeS
     let publicDomains = typeof domains !== 'undefined' ? domains : {};
     let moreDomains = typeof additionalDomains !== 'undefined' ? additionalDomains : {};
     let compiledDomains = [];
-
     document.getElementById('video-link').href = videoLink;
     frequentDomainsAnalysis(videoLink, Object.keys(publicDomains), Object.keys(moreDomains));
     saveVideoLink(videoLink, videoId, iframeSrc, compiledDomains.concat(Object.keys(publicDomains), Object.keys(moreDomains)));
@@ -237,14 +235,12 @@ function mediaResult(input){
 function extractMediaInfo(linkInput) {
     let publicDomains = typeof domains === 'object' ? domains : [];
     let domainResult = domainAnalyzis(publicDomains, linkInput.split('/')[2]);
-
     let linkArrayInfo;
     if (domainResult) {
         linkArrayInfo = mediaInformation(domainResult, linkInput, linkInput.split('/')[2]);
     } else {
         linkArrayInfo = typeof additionalMediaInfo === 'function' ? additionalMediaInfo(linkInput) : [];
     }
-
     return linkArrayInfo;
 }
 
@@ -324,7 +320,6 @@ function commandTestMediaInput(commandCheck, example, publicDomains, moreDomains
     functionIteration++;
     frequentDomainsAnalysis(commandCheck, Object.keys(publicDomains), Object.keys(moreDomains));
     let mediaInfo = mediaResult(example);
-    
     if (functionIteration >= maxLoopFunctionIteration || maxLoopFunctionIteration === 0) {
         console.log(['Local Storage Manipulated.', `Video Example Applied: ${example}.`]);
         functionIteration = 0;

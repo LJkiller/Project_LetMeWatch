@@ -14,6 +14,9 @@ let videoIdValueSpan = document.getElementById('video-id');
 let popup = document.getElementById('popup');
 let errorPopup = document.getElementById('error');
 
+let settingsButton = document.getElementById('settings-button');
+let closePopupButton = document.getElementById('close-settings-button');
+
 let starArea = document.getElementById('starred-videos'), playlistArea = document.getElementById('playlist');
 let starButton = document.getElementById('star-button'), addButton = document.getElementById('add-playlist-button');
 let qStarButton = document.getElementById('q-star-button'), qAddButton = document.getElementById('q-add-playlist-button');

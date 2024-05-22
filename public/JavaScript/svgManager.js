@@ -20,7 +20,6 @@ function createSVGNumber(bottomColor, topColor, textColor, outlineColor, iterati
     let gradientId = 'gradient-' + Math.random().toString(36).substr(2, 9);
     let defs = createSvgElement('defs', {});
     let linearGradient = createLinearGradient(gradientId, bottomColor, topColor);
-
     let shape = createShape(areaSize, gradientId, outlineColor, elementCase);
     let text = createText(iteration, textColor);
 
@@ -28,7 +27,6 @@ function createSVGNumber(bottomColor, topColor, textColor, outlineColor, iterati
     svg.appendChild(defs);
     svg.appendChild(shape);
     svg.appendChild(text);
-
     return svg.outerHTML;
 }
 
@@ -73,7 +71,6 @@ function createLinearGradient(gradientId, bottomColor, topColor) {
         'offset': '100%',
         'stop-color': topColor
     });
-
     linearGradient.appendChild(stop1);
     linearGradient.appendChild(stop2);
     return linearGradient;
@@ -114,7 +111,6 @@ function createShape(areaSize, gradientId, outlineColor, elementCase) {
             group.appendChild(shape);
             return group;
     }
-
     return shape;
 }
 

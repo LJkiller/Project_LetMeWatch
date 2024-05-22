@@ -9,7 +9,6 @@ function handleStartPlaylist(){
     if (playlist.length > 0) {
         toggleElements([iframeControls, startPlaylistButton]);
         scrollToArea('media-top');
-        
         localStorage.setItem('videoPlaylistPosition', JSON.stringify({ position: currentPlaylistPosition}));
         saveVideoPositions(currentPlaylistPosition);
         changeMediaPlayerSrc();
@@ -36,7 +35,6 @@ function handleExitPlaylist(event){
             resetCurrentVideoPositionSettings = item;
         }
     }
-
     if (removePlaylistEntriesSettings || event.shiftKey) {
         let playlistDetails = JSON.parse(localStorage.getItem('playlistDetails'));
         for (let i = 0; i < playlistDetails.length; i++) {
@@ -349,17 +347,15 @@ function changeMediaPlayerSrc() {
 
 
 /**
- * Method responsible of applying switched layout for playlist.
+ * Method responsible of applying switched layout or default for playlist.
+ * 
+ * @param {boolean} [switchToNew=false] - Boolean to check if new layout should be applied.
  */
-function switchPlaylistLayout() {
-    updateLayout('user-stars', 'user-playlist', 'row-reverse');
-}
-
-/**
- * Method responsible of applying default layout for playlist.
- */
-function defaultPlaylistLayout() {
-    updateLayout('user-playlist', 'user-stars', 'row');
+function switchPlaylistLayout(switchToNew = false) {
+    switchToNew === true ? 
+        updateLayout('user-stars', 'user-playlist', 'row-reverse') : 
+        updateLayout('user-playlist', 'user-stars', 'row')
+    ;
 }
 
 /**

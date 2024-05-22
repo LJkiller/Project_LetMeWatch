@@ -228,7 +228,6 @@ function handleSettingsForm(dataArray) {
 function applySetting(activeCases, settingType) {
     let singleCase = activeCases.length === 1 ? true : false;
     let items = activeCases.length === 1 ? activeCases[0] : activeCases;
-
     if (singleCase === true) {
         switch (settingType) {
             case themeCase.string:
