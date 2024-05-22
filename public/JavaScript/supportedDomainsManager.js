@@ -127,6 +127,7 @@ function updateMetricLists(){
 
 
 
+
 /**
  * Method responsible of saving frequent domain.
  * 

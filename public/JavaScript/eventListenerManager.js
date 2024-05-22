@@ -46,6 +46,7 @@ function resetVideoSize(displayAsLastVideo) {
 
 
 
+
 // #region Playlist Events
 
 /**
@@ -68,6 +69,7 @@ exitPlaylistButton.addEventListener('click', function(event){
 
 
 
+
 // #region Library Buttons Events
 
 
@@ -86,6 +88,7 @@ for (let i = 0; i < buttonConfigs.length; i++){
 }
 
 // #endregion
+
 
 
 

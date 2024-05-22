@@ -1,5 +1,6 @@
 
-/*#region Header*/
+/*#region MARK: Header
+*/
 
 header {
     width: 100%;
@@ -10,7 +11,8 @@ header #let-me-watch-logo span{
     color: var(--bigger-text-color);
 }
 
-/*#region Left*/
+/*#region MARK: Left
+*/
 header #let-me-watch-logo{
     margin-left: calc(var(--standard-spacing) * 1.6);
 }
@@ -34,7 +36,11 @@ header #let-me-watch-logo:hover>span>span{
 }
 /*#endregion*/
 
-/*#region Right*/
+
+
+
+/*#region MARK: Right
+*/
 
 header #media-form{
     height: var(--logo-dimensions);
@@ -44,7 +50,11 @@ header #media-form{
 
 /*#endregion*/
 
-/*#region Main*/
+
+
+
+/*#region MARK: Main
+*/
 
 main #content .media-information{
     font-weight: bold;
@@ -66,9 +76,14 @@ main #content #falsified-media-player:hover{
 #video-id {
     color: var(--normal-text-color);
 }
+
 /*#endregion*/
 
-/*#region Footer*/
+
+
+
+/*#region MARK: Footer
+*/
 
 footer {
     background-color: var(--primary-bg-color);

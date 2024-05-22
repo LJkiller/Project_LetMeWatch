@@ -186,6 +186,8 @@ function scrollToArea(areaId){
 // #endregion
 
 
+
+
 /**
  * Method responsible of getting a link's domain name.
  * 

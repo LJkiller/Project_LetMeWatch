@@ -11,7 +11,8 @@ body {
     gap: var(--standard-spacing);
 }
 
-/*#region Header */
+/*#region MARK: Header 
+*/
 
 header {
     grid-area: header;
@@ -72,7 +73,11 @@ header #media-form #media-form-buttons button {
 
 /*#endregion*/
 
-/*#region Main */
+
+
+
+/*#region MARK: Main 
+*/
 
 main {
     grid-area: main;
@@ -118,7 +123,11 @@ main #content #media-top section#width label {
 
 /*#endregion*/
 
-/*#region Footer */
+
+
+
+/*#region MARK: Footer 
+*/
 
 footer {
     grid-area: footer;
@@ -428,7 +437,11 @@ footer>section:not(#site-information, #site-insight, #user-library) ul li a {
 
 /*#endregion*/
 
-/*#region Media Queries */
+
+
+
+/*#region MARK: Media Queries 
+*/
 
 @media screen and (min-width: 271px) {
     /* Footer adjustment */

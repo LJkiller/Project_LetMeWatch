@@ -54,6 +54,7 @@ function updatePlayerDimensions(width, height) {
 
 
 
+
 // #region Media Result Saving
 
 /**
@@ -141,6 +142,7 @@ function updateVideoInfo(videoId = 'NOT FOUND', videoLink = 'NOT FOUND', iframeS
 }
 
 // #endregion
+
 
 
 
@@ -292,6 +294,7 @@ function mediaInformation(domainResult, linkInput, domainName) {
 }
 
 // #endregion
+
 
 
 

@@ -1,5 +1,6 @@
 
 // #region Setup
+
 let root = document.documentElement;
 
 let mediaPlayer = document.getElementById('falsified-media-player');

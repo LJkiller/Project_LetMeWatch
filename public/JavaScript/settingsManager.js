@@ -71,6 +71,7 @@ function updateCheckBox(checkbox){
 
 
 
+
 // #region HTML Manipulation
 
 /**
@@ -195,6 +196,7 @@ function createHTMLSettingsList(options, type, settingsValue) {
 }
 
 // #endregion
+
 
 
 

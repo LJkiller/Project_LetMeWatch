@@ -1,5 +1,6 @@
 
-/*#region No Script */
+/*#region MARK: No Script 
+*/
 
 noscript {
     position: fixed;
@@ -26,7 +27,9 @@ noscript section span {
 
 
 
-/*#region Popup*/
+
+/*#region MARK: Popup 
+*/
 
 #popup {
     position: fixed;
@@ -154,7 +157,9 @@ div.option-area label:last-child {
 
 
 
-/*#region Settings Area*/
+
+/*#region MARK: Settings Area
+*/
 
 #preference-area {
     display: grid;
@@ -185,5 +190,5 @@ div.option-area label:last-child {
     border-radius: var(--standard-border-radius);
 }
 
-
 /*#endregion*/
+

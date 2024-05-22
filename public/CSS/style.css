@@ -1,5 +1,6 @@
 
-/*#region Roots*/
+/*#region MARK: Roots
+*/
 
 /*Color*/
 :root{
@@ -122,7 +123,9 @@
 
 
 
-/*#region General Changes*/
+
+/*#region MARK: General Changes
+*/
 
 * {
     margin: 0;
@@ -176,7 +179,9 @@ label {
 
 
 
-/*#region Scrollbar*/
+
+/*#region MARK: Scrollbar
+*/
 
 ::-webkit-scrollbar{
 	width: .8vw;

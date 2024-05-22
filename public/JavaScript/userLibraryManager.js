@@ -211,6 +211,7 @@ function closeContainer(containerId) {
 
 
 
+
 // #region HTML Manipulation
 
 /**
@@ -380,6 +381,7 @@ function updateLayout(leftArea, rightArea, flexDirection) {
 
 
 
+
 // #region Library Manipulation
 
 /**
@@ -467,6 +469,7 @@ function removeFromPlaylist(libraryType, encodedItem) {
 }
 
 // #endregion
+
 
 
 
