@@ -122,6 +122,12 @@ function siteSettingsCorrection() {
     handleSettingsForm(settings);
 }
 
+/**
+ * Method responsible of handling setting when website has loaded.
+ * 
+ * @param {string[]} activePlaylistBehvaiours - Array of active playlist behvaiours to be applied.
+ * @param {string[]} activeLayouts - Array of active layout behvaiours to be applied.
+ */
 function handleInitialSettings(activePlaylistBehvaiours, activeLayouts){
     if (activePlaylistBehvaiours.includes(playlistCase.options[1])){
         let initialVideoPlaylistPosition = JSON.parse(localStorage.getItem('videoPlaylistPosition'));
