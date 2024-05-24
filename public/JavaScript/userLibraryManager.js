@@ -186,11 +186,11 @@ function handlePlaylistDetails(libraryType, encodedItem, id) {
 function closeContainer(containerId) {
     let container = document.getElementById(containerId);
     if (container) {
+        container.style.height = '1.2rem';
         setTimeout(() => {
-            container.style.opacity = 0;
+            container.style.width = '50%';
             container.style.border = 0;
-            container.style.width = 0;
-            container.style.height = 0;
+            container.style.opacity = 0;
             let parentElement = container.parentElement;
             if (containerId.includes('details-')) {
                 let button = parentElement.querySelector('button');
