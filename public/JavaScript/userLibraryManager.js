@@ -182,10 +182,10 @@ function handlePlaylistDetails(libraryType, encodedItem, id) {
  * Method responsible of handling playlist layout.
  */
 function handlePlaylistLayout(){
-    if (playlistActiveSetting.includes(playlistLayoutCase.options[0])) {
+    if (playlistActiveLayoutSetting.includes(playlistLayoutCase.options[0])) {
         switchPlaylistPosition();
     } else {
-        if (playlistActiveSetting.includes(playlistLayoutCase.options[1])){
+        if (playlistActiveLayoutSetting.includes(playlistLayoutCase.options[1])){
             switchPlaylistLayoutByAmount();
         } else {
             resetPlaylistPosition();

@@ -146,10 +146,10 @@ function handleBehvourSettings(activePlaylistBehvaiours){
  * @param {string[]} activeLayouts - Array of active layout behvaiours to be applied.
  */
 function handleLayoutSettings(activeLayouts){
-    playlistActiveSetting = '';
+    playlistActiveLayoutSetting = '';
     for (let i = 0; i < activeLayouts.length; i++) {
         if (activeLayouts[i].includes(playlistLayoutCase.string)){
-            playlistActiveSetting = activeLayouts[i];
+            playlistActiveLayoutSetting = activeLayouts[i];
         }
     }
 
