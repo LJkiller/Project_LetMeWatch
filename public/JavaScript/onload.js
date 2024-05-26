@@ -150,7 +150,6 @@ function handleLayoutSettings(activeLayouts){
     for (let i = 0; i < activeLayouts.length; i++) {
         if (activeLayouts[i].includes(playlistLayoutCase.string)){
             playlistActiveSetting = activeLayouts[i];
-            console.log(playlistActiveSetting);
         }
     }
 
