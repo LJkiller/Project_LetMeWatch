@@ -151,6 +151,10 @@ footer>section>span {
 footer>section>h2{
     margin-top: var(--standard-spacing);
 }
+footer>section:not(#user-library)>h2 {
+    padding-top: calc(var(--standard-spacing) + 0.021rem);
+    padding-bottom: calc(var(--standard-spacing) + 0.021rem);
+}
 
 /*#region MARK: Site Information 
 */
@@ -425,6 +429,7 @@ footer>section:not(#site-information, #site-insight, #user-library) #add-custom-
     grid-area: add-custom-domain;
 }
 footer>section:not(#site-information, #site-insight, #user-library) ul {
+    margin-top: var(--standard-spacing);
     grid-area: domains-list;
     display: flex;
     justify-content: start;
