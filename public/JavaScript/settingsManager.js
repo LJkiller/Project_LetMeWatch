@@ -21,7 +21,7 @@ function uncheckOtherBoxes(checkedCheckbox, checkboxes) {
  * 
  * @param {HTMLInputElement} checkbox - The checkbox.
  */
-function updateCheckBox(checkbox){
+function updateCheckBox(checkbox) {
     if (checkbox.checked) {
         checkbox.parentElement.classList.add('box-checked');
     } else {
@@ -57,9 +57,9 @@ function createSettingsList(options, type, settingsValue, location) {
             location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
             handleCheckbox(location.querySelectorAll('.option'));
             break;
-        case layoutCase.string:
+        case playlistLayoutCase.string:
             location.innerHTML = createHTMLSettingsList(options, type, settingsValue);
-            handleCheckbox(location.querySelectorAll('.option'));
+            handleCheckbox(location.querySelectorAll('.option'), true);
             break;
         default:
             break;
@@ -120,7 +120,7 @@ function createHTMLSettingsList(options, type, settingsValue) {
                     ${capitalizeFirstLetter(text)} ${isActive}
                     ${checkedOrDefault === 'disabled' ? `<input type="hidden" name="primary-color-${option}" value=""'}>` : ''}
                 </label>`
-            ;
+                    ;
                 break;
             case playlistCase.string:
                 text = option;
@@ -138,10 +138,12 @@ function createHTMLSettingsList(options, type, settingsValue) {
                     </label>
                 `;
                 break;
-            case layoutCase.string:
+            case playlistLayoutCase.string:
                 text = option;
-                if (text === layoutCase.options[0]) {
-                    displayText = 'Switch playlist positions.';
+                if (text === playlistLayoutCase.options[0]) {
+                    displayText = 'Switch positions.';
+                } else if (text === playlistLayoutCase.options[1]){
+                    displayText = 'Switch positions based on amount.';
                 }
                 html += `
                     <label ${classCheck}>
@@ -252,6 +254,41 @@ function getActiveValues(items) {
         }
     }
     return activeElement;
+}
+
+
+/**
+ * Method responsible of switching playlist positions.
+ */
+function switchPlaylistPosition() {
+    switchPlaylistLayout(true);
+    window.addEventListener('resize', switchPlaylistLayout);
+}
+
+/**
+ * Method responsible of resetting playlist position.
+ */
+function resetPlaylistPosition() {
+    switchPlaylistLayout();
+    window.removeEventListener('resize', switchPlaylistLayout);
+}
+
+/**
+ * Method responsible of switching playtlist positions depending on amount.
+ * 
+ * @returns - Nothing.
+ */
+function switchPlaylistLayoutByAmount(){
+    let starLibraryLength = JSON.parse(localStorage.getItem('starLibraryLength')) || 0;
+    let playlistLibraryLength = JSON.parse(localStorage.getItem('playlistLibraryLength')) || 0;
+    console.log(starLibraryLength, playlistLibraryLength);
+    if (starLibraryLength < playlistLibraryLength){
+        resetPlaylistPosition();
+    } else if (starLibraryLength > playlistLibraryLength) {
+        switchPlaylistPosition();
+    } else {
+        return;
+    }
 }
 
 // #endregion

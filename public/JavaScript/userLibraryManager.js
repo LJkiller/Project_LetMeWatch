@@ -179,31 +179,17 @@ function handlePlaylistDetails(libraryType, encodedItem, id) {
 }
 
 /**
- * Method responsible of removing container.
- * 
- * @param {string} containerId - The container to remove.
+ * Method responsible of handling playlist layout.
  */
-function closeContainer(containerId) {
-    let container = document.getElementById(containerId);
-    if (container) {
-        container.style.height = '1.2rem';
-        setTimeout(() => {
-            container.style.width = 0;
-            container.style.border = 0;
-            container.style.opacity = 0;
-            let parentElement = container.parentElement;
-            if (containerId.includes('details-')) {
-                let button = parentElement.querySelector('button');
-                let color = 'primary-color';
-                if (button.classList.contains('current-video-position')){
-                    color = 'white';
-                }
-                button.style.color = `var(--${color})`;
-            }
-            setTimeout(() => {
-                container.remove();
-            }, 200);
-        }, 100);
+function handlePlaylistLayout(){
+    if (playlistActiveSetting.includes(playlistLayoutCase.options[0])) {
+        switchPlaylistPosition();
+    } else {
+        if (playlistActiveSetting.includes(playlistLayoutCase.options[1])){
+            switchPlaylistLayoutByAmount();
+        } else {
+            resetPlaylistPosition();
+        }
     }
 }
 
@@ -347,7 +333,6 @@ function changeMediaPlayerSrc() {
     checkLibrary();
 }
 
-
 /**
  * Method responsible of applying switched layout or default for playlist.
  * 
@@ -435,6 +420,8 @@ function addToLibrary(libraryType, newItem){
     let doesExist = itemExistsInList(library, newObject)
     doesExist ? '': library.push(newObject);
     doesExist ? '': localStorage.setItem(libraryType, JSON.stringify(library));
+    doesExist ? '': localStorage.setItem(`${libraryType}Length`, JSON.stringify(library.length));
+    handlePlaylistLayout();
 }
 
 /**
@@ -452,6 +439,8 @@ function removeFromLibrary(libraryType, item) {
     if (indexToRemove !== -1) {
         library.splice(indexToRemove, 1);
         localStorage.setItem(libraryType, JSON.stringify(library));
+        localStorage.setItem(`${libraryType}Length`, JSON.stringify(library.length));
+        handlePlaylistLayout();
     }
 }
 

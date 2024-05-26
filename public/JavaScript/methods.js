@@ -228,6 +228,35 @@ function closePopupOutside(event) {
     }
 }
 
+/**
+ * Method responsible of removing container.
+ * 
+ * @param {string} containerId - The container to remove.
+ */
+function closeContainer(containerId) {
+    let container = document.getElementById(containerId);
+    if (container) {
+        container.style.height = '1.2rem';
+        setTimeout(() => {
+            container.style.width = 0;
+            container.style.border = 0;
+            container.style.opacity = 0;
+            let parentElement = container.parentElement;
+            if (containerId.includes('details-')) {
+                let button = parentElement.querySelector('button');
+                let color = 'primary-color';
+                if (button.classList.contains('current-video-position')){
+                    color = 'white';
+                }
+                button.style.color = `var(--${color})`;
+            }
+            setTimeout(() => {
+                container.remove();
+            }, 200);
+        }, 100);
+    }
+}
+
 // #endregion
 
 

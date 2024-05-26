@@ -29,7 +29,6 @@ let playlistNameMaxNotice = document.getElementById('playlist-max-char-notice');
 
 let baseWidth = 560;
 let baseHeight = 315;
-// Scale factor to get to 1280 & 720px.
 let scaleFactor = 2.28571428571428580944;
 let aspectRatio = baseWidth / baseHeight;
 
@@ -48,6 +47,7 @@ let playlist;
 let currentPlaylistPosition = 0;
 let playlistActive = false;
 let playlistNameLimit = 16;
+let playlistActiveSetting = '';
 
 let linkRegex = /^(http|https|ftp|ssh|telnet|smtp|imap|dns|snmp|ntp|ldap|sftp|ftps|smtps|webdav|rtsp|bittorrent):\/\/[^\s/$.?#].[^\s]*$/i;
 
@@ -204,7 +204,6 @@ let settingsCase = {
         string: 'behaviour',
         playlistCase: {
             string: 'playlist',
-            defaultValue: '',
             options: [
                 'remove-entries-behaviour', 
                 'reset-video-position-behaviour'
@@ -213,13 +212,18 @@ let settingsCase = {
     },
     layoutCase: {
         string: 'layout',
-        options: [
-            'switch-playlist-positions-layout'
-        ]
+        playlistLayoutCase: {
+            string: 'playlist-layout',
+            options: [
+                'switch-positions-playlist-layout',
+                'switch-positions-by-amount-playlist-layout'
+            ]
+        }
     }
 }
 let { themeCase, colorCase, behaviourCase, layoutCase } = settingsCase;
 let { playlistCase } = behaviourCase;
+let { playlistLayoutCase } = layoutCase;
 
 let lightColors = [
     colorCase.options[1], 

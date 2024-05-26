@@ -115,34 +115,44 @@ function siteSettingsCorrection() {
     
     let activePlaylistBehvaiours = getActiveValues(items[2]);
     let activeLayouts = getActiveValues(items[3]);
-    handleInitialSettings(activePlaylistBehvaiours, activeLayouts);
+    handleBehvourSettings(activePlaylistBehvaiours);
+    handleLayoutSettings(activeLayouts);
 
     createSettingsList(themeCase.options, themeCase.string, themeValue, document.getElementById('theme-options-area'));
     createSettingsList(colorCase.options, colorCase.string, colorValue, document.getElementById('primary-color-options-area'));
     createSettingsList(playlistCase.options, playlistCase.string, activePlaylistBehvaiours, document.getElementById('playlist-behaviour-options-area'));
-    createSettingsList(layoutCase.options, layoutCase.string, activeLayouts, document.getElementById('switch-layout-options-area'));
+    createSettingsList(playlistLayoutCase.options, playlistLayoutCase.string, activeLayouts, document.getElementById('switch-layout-options-area'));
 
     handleSettingsForm(settings);
 }
 
 /**
- * Method responsible of handling setting when website has loaded.
+ * Method responsible of handling behaviour settings when website has loaded.
  * 
  * @param {string[]} activePlaylistBehvaiours - Array of active playlist behvaiours to be applied.
- * @param {string[]} activeLayouts - Array of active layout behvaiours to be applied.
  */
-function handleInitialSettings(activePlaylistBehvaiours, activeLayouts){
+function handleBehvourSettings(activePlaylistBehvaiours){
     if (!activePlaylistBehvaiours.includes(playlistCase.options[1])){
         let initialVideoPlaylistPosition = JSON.parse(localStorage.getItem('videoPlaylistPosition'));
         if (initialVideoPlaylistPosition){
             currentPlaylistPosition = initialVideoPlaylistPosition.position;
         }
     }
-    if (activeLayouts.includes(layoutCase.options[0])) {
-        switchPlaylistLayout(true);
-        window.addEventListener('resize', switchPlaylistLayout);
-    } else {
-        switchPlaylistLayout();
-        window.removeEventListener('resize', switchPlaylistLayout);
+}
+
+/**
+ * Method responsible of handling layout settings.
+ * 
+ * @param {string[]} activeLayouts - Array of active layout behvaiours to be applied.
+ */
+function handleLayoutSettings(activeLayouts){
+    playlistActiveSetting = '';
+    for (let i = 0; i < activeLayouts.length; i++) {
+        if (activeLayouts[i].includes(playlistLayoutCase.string)){
+            playlistActiveSetting = activeLayouts[i];
+            console.log(playlistActiveSetting);
+        }
     }
+
+    handlePlaylistLayout();
 }
