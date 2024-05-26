@@ -121,7 +121,7 @@ function siteSettingsCorrection() {
     createSettingsList(themeCase.options, themeCase.string, themeValue, document.getElementById('theme-options-area'));
     createSettingsList(colorCase.options, colorCase.string, colorValue, document.getElementById('primary-color-options-area'));
     createSettingsList(playlistCase.options, playlistCase.string, activePlaylistBehvaiours, document.getElementById('playlist-behaviour-options-area'));
-    createSettingsList(playlistLayoutCase.options, playlistLayoutCase.string, activeLayouts, document.getElementById('switch-layout-options-area'));
+    createSettingsList(playlistLayoutCase.options, playlistLayoutCase.string, activeLayouts, document.getElementById('playlist-layout-options-area'));
 
     handleSettingsForm(settings);
 }
