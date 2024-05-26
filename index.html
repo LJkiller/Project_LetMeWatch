@@ -108,12 +108,12 @@
 			<h2><span>User Library</span><button id="start-playlist-button" class="quick-button active"><i class="fa-solid fa-play"></i> Start Playlist</button></h2>
 			<div>
 				<section id="playlist">
-					<h3>Playlist</h3>
+					<h3><span></span><button id="edit-playlist-button" class="quick-button"><i class="fa-solid fa-pen-to-square"></i> Edit Name</button></h3>
 					<ul class="videos">
 					</ul>
 				</section>
 				<section id="starred-videos">
-					<h3>Starred Videos</h3>
+					<h3><span>Starred Videos</span></h3>
 					<ul class="videos">
 					</ul>
 				</section>
@@ -171,8 +171,8 @@
 				<h2><span>Settings <i class="fa-solid fa-gear"></i></span><button id="close-settings-button" class="form-button single-icon-button"><i class="fa-solid fa-xmark"></i></button></h2>
 				<p>Select your preferences for the website's behaviour!</p>
 			</div>
-			<form id="preference-area">
-				<div id="settings-container">
+			<form class="preference-area">
+				<div class="edit-container">
 					<section id="website-theme">
 						<h3>Website color themes</h3>
 						<section id="web-theme">
@@ -196,7 +196,6 @@
 						<section id="other-behaviour">
 							<span>Switch positions</span>
 							<div id="switch-layout-options-area" class="option-area">
-								
 							</div>
 						</section>
 					</section>
@@ -204,9 +203,25 @@
 				<button id="apply-button" class="form-button"><i class="fa-solid fa-floppy-disk"></i> Apply</button>
 			</form>
 		</section>
+		<section id="edit-playlist">
+			<div>
+				<h2><span>Edit Playlist</span><i class="fa-solid fa-pen-to-square"></i></h2>
+				<span><i id="playlist-max-char-notice">Max ?? characters.</i></span>
+				<p>Change the playlist's name!</p>
+				<ul>
+					<p>Recommended names:</p>
+					<li><button onclick="setInputValue('playlist-name-input', 'PTW')" class="hidden-button">PTW (plan to watch)</button></li>
+					<li><button onclick="setInputValue('playlist-name-input', 'Watch Later')" class="hidden-button">Watch Later</button></li>
+				</ul>
+			</div>
+			<form class="preference-area">
+				<input id="playlist-name-input" name="change-playlist-name" class="form-input" type="text" placeholder="New Playlist Name" autocomplete="off" required>
+				<button id="apply-button" class="form-button"><i class="fa-solid fa-floppy-disk"></i> Apply</button>
+			</form>
+		</section>
 		<section id="error">
 			<div>
-				<h2><span>Error! <i class="fa-solid fa-bug"></i></span></h2>
+				<h2><span>Error</span><i class="fa-solid fa-bug"></i></h2>
 				<p></p>
 				<span></span>
 			</div>

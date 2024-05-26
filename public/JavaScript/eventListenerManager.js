@@ -65,6 +65,28 @@ exitPlaylistButton.addEventListener('click', function(event){
     handleExitPlaylist(event);
 });
 
+/**
+ * Event for opening edit playlist option.
+ */
+editPlaylistButton.addEventListener('click', (event) => { openPopup(event, 'edit-playlist')});
+
+/**
+ * Event for submitting edit-playlist form (name).
+ */
+document.querySelector('#edit-playlist .preference-area').addEventListener('submit', function (event) {
+    event.preventDefault();
+    let formData = new FormData(event.target);
+    let newPlaylistName = formData.get('change-playlist-name');
+    if (newPlaylistName.length > playlistNameLimit) {
+        alert(`Playlist name cannot exceed ${playlistNameLimit} characters.`);
+        return;
+    }
+    localStorage.setItem('playlistName', newPlaylistName);
+    updatePlaylistName(newPlaylistName);
+    closePopup(event);
+    document.getElementById('playlist-name-input').value = '';
+});
+
 // #endregion
 
 
@@ -98,7 +120,7 @@ addCustomButton.addEventListener('click', () => {displayError('Not a working fun
 settingsButton.addEventListener('click', (event) => { openPopup(event, 'settings')});
 closePopupButton.addEventListener('click', closePopup);
 popup.addEventListener('click', closePopupOutside);
-document.getElementById('preference-area').addEventListener('submit', function (event) {
+document.querySelector('#settings .preference-area').addEventListener('submit', function (event) {
     event.preventDefault();
     let formData = new FormData(event.target);
     let formDataArray = [];

@@ -23,6 +23,9 @@ let starButton = document.getElementById('star-button'), addButton = document.ge
 let qStarButton = document.getElementById('q-star-button'), qAddButton = document.getElementById('q-add-playlist-button');
 let starUl = starArea.querySelector('ul'), playlistUl = playlistArea.querySelector('ul');
 let starLibraryType = 'starLibrary', playlistLibraryType = 'playlistLibrary';
+let editPlaylistButton = document.getElementById('edit-playlist-button');
+let playlistNameSpan = playlistArea.querySelector('h3>span');
+let playlistNameMaxNotice = document.getElementById('playlist-max-char-notice');
 
 let baseWidth = 560;
 let baseHeight = 315;
@@ -44,8 +47,10 @@ let maxPlaylistIteration = defaultMaxPlaylistIteration;
 let playlist;
 let currentPlaylistPosition = 0;
 let playlistActive = false;
+let playlistNameLimit = 16;
 
 let linkRegex = /^(http|https|ftp|ssh|telnet|smtp|imap|dns|snmp|ntp|ldap|sftp|ftps|smtps|webdav|rtsp|bittorrent):\/\/[^\s/$.?#].[^\s]*$/i;
+
 // #endregion
 
 let metricSelectors = {
@@ -119,8 +124,8 @@ let domains = {
 let commands = {
     cmdList: ['commands', 'command', 'cmds', 'cmd'],
     example: ['videoexample', "videoex", "example", 'ex'],
-    loop: ['looptest', 'forloop', 'loops', 'loop'],
-    localClear: ['localclear', 'localreset', 'clear', 'clr'],
+    loop: ['looptest', 'forloop', 'loops', 'loop()', 'loop'],
+    localClear: ['localclear', 'localreset', 'clear()', 'clear', 'clr'],
     localStorage: ['localstorage', 'localstore', 'storage', 'store', 'check', 'str'],
     localFill: ['localfill', 'fill', 'fl'],
     localTest: ['localtest', 'test'],

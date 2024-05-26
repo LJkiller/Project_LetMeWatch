@@ -94,6 +94,8 @@
     --button-height: 2.4rem;
     --min-button-width: 7rem;
 
+    --library-max-width: 18.25rem;
+
     --base-height: 240;
     --base-width: 426;
     --media-aspect-ratio: var(--base-height)/var(--base-width);
@@ -162,7 +164,7 @@ i.fa-fire {
 h2, h2 span {
     color: var(--bigger-text-color);
 }
-h3 {
+h3, h3 span {
     color: var(--big-text-color);
 }
 p {

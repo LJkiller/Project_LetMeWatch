@@ -1,4 +1,3 @@
-
 /*#region MARK: No Script 
 */
 
@@ -9,9 +8,10 @@ noscript {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
     z-index: var(--popup-z-index);
 }
+
 noscript section {
     padding: calc(var(--standard-spacing) * 4);
     min-height: var(--popup-min-height);
@@ -19,6 +19,7 @@ noscript section {
     background-color: var(--primary-bg-color);
     border: 5px var(--standard-border);
 }
+
 noscript section span {
     font-style: italic;
 }
@@ -35,11 +36,12 @@ noscript section span {
     position: fixed;
     height: 100%;
     width: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     display: none;
     z-index: var(--popup-z-index);
     font-weight: bold;
 }
+
 #popup.active {
     display: flex;
     justify-content: center;
@@ -55,27 +57,32 @@ noscript section span {
     outline: 5px var(--standard-border);
     display: none;
 }
+
 #popup>section.active {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
 }
 
-#popup>section>div>p, #popup>section>span {
+#popup>section>div>p,
+#popup>section>span {
     padding-right: calc(var(--standard-spacing) * 5);
 }
+
 #popup>section>div>h2 {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
+    gap: var(--standard-spacing);
 }
 
-#popup>section>div>h2, #popup>section>div>p{
+#popup>section>div>h2,
+#popup>section>div>p {
     margin-bottom: calc(var(--standard-spacing) * 1.5);
 }
 
-#popup>section>#preference-area div>section>section {
+#popup>section>.preference-area div>section>section {
     margin-top: var(--standard-spacing);
     width: var(--setting-option-width);
     display: flex;
@@ -84,9 +91,11 @@ noscript section span {
     align-items: start;
     gap: calc(var(--standard-spacing) / 2);
 }
-#popup>section>#preference-area div>section>section:nth-of-type(n + 2) {
+
+#popup>section>.preference-area div>section>section:nth-of-type(n + 2) {
     margin-top: calc(var(--standard-spacing) * 2);
 }
+
 #popup form section div.option-area {
     width: 100%;
     display: flex;
@@ -94,6 +103,7 @@ noscript section span {
     justify-content: start;
     border-radius: calc(var(--standard-border-radius) / 2);
 }
+
 div.option-area label {
     display: flex;
     justify-content: start;
@@ -105,15 +115,17 @@ div.option-area label:first-child {
     border-top-left-radius: calc(var(--standard-border-radius) / 2);
     border-top-right-radius: calc(var(--standard-border-radius) / 2);
 }
+
 div.option-area label:last-child {
     border-bottom-left-radius: calc(var(--standard-border-radius) / 2);
     border-bottom-right-radius: calc(var(--standard-border-radius) / 2);
 }
 
-#popup>section>#preference-area>div>section:not(:nth-of-type(1)) {
+#popup>section>.preference-area>div>section:not(:nth-of-type(1)) {
     margin-top: calc(var(--standard-spacing) * 2);
 }
-#popup>section>#preference-area section>h3::before {
+
+#popup>section>.preference-area section>h3::before {
     content: "";
     display: block;
     margin-bottom: var(--standard-spacing);
@@ -123,15 +135,17 @@ div.option-area label:last-child {
     border-radius: var(--standard-border-radius);
 }
 
-.option-area label { 
+.option-area label {
     transition: var(--sharp-eio-transition);
     padding: calc(var(--standard-spacing) / 2) var(--standard-spacing);
 }
+
 .option-area label:hover,
 .option-area input[type="checkbox"]:hover {
     cursor: pointer;
     background-color: var(--primary-bg-color);
 }
+
 .option-area input[type="checkbox"] {
     transition: var(--sharp-eio-transition);
     appearance: none;
@@ -140,14 +154,17 @@ div.option-area label:last-child {
     height: 1rem;
     border-radius: 0.15rem;
 }
+
 .option-area input[type="checkbox"]:hover {
     background-color: var(--white);
 }
+
 .option-area input[type="checkbox"]:checked {
     --checkbox-color: var(--blue);
     background-color: var(--checkbox-color);
     box-shadow: 0 0 10px 1px var(--checkbox-color);
 }
+
 .option-area .box-checked:hover {
     cursor: default;
     background-color: transparent;
@@ -161,34 +178,74 @@ div.option-area label:last-child {
 /*#region MARK: Settings Area
 */
 
-#preference-area {
+.preference-area {
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto auto;
-    grid-template-areas: 
+    grid-template-areas:
         "settings-area"
         "apply-button"
     ;
     gap: var(--standard-spacing);
 }
-#preference-area div#settings-container {
+
+.preference-area div.edit-container,
+.preference-area>input {
     grid-area: settings-area;
     max-height: 30rem;
     overflow-y: auto;
     padding: var(--standard-spacing);
 }
-#preference-area #apply-button {
+
+.preference-area #apply-button {
     grid-area: apply-button;
 }
 
-#preference-area>div>section>section>span{
+.preference-area>div>section>section>span {
     color: var(--normal-text-color);
 }
 
 
-#preference-area div#settings-container::-webkit-scrollbar-track{
+.preference-area div.edit-container::-webkit-scrollbar-track {
     border-radius: var(--standard-border-radius);
 }
 
 /*#endregion*/
 
+
+
+
+/*#region MARK: Edit Playlist*/
+
+#edit-playlist ul p {
+    margin-bottom: calc(var(--standard-spacing) / 2);
+}
+#edit-playlist ul li {
+    list-style: none;
+    padding-top: calc(var(--standard-spacing) / 2);
+    padding-left: var(--standard-spacing);
+}
+#edit-playlist ul li:last-child {
+    padding-bottom: calc(var(--standard-spacing) * 2);
+}
+
+#playlist-name-input {
+    width: 100%;
+}
+#playlist-name-input::placeholder {
+    color: var(--light-gray);
+}
+#playlist-name-input:hover {
+    background-color: var(--primary-bg-color);
+}
+#playlist-name-input:hover::placeholder {
+    color: var(--white);
+}
+#playlist-name-input:valid {
+    border-color: var(--green);
+}
+#playlist-name-input:invalid {
+    border-color: var(--red);
+}
+
+/*#endregion*/

@@ -101,7 +101,7 @@ function isGibberish(input) {
             console.log('Too Frequent.');
             return true;
         }
-    
+
         let positions = frequentCharacters[char].positions;
         let consecutivePositions = 0;
         for (let i = 1; i < positions.length; i++) {
@@ -126,8 +126,8 @@ function isGibberish(input) {
  * @param {number} charLimit - Character limit of the text.
  * @returns {string} - Limited text.
  */
-function limitText(input, charLimit){
-    return `${input.slice(0, charLimit)}${input.length > charLimit ? '...': ''}`
+function limitText(input, charLimit) {
+    return `${input.slice(0, charLimit)}${input.length > charLimit ? '...' : ''}`
 }
 
 /**
@@ -166,7 +166,7 @@ function getRandomValue(array) {
  * @param {string} color - The color.
  * @returns {string} - Themed color.
  */
-function getColor(color){
+function getColor(color) {
     return document.body.classList.contains('light-theme') ? `dark-${color}` : color;
 }
 
@@ -175,10 +175,10 @@ function getColor(color){
  * 
  * @param {string} areaId - Area to scroll to. 
  */
-function scrollToArea(areaId){
+function scrollToArea(areaId) {
     let area = document.getElementById(areaId);
     area.scrollIntoView();
-    if (area.tagName.toLowerCase() === 'input'){
+    if (area.tagName.toLowerCase() === 'input') {
         area.focus();
     }
 }
@@ -188,6 +188,71 @@ function scrollToArea(areaId){
 
 
 
+// #region General Events
+
+/**
+ * Method responsible for opening the popup.
+ * 
+ * @param {Event} event - Event.
+ * @param {string} sectionId - Section id to be displayed.
+ */
+function openPopup(event, sectionId) {
+    event.preventDefault();
+    let section = popup.querySelector(`section#${sectionId}`);
+    popup.classList.add('active');
+    section.classList.add('active');
+}
+
+/**
+ * Method responsible for closing popup.
+ * 
+ * @param {Event} event - Event.
+ */
+function closePopup(event) {
+    event.preventDefault();
+    let activeSections = popup.querySelectorAll('section.active');
+    for (let i = 0; i < activeSections.length; i++) {
+        activeSections[i].classList.remove('active');
+    }
+    popup.classList.remove('active');
+}
+
+/**
+ * Method responsible for closing the popup when clicking outside the settings section.
+ * 
+ * @param {Event} event - Event.
+ */
+function closePopupOutside(event) {
+    if (!event.target.closest('section')) {
+        closePopup(event);
+    }
+}
+
+// #endregion
+
+
+/**
+ * Method responsible of setting an input's value from an option.
+ * 
+ * @param {string} inputId - Id of the input to change.
+ * @param {string} value - Value to set as.
+ */
+function setInputValue(inputId, value){
+    let input = document.getElementById(inputId);
+    input.value = value;
+}
+
+/**
+ * Method responsible of uådating playlist name.
+ * 
+ * @param {string} [newName=undefined] - New playlist name.
+ */
+function updatePlaylistName(newName = undefined) {
+    let playlistName = newName === undefined ? localStorage.getItem('playlistName') || 'Playlist' : newName;
+    playlistNameSpan.textContent = playlistName;
+}
+
+
 /**
  * Method responsible of getting a link's domain name.
  * 
@@ -195,16 +260,16 @@ function scrollToArea(areaId){
  * @returns {string} - Domain name.
  */
 function getWebsiteName(link, domains = []) {
-    let returnValue = link.includes('www.') ? 
+    let returnValue = link.includes('www.') ?
         link.split('www.')[1].split('/')[0] : link.split('://')[1].split('/')[0]
-    ;
-    if (returnValue.split('.').length > 2){
+        ;
+    if (returnValue.split('.').length > 2) {
         let splitArray = returnValue.split('.');
         splitArray.shift();
         returnValue = splitArray.join('.');
     }
 
-    if (domains.length > 0){
+    if (domains.length > 0) {
         let parsedDomains = [];
         for (let i = 0; i < domains.length; i++) {
             let domain = domains[i];
@@ -223,7 +288,7 @@ function getWebsiteName(link, domains = []) {
             }
         }
     }
-    
+
     return returnValue;
 }
 /**
@@ -251,8 +316,8 @@ function getWebsiteNames(domains) {
  * 
  * @returns {array} - Array containing videoLinks and latestVideo.
  */
-function getVideoLinksArray(){
-    let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [{id: 'NOT FOUND', src: 'NOT FOUND', url: 'NOT FOUND'}];
+function getVideoLinksArray() {
+    let videoLinksArray = JSON.parse(localStorage.getItem('videoLinks')) || [{ id: 'NOT FOUND', src: 'NOT FOUND', url: 'NOT FOUND' }];
     let latestVideo = videoLinksArray[videoLinksArray.length - 1];
     return [videoLinksArray, latestVideo];
 }
@@ -300,13 +365,13 @@ function getAllDomainExamples() {
  * @param {string} causeOfError - Error message to be displayed.
  * @param {HTMLElement} [location=undefined] - Error location of where it occured.
  */
-function displayError(causeOfError, location = undefined){
+function displayError(causeOfError, location = undefined) {
     let locationInformationArea = errorPopup.querySelector('div>span');
     locationInformationArea.textContent = '';
     toggleElements([popup, errorPopup]);
-    
+
     errorPopup.querySelector('div>p').textContent = causeOfError;
-    if (location !== undefined){
+    if (location !== undefined) {
         let locationInformation = `<br>${capitalizeFirstLetter(location.tagName.toLowerCase())}:<br> ${location.textContent}`;
         locationInformationArea.innerHTML = locationInformation;
     }
@@ -317,9 +382,9 @@ function displayError(causeOfError, location = undefined){
  * 
  * @param {Array} elementsToToggle - Elements to toggle.
  */
-function toggleElements(elementsToToggle){
-    for (let i = 0; i < elementsToToggle.length; i++){
-        if (elementsToToggle[i].classList.contains('active')){
+function toggleElements(elementsToToggle) {
+    for (let i = 0; i < elementsToToggle.length; i++) {
+        if (elementsToToggle[i].classList.contains('active')) {
             elementsToToggle[i].classList.remove('active');
         } else {
             elementsToToggle[i].classList.add('active');
@@ -330,28 +395,28 @@ function toggleElements(elementsToToggle){
 /**
  * Method responsible of adding color contrast.
  */
-function applyContrast(){
+function applyContrast() {
     let primaryColor = root.style.getPropertyValue('--primary-color').trim();
     let isLightColor = false;
     let isDarkThemed = true;
     if (document.body.getAttribute('class')) {
         isDarkThemed = false;
-    } 
+    }
 
     let formButtons = document.querySelectorAll('button.form-button');
     let quickButtons = document.querySelectorAll('button.quick-button');
     let formInputs = document.querySelectorAll('input.form-input');
-    let elements = [...formButtons, ...quickButtons, ...formInputs];    
-    if (isDarkThemed === true){
-        for (let i = 0; i < lightColors.length; i++){
-            if (primaryColor.includes(lightColors[i])){
+    let elements = [...formButtons, ...quickButtons, ...formInputs];
+    if (isDarkThemed === true) {
+        for (let i = 0; i < lightColors.length; i++) {
+            if (primaryColor.includes(lightColors[i])) {
                 isLightColor = true;
                 break;
             }
         }
 
-        for (let i = 0; i < elements.length; i++){
-            if (isLightColor){
+        for (let i = 0; i < elements.length; i++) {
+            if (isLightColor) {
                 elements[i].classList.add('apply-contrast');
             } else {
                 elements[i].classList.remove('apply-contrast');

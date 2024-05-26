@@ -152,7 +152,8 @@ footer>section>h2{
     margin-top: var(--standard-spacing);
 }
 
-/*#region Site Information */
+/*#region MARK: Site Information 
+*/
 
 footer>#site-information {
     grid-area: site-information;
@@ -178,7 +179,11 @@ footer>#site-information span#site-info-copy {
 
 /*#endregion*/
 
-/*#region User Library */
+
+
+
+/*#region MARK: User Library 
+*/
 
 footer>#user-library{
     grid-area: user-library;
@@ -209,15 +214,24 @@ footer>#user-library>div{
         "user-stars"
     ;
 }
-footer>#user-library>div h3{
-    padding: var(--standard-spacing) calc(var(--standard-spacing) * 2);
-    margin-top: var(--standard-spacing);
-}
 footer>#user-library>div>section#playlist{
     grid-area: user-playlist;
 }
 footer>#user-library>div>section#starred-videos{
     grid-area: user-stars;
+}
+footer>#user-library>div section h3{
+    padding: var(--standard-spacing) calc(var(--standard-spacing) * 2);
+    margin-top: var(--standard-spacing);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--standard-spacing);
+}
+footer>section>div>section:not(#playlist)>h3{
+    padding-top: calc(var(--standard-spacing) + 0.2rem);
+    padding-bottom: calc(var(--standard-spacing) + 0.2rem);
 }
 
 footer>#user-library>div section ul li {
@@ -298,7 +312,11 @@ footer>#user-library>div section ul li button {
 
 /*#endregion*/
 
-/*#region Site Insight */
+
+
+
+/*#region MARK: Site Insight 
+*/
 
 footer>#site-insight{
     grid-area: site-insight;
@@ -375,7 +393,11 @@ footer>#site-insight>div section ul li p {
 
 /*#endregion*/
 
-/*#region Domains*/
+
+
+
+/*#region MARK: Domains
+*/
 
 footer>#supported-domains {
     grid-area: additional-domains;
@@ -514,7 +536,7 @@ footer>section:not(#site-information, #site-insight, #user-library) ul li a {
         grid-template-columns: auto auto 1fr;
         grid-template-rows: minmax(var(--site-insight-height), auto) minmax(var(--site-insight-height), auto) auto auto;
         grid-template-areas:
-            "user-library user-library -"
+            "user-library user-library ."
             "site-insight site-insight ."
             "supported-domains additional-domains ."
             "site-information site-information ."
@@ -531,7 +553,7 @@ footer>section:not(#site-information, #site-insight, #user-library) ul li a {
         min-height: var(--popup-min-height);
         max-height: 70%;
     } 
-    #preference-area div#settings-container {
+    .preference-area div.edit-container {
         max-height: 25rem;
     }
 }
@@ -591,7 +613,7 @@ footer>section:not(#site-information, #site-insight, #user-library) ul li a {
 
 }
 
-@media screen and (min-width: 1156px) {
+@media screen and (min-width: 1166px) {
     /* Footer adjustment */
 
     footer {
@@ -636,7 +658,7 @@ footer>section:not(#site-information, #site-insight, #user-library) ul li a {
     
 }
 
-@media screen and (min-width: 1558px) {
+@media screen and (min-width: 1568px) {
     /* Footer adjustment */
 
     footer {

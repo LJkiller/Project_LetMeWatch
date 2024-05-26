@@ -188,7 +188,7 @@ function closeContainer(containerId) {
     if (container) {
         container.style.height = '1.2rem';
         setTimeout(() => {
-            container.style.width = '50%';
+            container.style.width = 0;
             container.style.border = 0;
             container.style.opacity = 0;
             let parentElement = container.parentElement;

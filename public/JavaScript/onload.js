@@ -96,6 +96,9 @@ function siteLibraryCorrection(){
     let playlistLibrary = JSON.parse(localStorage.getItem('playlistLibrary')) || [];
     createLibraryList(starLibrary, document.querySelector(`#starred-videos > .videos`));
     createLibraryList(playlistLibrary, document.querySelector(`#playlist > .videos`));
+    
+    playlistNameMaxNotice.textContent = `Max ${playlistNameLimit} characters.`;
+    updatePlaylistName();
 }
 
 /**
