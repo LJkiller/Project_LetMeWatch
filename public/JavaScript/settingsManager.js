@@ -281,13 +281,12 @@ function resetPlaylistPosition() {
 function switchPlaylistLayoutByAmount(){
     let starLibraryLength = JSON.parse(localStorage.getItem('starLibraryLength')) || 0;
     let playlistLibraryLength = JSON.parse(localStorage.getItem('playlistLibraryLength')) || 0;
-    console.log(starLibraryLength, playlistLibraryLength);
     if (starLibraryLength < playlistLibraryLength){
         resetPlaylistPosition();
     } else if (starLibraryLength > playlistLibraryLength) {
         switchPlaylistPosition();
     } else {
-        return;
+        resetPlaylistPosition();
     }
 }
 
