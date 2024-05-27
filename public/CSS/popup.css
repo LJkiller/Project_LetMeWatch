@@ -1,3 +1,4 @@
+
 /*#region MARK: No Script 
 */
 
@@ -72,7 +73,7 @@ noscript section span {
 #popup>section>div>h2 {
     display: flex;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
     gap: var(--standard-spacing);
 }
@@ -175,7 +176,7 @@ div.option-area label:last-child {
 
 
 
-/*#region MARK: Settings Area
+/*#region MARK: Form
 */
 
 .preference-area {
@@ -197,7 +198,7 @@ div.option-area label:last-child {
     padding: var(--standard-spacing);
 }
 
-.preference-area #apply-button {
+.preference-area .apply-button {
     grid-area: apply-button;
 }
 
@@ -208,44 +209,6 @@ div.option-area label:last-child {
 
 .preference-area div.edit-container::-webkit-scrollbar-track {
     border-radius: var(--standard-border-radius);
-}
-
-/*#endregion*/
-
-
-
-
-/*#region MARK: Edit Playlist*/
-
-#edit-playlist ul p {
-    margin-bottom: calc(var(--standard-spacing) / 2);
-}
-#edit-playlist ul li {
-    list-style: none;
-    padding-top: calc(var(--standard-spacing) / 2);
-    padding-left: var(--standard-spacing);
-}
-#edit-playlist ul li:last-child {
-    padding-bottom: calc(var(--standard-spacing) * 2);
-}
-
-#playlist-name-input {
-    width: 100%;
-}
-#playlist-name-input::placeholder {
-    color: var(--light-gray);
-}
-#playlist-name-input:hover {
-    background-color: var(--primary-bg-color);
-}
-#playlist-name-input:hover::placeholder {
-    color: var(--white);
-}
-#playlist-name-input:valid {
-    border-color: var(--green);
-}
-#playlist-name-input:invalid {
-    border-color: var(--red);
 }
 
 /*#endregion*/

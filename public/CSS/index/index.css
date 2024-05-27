@@ -77,6 +77,10 @@ main #content #falsified-media-player:hover{
     color: var(--normal-text-color);
 }
 
+#video-search-button {
+    font-weight: bold;
+}
+
 /*#endregion*/
 
 

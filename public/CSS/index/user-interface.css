@@ -1,0 +1,38 @@
+
+#media-form #media-form-buttons button, #media-form button, #media-form input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#media-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--standard-spacing);
+}
+
+
+#iframe-controls {
+    display: none;
+}
+#iframe-controls.active{
+    display: flex;
+    gap: var(--standard-spacing);
+}
+#iframe-controls > button {
+    display: flex;
+    padding: var(--standard-spacing);
+    justify-content: center;
+    align-items: center;
+    gap: var(--standard-spacing);
+}
+
+#start-playlist-button{
+    display: none;
+}
+#start-playlist-button.active{
+    display: inline-block;
+}

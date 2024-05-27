@@ -42,6 +42,11 @@ function resetVideoSize(displayAsLastVideo) {
     displayVideoId(displayAsLastVideo);
 }
 
+document.getElementById('video-search-button').addEventListener('click', function(event){
+    event.preventDefault();
+    openPopup(event, 'search-video');
+});
+
 // #endregion
 
 
@@ -148,5 +153,30 @@ function handleCheckbox(checkboxes, limit = false){
         });
     }
 }
+
+// #endregion
+
+
+
+// #region Search Video Events
+
+document.getElementById('search-button').addEventListener('click', function (event) {
+    event.preventDefault();
+    let searchBar = document.getElementById('search-bar');
+    let searchQuery = searchBar.value;
+    let videoContainer = document.getElementById('video-container');
+
+    searchBar.value = '';
+    videoContainer.innerHTML = '';
+    fetch(`/search?query=${encodeURIComponent(searchQuery)}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error fetching video data:', error);
+            videoContainer.innerHTML = '<p>There was an error fetching the video results.</p>';
+        });
+});
 
 // #endregion

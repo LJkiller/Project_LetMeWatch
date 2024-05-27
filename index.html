@@ -14,9 +14,12 @@
 	<link rel="stylesheet" href="./public/CSS/style.css">
 	<link rel="stylesheet" href="./public/CSS/user-interface.css">
 	<link rel="stylesheet" href="./public/CSS/popup.css">
-
-	<link rel="stylesheet" href="./public/CSS/index.css">
 	<link rel="stylesheet" href="./public/CSS/responsive.css">
+
+	<link rel="stylesheet" href="./public/CSS/index/popup.css">
+	<link rel="stylesheet" href="./public/CSS/index/user-interface.css">
+	<link rel="stylesheet" href="./public/CSS/index/index.css">
+	<link rel="stylesheet" href="./public/CSS/index/responsive.css">
 	<!-- #endregion -->
 
 	<!-- #region Scripts -->
@@ -36,7 +39,8 @@
 	<!-- #endregion -->
 
 	<!-- #region Icons-->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 	<script src="https://kit.fontawesome.com/180268d8b3.js" crossorigin="anonymous"></script>
 	<!-- #endregion-->
 
@@ -46,23 +50,27 @@
 
 	<header>
 		<a id="let-me-watch-logo" href="./index.html">
-			<img loading="lazy" src="./public/assets/Icons/LetMeWatchIcon.png" alt="LetMeWatch logo, a bright colored playbutton.">
+			<img loading="lazy" src="./public/assets/Icons/LetMeWatchIcon.png"
+				alt="LetMeWatch logo, a bright colored playbutton.">
 			<span id="let-me-watch-title">LetMeWatch <span>DAMMIT</span></span>
 		</a>
 		<div id="media-form" class="form">
 			<label>Enter Link</label>
 			<div id="media-form-buttons">
-				<button id="q-add-playlist-button" class="form-button"><i class="fa-solid fa-plus"></i> <i class="fa-regular fa-bookmark"></i></button>
-				<button id="q-star-button" class="form-button"><i class="fa-solid fa-plus"></i> <i class="fa-regular fa-star"></i></button>
+				<button id="q-add-playlist-button" class="form-button"><i class="fa-solid fa-plus"></i> <i
+						class="fa-regular fa-bookmark"></i></button>
+				<button id="q-star-button" class="form-button"><i class="fa-solid fa-plus"></i> <i
+						class="fa-regular fa-star"></i></button>
 			</div>
 			<form id="link-form">
 				<input id="link-input" class="form-input" type="text" placeholder="Link" autocomplete="off">
 				<button id="media-link-button" class="form-button">Update Video</button>
 			</form>
-			<button id="settings-button" class="form-button single-icon-button"><i class="fa-solid fa-gear"></i></button>
+			<button id="settings-button" class="form-button single-icon-button"><i
+					class="fa-solid fa-gear"></i></button>
 		</div>
 	</header>
-
+	
 	<main>
 		<section id="content">
 			<div id="media-top">
@@ -84,10 +92,11 @@
 			</div>
 			<iframe id="falsified-media-player" referrerpolicy="no-referrer"
 				title="Media Viewer: Area where the videos are displayed" aria-label="Video Player"
-				src="https://www.youtube-nocookie.com/embed/{id}?start=0&autoplay=1&autohide=1"
-				allowfullscreen controls frameborder="0"
+				src="https://www.youtube-nocookie.com/embed/{id}?start=0&autoplay=1&autohide=1" allowfullscreen controls
+				frameborder="0"
 				allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
 			</iframe>
+			<button id="video-search-button" class="hidden-button">Find Videos <i class="fa-solid fa-magnifying-glass"></i></button>
 			<div id="media-bottom" class="media-information">
 				<span id="video-id">VideoID: $(storedVideoID)</span>
 				<span>-</span>
@@ -102,13 +111,15 @@
 			</div>
 		</section>
 	</main>
-
+	
 	<footer>
 		<section id="user-library">
-			<h2><span>User Library</span><button id="start-playlist-button" class="quick-button active"><i class="fa-solid fa-play"></i> Start Playlist</button></h2>
+			<h2><span>User Library</span><button id="start-playlist-button" class="quick-button active"><i
+						class="fa-solid fa-play"></i> Start Playlist</button></h2>
 			<div>
 				<section id="playlist">
-					<h3><span></span><button id="edit-playlist-button" class="quick-button"><i class="fa-solid fa-pen-to-square"></i> Edit Name</button></h3>
+					<h3><span></span><button id="edit-playlist-button" class="quick-button"><i
+								class="fa-solid fa-pen-to-square"></i> Edit Name</button></h3>
 					<ul class="videos">
 					</ul>
 				</section>
@@ -138,7 +149,8 @@
 			<h2>Supported Domains</h2>
 			<ul>
 			</ul>
-			<button id="add-custom-button" class="quick-button"><i class="fa-solid fa-circle-plus"></i> Add Custom Domain</button>
+			<button id="add-custom-button" class="quick-button"><i class="fa-solid fa-circle-plus"></i> Add Custom
+				Domain</button>
 		</section>
 		<section id="additional-domains">
 			<h2></h2>
@@ -148,27 +160,32 @@
 			<h2 id="site-info-header">Site Information</h2>
 			<p id="site-info-content">
 				This website is developed purely out of spite for YouTube's crackdown on ads.<br>
-				This website has since been further developed branching out to more platforms, not limited by YouTube.<br><br>
-				To use this platform, simply insert a video link (from any <button onclick="scrollToArea('supported-domains')" class="hidden-button">supported domain</button>) into the <button onclick="scrollToArea('link-input')" class="hidden-button">link input field</button>.<br>
+				This website has since been further developed branching out to more platforms, not limited by
+				YouTube.<br><br>
+				To use this platform, simply insert a video link (from any <button
+					onclick="scrollToArea('supported-domains')" class="hidden-button">supported domain</button>) into
+				the <button onclick="scrollToArea('link-input')" class="hidden-button">link input field</button>.<br>
 				Please note that certain videos may be unavailable due to uploader restrictions or regional blocks.
 			</p>
 			<span id="site-info-copy">&copy; LJkiller 2024. All rights reserved. </span>
 		</section>
 	</footer>
-
+	
 	<noscript>
 		<section>
 			<h2>Website unavailable</h2>
 			<span>Why? JavaScript is blocked.</span>
 			<p>You can enable JavaScript in your browser settings:</p>
-			<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygULUmljayBBc3RsZXk%3D" target="_blank">Enable JavaScript</a>
+			<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygULUmljayBBc3RsZXk%3D" target="_blank">Enable
+				JavaScript</a>
 		</section>
 	</noscript>
 	
 	<dialog id="popup">
 		<section id="settings">
 			<div>
-				<h2><span>Settings <i class="fa-solid fa-gear"></i></span><button id="close-settings-button" class="form-button single-icon-button"><i class="fa-solid fa-xmark"></i></button></h2>
+				<h2><span>Settings <i class="fa-solid fa-gear"></i></span><button id="close-settings-button"
+						class="form-button single-icon-button"><i class="fa-solid fa-xmark"></i></button></h2>
 				<p>Select your preferences for the website's behaviour!</p>
 			</div>
 			<form class="preference-area">
@@ -200,31 +217,45 @@
 						</section>
 					</section>
 				</div>
-				<button id="apply-button" class="form-button"><i class="fa-solid fa-floppy-disk"></i> Apply</button>
+				<button class="form-button apply-button"><i class="fa-solid fa-floppy-disk"></i> Apply</button>
 			</form>
 		</section>
 		<section id="edit-playlist">
 			<div>
-				<h2><span>Edit Playlist</span><i class="fa-solid fa-pen-to-square"></i></h2>
+				<h2><span>Edit Playlist <i class="fa-solid fa-pen-to-square"></i></span></h2>
 				<span><i id="playlist-max-char-notice">Max ?? characters.</i></span>
 				<p>Change the playlist's name!</p>
 				<ul>
 					<p>Recommended names:</p>
-					<li><button onclick="setInputValue('playlist-name-input', 'PTW')" class="hidden-button">PTW (plan to watch)</button></li>
-					<li><button onclick="setInputValue('playlist-name-input', 'Watch Later')" class="hidden-button">Watch Later</button></li>
+					<li><button onclick="setInputValue('playlist-name-input', 'PTW')" class="hidden-button">PTW (plan to
+							watch)</button></li>
+					<li><button onclick="setInputValue('playlist-name-input', 'Watch Later')"
+							class="hidden-button">Watch Later</button></li>
 				</ul>
 			</div>
 			<form class="preference-area">
-				<input id="playlist-name-input" name="change-playlist-name" class="form-input" type="text" placeholder="New Playlist Name" autocomplete="off" required>
+				<input id="playlist-name-input" name="change-playlist-name" class="form-input" type="text"
+					placeholder="New Playlist Name" autocomplete="off" required>
 				<button id="apply-button" class="form-button"><i class="fa-solid fa-floppy-disk"></i> Apply</button>
 			</form>
 		</section>
 		<section id="error">
 			<div>
-				<h2><span>Error</span><i class="fa-solid fa-bug"></i></h2>
+				<h2><span>Error <i class="fa-solid fa-bug"></i></span></h2>
 				<p></p>
 				<span></span>
 			</div>
+		</section>
+		<section id="search-video">
+			<div>
+				<h2><span>Find Videos <i class="fa-solid fa-magnifying-glass"></i></span></h2>
+				<span><i>Youtube</i></span>
+				<div id="video-container"></div>
+			</div>
+			<form class="preference-area">
+				<input type="text" id="search-bar" class="form-input" autocomplete="off" placeholder="Search">
+				<button id="search-button" class="quick-button">Search <i class="fa-solid fa-magnifying-glass"></i></button>
+			</form>
 		</section>
 	</dialog>
 	

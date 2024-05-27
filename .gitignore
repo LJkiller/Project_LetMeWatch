@@ -1,1 +1,12 @@
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Generated files
+package-lock.json
+
+# Misc
 additionalDomainsManager.js

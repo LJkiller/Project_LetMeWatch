@@ -1,0 +1,629 @@
+
+/*#region MARK: Header 
+*/
+
+header #media-form {
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+        "quick-buttons settings-button"
+        "enter-link enter-link"
+        "enter-link-label enter-link-label"
+    ;
+    justify-items: center;
+    gap: var(--standard-spacing);
+}
+header #media-form label {
+    grid-area: enter-link-label;
+}
+header #media-form #media-form-buttons {
+    grid-area: quick-buttons;
+    justify-self: end;
+}
+header #media-form #link-form {
+    grid-area: enter-link;
+}
+header #media-form #settings-button {
+    grid-area: settings-button;
+    justify-self: start;
+}
+header #media-form #media-form-buttons, header #media-form #link-form {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: start;
+    align-items: center;
+    gap: calc(var(--standard-spacing) * 0.5);
+}
+header #media-form #media-form-buttons button {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: calc(var(--standard-spacing) * 0.1);
+}
+
+/*#endregion*/
+
+
+
+
+/*#region MARK: Main 
+*/
+
+main {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "content-area"
+    ;
+}
+
+main #content {
+    grid-area: content-area;
+    display: flex;
+    align-self: flex-start;
+    margin-top: var(--header-margin-top);
+    margin-bottom: var(--header-margin-bottom);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--standard-spacing);
+}
+main #content #media-top {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: calc(var(--standard-spacing) / 2);
+}
+main #content #media-top #media-controller {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--standard-spacing) / 2);
+}
+main #content #media-top section#width {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: var(--standard-spacing);
+}
+main #content #media-top section#width label {
+    margin-left: calc(var(--standard-spacing) - 0.15rem);
+}
+
+/*#endregion*/
+
+
+
+
+/*#region MARK: Footer 
+*/
+
+footer {
+    grid-area: footer;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto 1fr auto;
+    grid-template-areas:
+        "user-library"
+        "site-insight"
+        "supported-domains"
+        "additional-domains"
+        "site-information"
+    ;
+}
+
+footer>section>h2,
+footer>section>p,
+footer>section>span {
+    padding: var(--standard-spacing) calc(var(--standard-spacing) * 2);
+}
+footer>section>h2{
+    margin-top: var(--standard-spacing);
+}
+footer>section:not(#user-library)>h2 {
+    padding-top: calc(var(--standard-spacing) + 0.021rem);
+    padding-bottom: calc(var(--standard-spacing) + 0.021rem);
+}
+
+/*#region MARK: Site Information 
+*/
+
+footer>#site-information {
+    grid-area: site-information;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+        "site-info-header"
+        "site-info-content"
+        "site-info-copy"
+    ;
+    justify-content: start;
+}
+footer>#site-information h2 {
+    grid-area: site-info-header;
+}
+footer>#site-information span#site-info-content {
+    grid-area: site-info-content;
+}
+footer>#site-information span#site-info-copy {
+    grid-area: site-info-copy;
+}
+
+/*#endregion*/
+
+
+
+
+/*#region MARK: User Library 
+*/
+
+footer>#user-library{
+    grid-area: user-library;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(var(--site-insight-height), 1fr);
+    grid-template-areas: 
+        "library-header"
+        "library-videos"
+    ;
+}
+
+footer>#user-library h2{
+    grid-area: library-header;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+    gap: var(--standard-spacing);
+}
+footer>#user-library>div{
+    grid-area: library-videos;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto minmax(calc(var(--standard-spacing) * 3), 1fr);
+    grid-template-areas: 
+        "user-playlist"
+        "user-stars"
+    ;
+}
+footer>#user-library>div>section#playlist{
+    grid-area: user-playlist;
+}
+footer>#user-library>div>section#starred-videos{
+    grid-area: user-stars;
+}
+footer>#user-library>div section h3{
+    padding: var(--standard-spacing) calc(var(--standard-spacing) * 2);
+    margin-top: var(--standard-spacing);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--standard-spacing);
+}
+footer>section>div>section:not(#playlist)>h3{
+    padding-top: calc(var(--standard-spacing) + 0.2rem);
+    padding-bottom: calc(var(--standard-spacing) + 0.2rem);
+}
+
+footer>#user-library>div section ul li {
+    display: grid;
+    margin-left: calc(var(--standard-spacing) * 2);
+    margin-bottom: var(--standard-spacing);
+    grid-template-columns: calc(var(--dot-size) * 4) auto;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+        "playlist-marker playlist-domain"
+        "playlist-id playlist-id"
+    ;
+    align-items: center;
+}
+footer>#user-library>div section ul li.display-more{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: 
+        "playlist-domain"
+        "playlist-display-more"
+    ;
+    align-items: center;
+    gap: calc(var(--standard-spacing) / 5);
+    margin-bottom: var(--standard-spacing);
+}
+
+footer>#user-library>div section ul li svg {
+    grid-area: playlist-marker;
+}
+footer>#user-library>div section ul li span {
+    grid-area: playlist-domain;
+    justify-self: start;
+}
+footer>#user-library>div section ul li .details {
+    grid-area: playlist-id;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: start;
+    align-items: center;
+    gap: var(--standard-spacing);
+}
+
+footer>#user-library>div section ul li div.details{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto auto auto;
+    grid-template-areas: 
+        "detail-domain-display"
+        "detail-play-video"
+        "detail-open-video"
+        "detail-remove-item"
+        "detail-close-button"
+    ;
+}
+footer>#user-library>div section ul li div.details .detail-domain-display {
+    grid-area: detail-domain-display;
+}
+footer>#user-library>div section ul li div.details .detail-play-video {
+    grid-area: detail-play-video;
+}
+footer>#user-library>div section ul li div.details .detail-open-video {
+    grid-area: detail-open-video;
+}
+footer>#user-library>div section ul li div.details .detail-remove-item {
+    grid-area: detail-remove-item;
+}
+footer>#user-library>div section ul li div.details .detail-close-button {
+    grid-area: detail-close-button;
+}
+
+
+footer>#user-library>div section ul li.display-more span {
+    justify-self: center;
+}
+footer>#user-library>div section ul li button {
+    grid-area: playlist-display-more;
+}
+
+/*#endregion*/
+
+
+
+
+/*#region MARK: Site Insight 
+*/
+
+footer>#site-insight{
+    grid-area: site-insight;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(var(--site-insight-height), 1fr);
+    grid-template-areas: 
+        "insight-header"
+        "insight-metrics"
+    ;
+}
+footer>#site-insight h2{
+    grid-area: insight-header;
+}
+footer>#site-insight>div{
+    grid-area: insight-metrics;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto minmax(calc(var(--standard-spacing) * 3), 1fr);
+    grid-template-areas: 
+        "last-viewed"
+        "most-frequent"
+    ;
+}
+footer>#site-insight>div h3{
+    padding: var(--standard-spacing) calc(var(--standard-spacing) * 2);
+    margin-top: var(--standard-spacing);
+}
+footer>#site-insight>div>section#last-viewed-video{
+    grid-area: last-viewed;
+}
+footer>#site-insight>div>section#frequent-domain-uses{
+    grid-area: most-frequent;
+}
+
+
+footer>#site-insight>div section ul li {
+    display: grid;
+    margin-left: calc(var(--standard-spacing) * 2);
+    margin-bottom: var(--standard-spacing);
+    grid-template-columns: calc(var(--dot-size) * 4) auto;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+        "metric-marker metric-date"
+        "metric-link metric-link"
+    ;
+    align-items: center;
+}
+footer>#site-insight>div section#frequent-domain-uses ul li {
+    grid-template-columns: calc(var(--dot-size) * 2.5) auto auto 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "metric-marker metric-date metric-link ."
+    ;
+    gap: var(--standard-spacing);
+}
+
+footer>#site-insight>div section ul li svg {
+    grid-area: metric-marker;
+}
+footer>#site-insight>div section ul li span.date {
+    grid-area: metric-date;
+    justify-self: start;
+}
+footer>#site-insight>div section ul li p {
+    grid-area: metric-link;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: start;
+    align-items: center;
+    gap: var(--standard-spacing);
+}
+
+
+/*#endregion*/
+
+
+
+
+/*#region MARK: Domains
+*/
+
+footer>#supported-domains {
+    grid-area: additional-domains;
+}
+footer>#additional-domains {
+    grid-area: additional-domains;
+}
+
+footer>section:not(#site-information, #site-insight, #user-library) {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-areas:
+        "supported-header"
+        "domains-list"
+        "add-custom-domain"
+        "."
+    ;
+    justify-content: start;
+}
+footer>section:not(#site-information, #site-insight, #user-library) h2 {
+    grid-area: supported-header;
+}
+footer>section:not(#site-information, #site-insight, #user-library) #add-custom-button{
+    grid-area: add-custom-domain;
+}
+footer>section:not(#site-information, #site-insight, #user-library) ul {
+    margin-top: var(--standard-spacing);
+    grid-area: domains-list;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    gap: calc(var(--standard-spacing) / 2);
+}
+footer>section:not(#site-information, #site-insight, #user-library) ul li {
+    display: grid;
+    grid-template-columns: calc(var(--dot-size) * 5) 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "marks domain-names"
+    ;
+    gap: var(--standard-spacing);
+}
+footer>section:not(#site-information, #site-insight, #user-library) ul li:last-child,
+footer>#site-insight>div section ul li:last-child {
+    margin-bottom: var(--standard-spacing);
+}
+
+footer>section:not(#site-information, #site-insight, #user-library) ul li i {
+    grid-area: marks;
+    align-self: center;
+    margin-left: var(--standard-spacing);
+    justify-self: center;
+}
+footer>section:not(#site-information, #site-insight, #user-library) ul li a {
+    grid-area: domain-names;
+}
+
+/*#endregion*/
+
+/*#endregion*/
+
+
+
+
+/*#region MARK: Media Queries 
+*/
+
+@media screen and (min-width: 271px) {
+    /* Footer adjustment */
+
+    footer>section {
+        justify-content: center;
+    }
+
+}
+
+@media screen and (min-width: 330px){
+    /* Footer adjustment */
+    
+    footer>#user-library>div section ul li {
+        display: grid;
+        margin-left: calc(var(--standard-spacing) * 2);
+        grid-template-columns: auto auto auto 1fr;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "playlist-marker playlist-domain playlist-id ."
+        ;
+        align-items: center;
+        gap: var(--standard-spacing);
+    }
+}
+
+@media screen and (min-width: 401px) {
+    /* Header adjustment */
+
+    :root {
+        --input-width: 10rem;
+    }
+}
+
+@media screen and (min-width: 451px) {
+    /* Media-controller adjustment */
+
+    main #content #media-top #media-controller {
+        flex-direction: row;
+    }
+
+    main #content #media-top section#width label {
+        margin-left: 0;
+    }
+
+}
+
+@media screen and (min-width: 556px) {
+    /* Header adjustment */
+    
+    header #media-form {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        gap: var(--standard-spacing);
+    }
+
+}
+
+@media screen and (min-width: 602px) {
+    /* Footer adjustment */
+
+    footer {
+        grid-template-columns: auto auto 1fr;
+        grid-template-rows: minmax(var(--site-insight-height), auto) minmax(var(--site-insight-height), auto) auto auto;
+        grid-template-areas:
+            "user-library user-library ."
+            "site-insight site-insight ."
+            "supported-domains additional-domains ."
+            "site-information site-information ."
+        ;
+    }
+
+    footer>#site-insight>div,
+    footer>#user-library>div{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #popup>section {
+        min-height: var(--popup-min-height);
+        max-height: 70%;
+    } 
+    .preference-area div.edit-container {
+        max-height: 25rem;
+    }
+}
+
+@media screen and (min-width: 964px) {
+    /* a-element & Scrollbar adjustment */
+
+    a {
+        text-decoration: none;
+    }
+    .hidden-button {
+        text-decoration: none;
+    }
+
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: var(--standard-border-radius);
+        height: 10%;
+        width: 100%;
+        border: 0px;
+        background-image:
+            linear-gradient(var(--primary-scroll-color),
+                var(--black));
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        border: 0.25rem solid var(--primary-scroll-color);
+        background-image:
+            linear-gradient(var(--primary-scroll-color),
+                var(--black));
+    }
+    ::-webkit-scrollbar-thumb:active {
+        border-color: var(--primary-scroll-color);
+        border-image:
+            linear-gradient(var(--primary-scroll-color),
+                var(--secondary-scroll-color));
+        border-image-slice: 1;
+        background-image:
+            linear-gradient(var(--primary-scroll-color),
+                var(--secondary-scroll-color));
+    }
+
+}
+
+@media screen and (min-width: 1166px) {
+    /* Footer adjustment */
+
+    footer {
+        grid-template-columns: auto 1fr auto auto auto;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+            "user-library . supported-domains additional-domains"
+            "site-insight . site-information site-information"
+        ;
+    }
+
+    footer>#site-insight>div section ul li {
+        display: grid;
+        margin-left: calc(var(--standard-spacing) * 2);
+        grid-template-columns: auto auto auto 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+            "metric-marker metric-date metric-link ."
+        ;
+        align-items: center;
+        gap: var(--standard-spacing);
+    }
+    
+    footer>#site-insight>div{
+        display: grid;
+        justify-content: initial;
+    }
+    footer>#site-insight>div>section#frequent-domain-uses h3{
+        padding: var(--standard-spacing) calc(var(--standard-spacing) * 2);
+        margin-top: var(--standard-spacing);
+    }
+
+    
+    footer>#user-library>div{
+        display: grid;
+        grid-template-columns: auto auto 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+            "user-playlist user-stars ."
+        ;
+    }
+    
+}
+
+@media screen and (min-width: 1568px) {
+    /* Footer adjustment */
+
+    footer {
+        grid-template-columns: auto 1fr auto auto auto;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+            "site-insight user-library supported-domains additional-domains"
+            "site-insight user-library site-information site-information"
+        ;
+    }
+}
+
+/*#endregion*/
