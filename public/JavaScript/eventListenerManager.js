@@ -42,7 +42,7 @@ function resetVideoSize(displayAsLastVideo) {
     displayVideoId(displayAsLastVideo);
 }
 
-document.getElementById('video-search-button').addEventListener('click', function(event){
+document.getElementById('video-search-button').addEventListener('click', function (event) {
     event.preventDefault();
     openPopup(event, 'search-video');
 });
@@ -65,7 +65,7 @@ startPlaylistButton.addEventListener('click', function (event) {
 /**
  * Event for closing iframe-controls for playlist.
  */
-exitPlaylistButton.addEventListener('click', function(event){
+exitPlaylistButton.addEventListener('click', function (event) {
     event.preventDefault();
     handleExitPlaylist(event);
 });
@@ -73,7 +73,7 @@ exitPlaylistButton.addEventListener('click', function(event){
 /**
  * Event for opening edit playlist option.
  */
-editPlaylistButton.addEventListener('click', (event) => { openPopup(event, 'edit-playlist')});
+editPlaylistButton.addEventListener('click', (event) => { openPopup(event, 'edit-playlist') });
 
 /**
  * Event for submitting edit-playlist form (name).
@@ -101,13 +101,13 @@ document.querySelector('#edit-playlist .preference-area').addEventListener('subm
 
 
 // Area for attaching events.
-for (let i = 0; i < qButtonConfigs.length; i++){
+for (let i = 0; i < qButtonConfigs.length; i++) {
     let button = qButtonConfigs[i];
     button.buttonLocation.addEventListener('mouseenter', (event) => handleHoverEvent(event, button));
     button.buttonLocation.addEventListener('mouseleave', (event) => handleHoverEvent(event, button));
     button.buttonLocation.addEventListener('click', (event) => handleClickQAddEvent(event, button));
 }
-for (let i = 0; i < buttonConfigs.length; i++){
+for (let i = 0; i < buttonConfigs.length; i++) {
     let button = buttonConfigs[i];
     button.buttonLocation.addEventListener('mouseenter', (event) => handleHoverEvent(event, button));
     button.buttonLocation.addEventListener('mouseleave', (event) => handleHoverEvent(event, button));
@@ -119,11 +119,19 @@ for (let i = 0; i < buttonConfigs.length; i++){
 
 
 
+// #region Popup Events
+
+/**
+ * Event for closing popup.
+ */
+for (let i = 0; i < closePopupButtons.length; i++) {
+    closePopupButtons[i].addEventListener('click', closePopup);
+}
+
 // #region Settings Events
 
-addCustomButton.addEventListener('click', () => {displayError('Not a working function', addCustomButton)});
-settingsButton.addEventListener('click', (event) => { openPopup(event, 'settings')});
-closePopupButton.addEventListener('click', closePopup);
+addCustomButton.addEventListener('click', () => { displayError('Not a working function', addCustomButton) });
+settingsButton.addEventListener('click', (event) => { openPopup(event, 'settings') });
 popup.addEventListener('click', closePopupOutside);
 document.querySelector('#settings .preference-area').addEventListener('submit', function (event) {
     event.preventDefault();
@@ -143,12 +151,12 @@ document.querySelector('#settings .preference-area').addEventListener('submit', 
  * @param {NodeList} checkboxes - All checkboxes in the same area.
  * @param {boolean} [limit=false] - If it should limit the box checks.
  */
-function handleCheckbox(checkboxes, limit = false){
-    for (let i = 0; i < checkboxes.length; i++){
-        checkboxes[i].addEventListener('change', function(event) {
-            if (limit){
+function handleCheckbox(checkboxes, limit = false) {
+    for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].addEventListener('change', function (event) {
+            if (limit) {
                 uncheckOtherBoxes(checkboxes[i], checkboxes);
-            } 
+            }
             updateCheckBox(checkboxes[i]);
         });
     }
@@ -158,25 +166,45 @@ function handleCheckbox(checkboxes, limit = false){
 
 
 
+
 // #region Search Video Events
 
+
+// let searchResultData = null;
+// let currentSearchPage = 0;
+// let itemsPerSearchPage = 0;
+// let totalSearchItems = 0;
+
+/**
+ * Event for searching for youtube videos.
+ */
 document.getElementById('search-button').addEventListener('click', function (event) {
     event.preventDefault();
     let searchBar = document.getElementById('search-bar');
     let searchQuery = searchBar.value;
-    let videoContainer = document.getElementById('video-container');
-
     searchBar.value = '';
-    videoContainer.innerHTML = '';
     fetch(`/search?query=${encodeURIComponent(searchQuery)}`)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            if (data.error){
+                let errorMessage = data.error.message.replace('<a href="/youtube/', '<a target="_blank" href="https://developers.google.com/youtube/');
+                searchResultContainer.innerHTML = `<p>${data.error.code}: ${errorMessage}</p>`;
+            }
+            if (data.items && data.items.length > 0) {
+                searchResultData = data;
+                itemsPerSearchPage = data.pageInfo.resultsPerPage;
+                totalSearchItems = data.pageInfo.totalResults;
+                displaySearchResult();
+            }
         })
         .catch(error => {
             console.error('Error fetching video data:', error);
-            videoContainer.innerHTML = '<p>There was an error fetching the video results.</p>';
-        });
+            searchResultContainer.innerHTML = '<p>There was an error fetching the video results.</p>';
+        })
+    ;
+    currentSearchPage = 0;
 });
+
+// #endregion
 
 // #endregion

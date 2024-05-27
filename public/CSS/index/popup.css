@@ -47,13 +47,72 @@
 #popup>section#search-video>div>h2 {
     margin-bottom: 0;
 }
-#popup>section#search-video>div>span{
-    padding-bottom: calc(var(--standard-spacing) * 1.5);
+#popup>section#search-video {
+    max-width: 55%;
 }
 
-#video-container {
-    background-color: red;
+#search-result-container {
+    margin-top: calc(var(--standard-spacing) * 1.5);
+    margin-bottom: var(--standard-spacing);
+    max-height: calc(var(--popup-content-max-height) - 2rem);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: var(--standard-spacing);
+    overflow: auto;
+    border-radius: var(--standard-border-radius);
 }
+#search-result-container::-webkit-scrollbar-track{
+    border-top-right-radius: var(--standard-border-radius);
+    border-bottom-right-radius: var(--standard-border-radius);
+}
+
+#search-result-container .video-item {
+    border-radius: var(--standard-border-radius);
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    grid-template-areas: 
+        "video-information"
+        "video-actions"
+    ;
+    padding: calc(var(--standard-spacing) * 1.5);
+    gap: calc(var(--standard-spacing) / 2);
+}
+
+#search-result-container .video-item .video-information {
+    grid-area: video-information;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+        "video-thumbnail video-title"
+        "video-thumbnail video-description"
+    ;
+    gap: calc(var(--standard-spacing) / 2);
+}
+#search-result-container .video-item .video-information .video-thumbnail {
+    grid-area: video-thumbnail;
+}
+#search-result-container .video-item .video-information .video-title {
+    grid-area: video-title;
+}
+#search-result-container .video-item .video-information .video-description {
+    grid-area: video-description;
+}
+#search-result-container .video-item .video-actions {
+    grid-area: video-actions;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+    gap: var(--standard-spacing);
+}
+#search-result-container .video-item .video-actions .hidden-button {
+    font-weight: bold;
+}
+
+
 
 #search-video .preference-area input.form-input {
     width: 100%;

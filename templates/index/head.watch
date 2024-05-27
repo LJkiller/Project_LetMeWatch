@@ -15,6 +15,7 @@
 <script src="/public/JavaScript/supportedDomainsManager.js" defer></script>
 <script src="/public/JavaScript/additionalDomainsManager.js" defer></script>
 <script src="/public/JavaScript/mediaPlayerManager.js" defer></script>
+<script src="/public/JavaScript/searchManager.js" defer></script>
 
 <script src="/public/JavaScript/settingsManager.js" defer></script>
 <script src="/public/JavaScript/onload.js" defer></script>

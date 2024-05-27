@@ -58,7 +58,6 @@ noscript section span {
     outline: 5px var(--standard-border);
     display: none;
 }
-
 #popup>section.active {
     display: flex;
     justify-content: space-between;
@@ -85,7 +84,7 @@ noscript section span {
 
 #popup>section>.preference-area div>section>section {
     margin-top: var(--standard-spacing);
-    width: var(--setting-option-width);
+    width: var(--popup-content-width);
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -116,7 +115,6 @@ div.option-area label:first-child {
     border-top-left-radius: calc(var(--standard-border-radius) / 2);
     border-top-right-radius: calc(var(--standard-border-radius) / 2);
 }
-
 div.option-area label:last-child {
     border-bottom-left-radius: calc(var(--standard-border-radius) / 2);
     border-bottom-right-radius: calc(var(--standard-border-radius) / 2);
@@ -130,7 +128,7 @@ div.option-area label:last-child {
     content: "";
     display: block;
     margin-bottom: var(--standard-spacing);
-    width: var(--setting-option-width);
+    width: var(--popup-content-width);
     height: 2px;
     background-color: var(--primary-color);
     border-radius: var(--standard-border-radius);
@@ -193,7 +191,7 @@ div.option-area label:last-child {
 .preference-area div.edit-container,
 .preference-area>input {
     grid-area: settings-area;
-    max-height: 30rem;
+    max-height: var(--popup-content-max-height);
     overflow-y: auto;
     padding: var(--standard-spacing);
 }

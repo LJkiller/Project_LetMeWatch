@@ -39,8 +39,9 @@ export async function handleRoute(url, pathSegments, request, response) {
                         }
 
                         try {
-                            let apiKey = process.env.YOUTUBE_API_KEY;
-                            let apiResponse = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&part=snippet&q=${encodeURIComponent(query)}`);
+                            let youtubeAPIKey = process.env.YOUTUBE_API_KEY;
+                            let maxResults = 20;
+                            let apiResponse = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${youtubeAPIKey}&part=snippet&q=${encodeURIComponent(query)}&maxResults=${maxResults}`);
                             let data = await apiResponse.json();
                             
                             response.writeHead(200, { 'Content-Type': 'application/json' });

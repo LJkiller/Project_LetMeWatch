@@ -14,9 +14,9 @@ let videoIdValueSpan = document.getElementById('video-id');
 
 let popup = document.getElementById('popup');
 let errorPopup = document.getElementById('error');
+let closePopupButtons = document.querySelectorAll('button.close-popup-button');
 
 let settingsButton = document.getElementById('settings-button');
-let closePopupButton = document.getElementById('close-settings-button');
 
 let starArea = document.getElementById('starred-videos'), playlistArea = document.getElementById('playlist');
 let starButton = document.getElementById('star-button'), addButton = document.getElementById('add-playlist-button');
@@ -26,6 +26,8 @@ let starLibraryType = 'starLibrary', playlistLibraryType = 'playlistLibrary';
 let editPlaylistButton = document.getElementById('edit-playlist-button');
 let playlistNameSpan = playlistArea.querySelector('h3>span');
 let playlistNameMaxNotice = document.getElementById('playlist-max-char-notice');
+
+let searchResultContainer = document.getElementById('search-result-container');
 
 let baseWidth = 560;
 let baseHeight = 315;
@@ -48,6 +50,11 @@ let currentPlaylistPosition = 0;
 let playlistActive = false;
 let playlistNameLimit = 16;
 let playlistActiveLayoutSetting = '';
+
+let searchResultData = null;
+let currentSearchPage = 0;
+let itemsPerSearchPage = 0;
+let totalSearchItems = 0;
 
 let linkRegex = /^(http|https|ftp|ssh|telnet|smtp|imap|dns|snmp|ntp|ldap|sftp|ftps|smtps|webdav|rtsp|bittorrent):\/\/[^\s/$.?#].[^\s]*$/i;
 
