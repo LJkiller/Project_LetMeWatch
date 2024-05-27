@@ -1,7 +1,7 @@
 
 
 <header>
-    <a id="let-me-watch-logo" href="./index.html">
+    <a id="let-me-watch-logo" href="/">
         <img loading="lazy" src="/public/assets/icons/LetMeWatchIcon.png" alt="LetMeWatch logo, a bright colored playbutton.">
         <span id="let-me-watch-title">LetMeWatch <span>DAMMIT</span></span>
     </a>
