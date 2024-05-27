@@ -169,12 +169,6 @@ function handleCheckbox(checkboxes, limit = false) {
 
 // #region Search Video Events
 
-
-// let searchResultData = null;
-// let currentSearchPage = 0;
-// let itemsPerSearchPage = 0;
-// let totalSearchItems = 0;
-
 /**
  * Event for searching for youtube videos.
  */
